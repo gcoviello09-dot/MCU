@@ -1,7 +1,7 @@
-const defaultMissions = [
+const missions = [
 
 {
-title:"The Infinity Saga",
+saga:"Infinity Saga",
 items:[
 "Iron Man (2008)",
 "The Incredible Hulk (2008)",
@@ -19,7 +19,7 @@ items:[
 "Black Panther (2018)",
 "Doctor Strange (2016)",
 "Thor: Ragnarok (2017)",
-"Guardians of the Galaxy Vol. 2 (2017)",
+"Guardians of the Galaxy Vol.2 (2017)",
 "Spider-Man: Homecoming (2017)",
 "Ant-Man and The Wasp (2018)",
 "Avengers: Infinity War (2018)",
@@ -31,33 +31,34 @@ items:[
 ]
 },
 
+
 {
-title:"The Multiverse Saga",
+saga:"Multiverse Saga",
 items:[
 "Loki",
 "What If...?",
 "WandaVision",
-"Shang-Chi and the Legend of the Ten Rings",
+"Shang-Chi",
 "The Falcon and the Winter Soldier",
 "Eternals",
-"Doctor Strange in the Multiverse of Madness",
+"Doctor Strange Multiverse of Madness",
 "Hawkeye",
 "Moon Knight",
 "I Am Groot",
 "She-Hulk",
-"Ms. Marvel",
+"Ms Marvel",
 "Werewolf by Night",
-"Guardians of the Galaxy Holiday Special",
-"Ant-Man and The Wasp: Quantumania",
+"Guardians Holiday Special",
+"Ant-Man Quantumania",
 "Secret Invasion",
-"Guardians of the Galaxy Vol. 3",
+"Guardians of the Galaxy Vol.3",
 "The Marvels",
 "Echo",
 "Deadpool & Wolverine",
 "Agatha All Along",
-"Daredevil: Born Again",
+"Daredevil Born Again",
 "Ironheart",
-"Captain America: Brave New World",
+"Captain America Brave New World",
 "Thunderbolts",
 "Jessica Jones",
 "Luke Cage",
@@ -67,8 +68,9 @@ items:[
 ]
 },
 
+
 {
-title:"Coming Soon",
+saga:"Coming Soon",
 items:[
 "Wonder Man",
 "Vision Quest"
@@ -78,42 +80,52 @@ items:[
 ];
 
 
-let missions =
-JSON.parse(localStorage.getItem("MCUmissions"))
-|| defaultMissions;
-
-
 
 function render(){
 
-const container=document.getElementById("missions");
 
-container.innerHTML="";
+let box=document.getElementById("missions");
+
+box.innerHTML="";
+
 
 let total=0;
+
 let done=0;
 
 
-missions.forEach((section,s)=>{
+
+missions.forEach((group,g)=>{
 
 
 let title=document.createElement("h2");
-title.innerText=section.title;
-container.appendChild(title);
+
+title.innerText=group.saga;
+
+box.appendChild(title);
 
 
 
-section.items.forEach((item,i)=>{
+group.items.forEach((mission,i)=>{
+
+
+let id=g+"-"+i;
+
 
 total++;
 
-let id=s+"-"+i;
 
 let checked=
 localStorage.getItem(id)==="true";
 
 
-if(checked) done++;
+
+if(checked){
+
+done++;
+
+}
+
 
 
 let div=document.createElement("div");
@@ -127,90 +139,118 @@ div.innerHTML=`
 ${checked?"checked":""}
 onclick="toggle('${id}')">
 
+
 <span class="${checked?"done":""}">
-${item}
+
+${mission}
+
 </span>
 
 `;
 
 
-container.appendChild(div);
+
+box.appendChild(div);
+
 
 
 });
 
 
 });
+
 
 
 let percent=Math.round((done/total)*100);
 
+
+
 document.getElementById("counter").innerText=
+
 `MISSION STATUS: ${done}/${total}`;
+
+
+
+document.getElementById("percent").innerText=
+
+percent+"%";
+
+
+
+document.getElementById("bar").style.width=
+
+percent+"%";
+
+
+
 let rank="RECRUIT";
 
-if(percent>=25){
+
+if(percent>=25)
 rank="AVENGER CANDIDATE";
-}
 
-if(percent>=50){
+
+if(percent>=50)
 rank="AVENGER";
-}
 
-if(percent>=75){
+
+if(percent>=75)
 rank="GUARDIAN OF THE MULTIVERSE";
-}
 
-if(percent==100){
+
+if(percent==100)
 rank="MASTER OF THE MCU";
-}
+
 
 
 document.getElementById("rank").innerText=
-"RANK: "+rank;
-document.getElementById("percent").innerText=
-percent+"%";
 
-document.getElementById("bar").style.width=
-percent+"%";
+"RANK: "+rank;
 
 
 }
+
 
 
 
 function toggle(id){
 
 let value=
+
 localStorage.getItem(id)==="true";
 
+
 localStorage.setItem(id,!value);
+
 
 render();
 
 }
+
 
 
 
 function addMission(){
 
-let name=
-prompt("New MCU Mission:");
 
-if(name){
+let newMission=
 
-missions[0].items.push(name);
+prompt("New MCU Mission");
 
-localStorage.setItem(
-"MCUmissions",
-JSON.stringify(missions)
-);
+
+if(newMission){
+
+
+missions[0].items.push(newMission);
+
 
 render();
 
+
 }
 
 }
+
 
 
 render();
