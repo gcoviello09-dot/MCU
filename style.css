@@ -106,3 +106,79 @@ button {
     font-size:18px;
     font-weight:bold;
 }
+#startup {
+    position: fixed;
+    inset: 0;
+    background: black;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    animation: startupHide 3.5s forwards;
+}
+
+
+#startup h1 {
+    font-size: 30px;
+    color:#ffd700;
+    letter-spacing:4px;
+}
+
+
+#boot-text {
+    color:#00c8ff;
+    font-size:18px;
+    letter-spacing:3px;
+}
+
+
+.jarvis-reactor {
+
+    width:120px;
+    height:120px;
+    border-radius:50%;
+
+    background:
+    radial-gradient(circle,
+    white,
+    #00c8ff,
+    #003366);
+
+    box-shadow:
+    0 0 30px #00c8ff,
+    0 0 80px #0066ff;
+
+    animation: pulse 1s infinite alternate;
+}
+
+
+@keyframes pulse {
+
+from {
+transform:scale(1);
+}
+
+to {
+transform:scale(1.15);
+}
+
+}
+
+
+@keyframes startupHide {
+
+0% {
+opacity:1;
+}
+
+80% {
+opacity:1;
+}
+
+100% {
+opacity:0;
+visibility:hidden;
+}
+
+}
