@@ -147,7 +147,27 @@ let percent=Math.round((done/total)*100);
 
 document.getElementById("counter").innerText=
 `MISSION STATUS: ${done}/${total}`;
+let rank="RECRUIT";
 
+if(percent>=25){
+rank="AVENGER CANDIDATE";
+}
+
+if(percent>=50){
+rank="AVENGER";
+}
+
+if(percent>=75){
+rank="GUARDIAN OF THE MULTIVERSE";
+}
+
+if(percent==100){
+rank="MASTER OF THE MCU";
+}
+
+
+document.getElementById("rank").innerText=
+"RANK: "+rank;
 document.getElementById("percent").innerText=
 percent+"%";
 
