@@ -4,89 +4,113 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>MCU</title>
+<title>MCU - Mission Control Unit</title>
+
+<link rel="stylesheet" href="style.css">
+
 <link rel="manifest" href="manifest.json">
 
 <meta name="apple-mobile-web-app-capable" content="yes">
+
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
 <meta name="apple-mobile-web-app-title" content="MCU">
-  <link rel="apple-touch-icon" href="icon.png">
-<link rel="stylesheet" href="style.css">
+
+<link rel="apple-touch-icon" href="icon.png">
 
 </head>
 
 
 <body>
-<div id="startup">
 
-    <div class="jarvis-reactor"></div>
 
-    <h1>STARK INDUSTRIES</h1>
+<div id="boot">
 
-    <p id="boot-text">
-        ARC REACTOR ONLINE
-    </p>
+<div class="reactor"></div>
+
+<h1>STARK INDUSTRIES</h1>
+
+<p>ARC REACTOR ONLINE</p>
+
+<p>JARVIS SYSTEM ACTIVE</p>
 
 </div>
+
+
 
 <header>
 
-<div class="logo"></div>
+<div class="mini-reactor"></div>
 
 <h1>MCU</h1>
 
-<div class="subtitle">
-MISSION CONTROL UNIT
-</div>
+<h3>MISSION CONTROL UNIT</h3>
 
 </header>
 
 
 
-<div class="panel">
+<section class="dashboard">
 
-<h2>STARK SYSTEM STATUS</h2>
+<h2>MCU STATUS</h2>
+
+
+<div id="rank">
+
+RANK: RECRUIT
+
+</div>
+
 
 <div id="counter">
+
 MISSION STATUS: 0/0
+
 </div>
-<div id="rank">
-RANK: RECRUIT
-</div>
-<br>
+
 
 <div class="progress">
 
-<div id="bar" class="progress-bar"></div>
+<div id="bar"></div>
 
 </div>
 
-<h3 id="percent">
+
+<div id="percent">
+
 0%
-</h3>
-
 
 </div>
 
 
+</section>
 
-<div class="panel">
+
+
+<section class="panel">
+
 
 <button onclick="addMission()">
-＋ ADD NEW MISSION
+
+＋ NEW MISSION
+
 </button>
 
-</div>
+
+</section>
 
 
 
-<div class="panel">
+<section class="panel">
+
 
 <div id="missions"></div>
 
-</div>
+
+</section>
 
 
 
