@@ -1,122 +1,105 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MCU - Mission Control Unit</title>
 
 <link rel="stylesheet" href="style.css">
-
 <link rel="manifest" href="manifest.json">
 
 <meta name="apple-mobile-web-app-capable" content="yes">
-
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
 <meta name="apple-mobile-web-app-title" content="MCU">
-
 <link rel="apple-touch-icon" href="icon.png">
-
 </head>
-
 
 <body>
 
-
 <div id="boot">
-
 <div class="reactor"></div>
-
 <h1>STARK INDUSTRIES</h1>
-
-<p>ARC REACTOR ONLINE</p>
-
-<p>JARVIS SYSTEM ACTIVE</p>
-
+<p>JARVIS ONLINE</p>
 </div>
 
-
+<div id="app">
 
 <header>
-
 <div class="mini-reactor"></div>
-
 <h1>MCU</h1>
-
-<h3>MISSION CONTROL UNIT</h3>
-
+<p>Mission Control Unit</p>
 </header>
 
+<nav class="tabs">
+<button class="tab active" data-page="home">🏠 Home</button>
+<button class="tab" data-page="missions">🎬 Missioni</button>
+<button class="tab" data-page="badges">🏆 Badge</button>
+<button class="tab" data-page="settings">⚙️</button>
+</nav>
 
+<main>
 
-<section class="dashboard">
+<section id="home" class="page active">
 
-<h2>MCU STATUS</h2>
+<div class="card">
+<h2>Universe Progress</h2>
 
+<div id="rank">RECRUIT</div>
 
-<div id="rank">
-
-RANK: RECRUIT
-
-</div>
-
-
-<div id="counter">
-
-MISSION STATUS: 0/0
-
-</div>
-
+<div id="counter">0 / 0</div>
 
 <div class="progress">
-
 <div id="bar"></div>
+</div>
+
+<h3 id="percent">0%</h3>
 
 </div>
 
+<div class="card">
 
-<div id="percent">
+<input
+id="search"
+type="text"
+placeholder="🔎 Cerca missione...">
 
-0%
+<button onclick="addMission()">
+＋ Nuova Missione
+</button>
 
 </div>
-
 
 </section>
 
+<section id="missions" class="page">
+<div id="missionsList"></div>
+</section>
 
+<section id="badges" class="page">
 
-<section class="panel">
+<div id="badgesList"></div>
 
+</section>
 
-<button onclick="addMission()">
+<section id="settings" class="page">
 
-＋ NEW MISSION
+<div class="card">
+
+<button onclick="resetProgress()">
+
+Reset Progressi
 
 </button>
 
+</div>
 
 </section>
 
+</main>
 
-
-<section class="panel">
-
-
-<div id="missions"></div>
-
-
-</section>
-
-
+</div>
 
 <script src="app.js"></script>
 
-
 </body>
-
 </html>
