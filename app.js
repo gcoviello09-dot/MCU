@@ -1,4 +1,4 @@
-const missions = [
+let defaultMissions = [
 
 {
 saga:"Infinity Saga",
@@ -80,7 +80,10 @@ items:[
 ];
 
 
-
+let missions =
+JSON.parse(localStorage.getItem("customMissions"))
+||
+defaultMissions;
 function render(){
 
 
@@ -243,6 +246,10 @@ if(newMission){
 
 missions[0].items.push(newMission);
 
+localStorage.setItem(
+"customMissions",
+JSON.stringify(missions)
+);
 
 render();
 
