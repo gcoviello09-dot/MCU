@@ -1,87 +1,24 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MCU - Mission Control Unit</title>
 
-<style>
-body {
-    margin: 0;
-    background: radial-gradient(circle, #222, #000);
-    color: white;
-    font-family: Arial, sans-serif;
-}
+<title>MCU</title>
 
-header {
-    text-align: center;
-    padding: 25px;
-}
-
-h1 {
-    font-size: 55px;
-    color: #ffd700;
-    text-shadow: 0 0 20px red;
-    margin: 0;
-}
-
-.subtitle {
-    color: #aaa;
-    letter-spacing: 3px;
-}
-
-.arc {
-    width: 120px;
-    height: 120px;
-    margin: 25px auto;
-    border-radius: 50%;
-    background: radial-gradient(circle, white, #00aaff, #003366);
-    box-shadow: 0 0 40px #00aaff;
-}
-
-.card {
-    background: rgba(255,255,255,0.08);
-    margin: 15px;
-    padding: 15px;
-    border-radius: 15px;
-    border: 1px solid #555;
-}
-
-button {
-    background: #b00000;
-    color:white;
-    border:none;
-    padding:12px;
-    border-radius:10px;
-    width:100%;
-    font-size:18px;
-}
-
-.mission {
-    padding:12px;
-    margin:8px 0;
-    background:#111;
-    border-radius:10px;
-}
-
-input[type="checkbox"] {
-    transform:scale(1.5);
-    margin-right:15px;
-}
-
-.done {
-    text-decoration:line-through;
-    color:#777;
-}
-</style>
+<link rel="stylesheet" href="style.css">
 
 </head>
 
+
 <body>
+
 
 <header>
 
-<div class="arc"></div>
+<div class="logo"></div>
 
 <h1>MCU</h1>
 
@@ -92,76 +29,53 @@ MISSION CONTROL UNIT
 </header>
 
 
-<div class="card">
 
-<h2>Infinity Saga</h2>
+<div class="panel">
+
+<h2>STARK SYSTEM STATUS</h2>
+
+<div id="counter">
+MISSION STATUS: 0/0
+</div>
+
+<br>
+
+<div class="progress">
+
+<div id="bar" class="progress-bar"></div>
+
+</div>
+
+<h3 id="percent">
+0%
+</h3>
+
+
+</div>
+
+
+
+<div class="panel">
+
+<button onclick="addMission()">
+＋ ADD NEW MISSION
+</button>
+
+</div>
+
+
+
+<div class="panel">
 
 <div id="missions"></div>
 
 </div>
 
 
-<script>
 
-let missions = [
-"Iron Man (2008)",
-"The Incredible Hulk (2008)",
-"Iron Man 2 (2010)",
-"Thor (2011)",
-"Avengers (2012)",
-"Captain America: The First Avenger (2011)",
-"Iron Man 3 (2013)",
-"Thor: The Dark World (2013)",
-"Captain America: The Winter Soldier (2014)",
-"Guardians of the Galaxy (2014)"
-];
+<script src="app.js"></script>
 
-
-function load(){
-
-let box=document.getElementById("missions");
-
-box.innerHTML="";
-
-missions.forEach((m,i)=>{
-
-let checked=localStorage.getItem(i)=="true";
-
-box.innerHTML+=`
-
-<div class="mission">
-
-<input type="checkbox"
-${checked?"checked":""}
-onclick="save(${i})">
-
-<span class="${checked?'done':''}">
-${m}
-</span>
-
-</div>
-
-`;
-
-});
-
-}
-
-
-function save(i){
-
-let value=localStorage.getItem(i)=="true";
-
-localStorage.setItem(i,!value);
-
-load();
-
-}
-
-
-load();
-
-</script>
 
 </body>
+
 </html>
