@@ -31,7 +31,6 @@ items:[
 ]
 },
 
-
 {
 saga:"Multiverse Saga",
 items:[
@@ -68,7 +67,6 @@ items:[
 ]
 },
 
-
 {
 saga:"Coming Soon",
 items:[
@@ -81,19 +79,50 @@ items:[
 
 
 let missions =
-JSON.parse(localStorage.getItem("customMissions"))
+JSON.parse(localStorage.getItem("missions"))
 ||
 defaultMissions;
+
+
+
+let favorites =
+JSON.parse(localStorage.getItem("favorites"))
+||
+[];
+
+
+
+function save(){
+
+localStorage.setItem(
+"missions",
+JSON.stringify(missions)
+);
+
+localStorage.setItem(
+"favorites",
+JSON.stringify(favorites)
+);
+
+}
+
+
+
 function render(){
 
 
-let box=document.getElementById("missions");
+let list=document.getElementById("missionsList");
 
-box.innerHTML="";
+list.innerHTML="";
+
+
+let search =
+document.getElementById("search")?.value.toLowerCase()
+||
+"";
 
 
 let total=0;
-
 let done=0;
 
 
@@ -103,13 +132,15 @@ missions.forEach((group,g)=>{
 
 let title=document.createElement("h2");
 
+title.className="saga-title";
+
 title.innerText=group.saga;
 
-box.appendChild(title);
+list.appendChild(title);
 
 
 
-group.items.forEach((mission,i)=>{
+group.items.forEach((item,i)=>{
 
 
 let id=g+"-"+i;
@@ -121,13 +152,18 @@ total++;
 let checked=
 localStorage.getItem(id)==="true";
 
-
-
-if(checked){
-
+if(checked)
 done++;
 
-}
+
+if(search &&
+!item.toLowerCase().includes(search))
+return;
+
+
+
+let fav=
+favorites.includes(id);
 
 
 
@@ -136,7 +172,9 @@ let div=document.createElement("div");
 div.className="mission";
 
 
-div.innerHTML=`
+div.innerHTML=
+
+`
 
 <input type="checkbox"
 ${checked?"checked":""}
@@ -144,17 +182,19 @@ onclick="toggle('${id}')">
 
 
 <span class="${checked?"done":""}">
-
-${mission}
-
+${item}
 </span>
+
+
+<button onclick="favorite('${id}')">
+${fav?"⭐":"☆"}
+</button>
 
 `;
 
 
 
-box.appendChild(div);
-
+list.appendChild(div);
 
 
 });
@@ -169,94 +209,214 @@ let percent=Math.round((done/total)*100);
 
 
 document.getElementById("counter").innerText=
-
-`MISSION STATUS: ${done}/${total}`;
+done+" / "+total;
 
 
 
 document.getElementById("percent").innerText=
-
 percent+"%";
 
 
-
 document.getElementById("bar").style.width=
-
 percent+"%";
 
 
 
 let rank="RECRUIT";
 
-
 if(percent>=25)
 rank="AVENGER CANDIDATE";
-
 
 if(percent>=50)
 rank="AVENGER";
 
-
 if(percent>=75)
 rank="GUARDIAN OF THE MULTIVERSE";
 
-
 if(percent==100)
-rank="MASTER OF THE MCU";
-
+rank="MASTER OF MCU";
 
 
 document.getElementById("rank").innerText=
+rank;
 
-"RANK: "+rank;
+
+renderBadges();
 
 
 }
-
 
 
 
 function toggle(id){
 
 let value=
-
 localStorage.getItem(id)==="true";
 
 
 localStorage.setItem(id,!value);
 
-
 render();
 
 }
 
+
+
+function favorite(id){
+
+if(favorites.includes(id)){
+
+favorites=favorites.filter(x=>x!==id);
+
+}else{
+
+favorites.push(id);
+
+}
+
+save();
+
+render();
+
+}
 
 
 
 function addMission(){
 
-
-let newMission=
-
-prompt("New MCU Mission");
+let name=
+prompt("Nuova missione MCU");
 
 
-if(newMission){
+if(name){
 
 
-missions[0].items.push(newMission);
+missions[0].items.push(name);
 
-localStorage.setItem(
-"customMissions",
-JSON.stringify(missions)
-);
+save();
 
 render();
 
+}
+
+}
+
+
+
+function renderBadges(){
+
+
+let box=document.getElementById("badgesList");
+
+if(!box)return;
+
+
+let completed=0;
+
+
+missions.forEach((g,x)=>{
+
+g.items.forEach((m,i)=>{
+
+if(localStorage.getItem(x+"-"+i)==="true")
+completed++;
+
+});
+
+});
+
+
+box.innerHTML="";
+
+
+let badges=[
+
+["🏆 First Avenger", completed>=1],
+
+["🛡 Avengers Initiative", completed>=10],
+
+["💎 Infinity Survivor", completed>=25],
+
+["🌌 Multiverse Explorer", completed>=40]
+
+];
+
+
+
+badges.forEach(b=>{
+
+
+let div=document.createElement("div");
+
+div.className=
+"badge "+(b[1]?"unlocked":"");
+
+
+div.innerText=
+b[0];
+
+
+box.appendChild(div);
+
+
+});
+
+
+}
+
+
+
+function resetProgress(){
+
+if(confirm("Reset completo?")){
+
+localStorage.clear();
+
+location.reload();
 
 }
 
 }
+
+
+
+
+document.querySelectorAll(".tab")
+.forEach(btn=>{
+
+
+btn.onclick=function(){
+
+
+document.querySelectorAll(".tab")
+.forEach(x=>x.classList.remove("active"));
+
+
+document.querySelectorAll(".page")
+.forEach(x=>x.classList.remove("active"));
+
+
+btn.classList.add("active");
+
+
+document
+.getElementById(btn.dataset.page)
+.classList.add("active");
+
+
+}
+
+
+});
+
+
+
+document
+.getElementById("search")
+?.addEventListener(
+"input",
+render
+);
 
 
 
