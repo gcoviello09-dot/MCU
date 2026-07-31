@@ -1,184 +1,406 @@
+* {
+    box-sizing: border-box;
+}
+
+
 body {
-    margin: 0;
-    min-height: 100vh;
+
+    margin:0;
+
+    min-height:100vh;
+
     background:
-    radial-gradient(circle at top, #222 0%, #050505 45%, #000 100%);
-    color: white;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-}
+    radial-gradient(circle at top,#202020,#000 65%);
 
-header {
-    text-align: center;
-    padding: 30px 20px 10px;
-}
-
-.logo {
-    width: 130px;
-    height: 130px;
-    margin: auto;
-    border-radius: 50%;
-    background:
-    radial-gradient(circle, white 5%, #00c8ff 20%, #0066aa 45%, #001020 70%);
-    box-shadow:
-    0 0 20px #00c8ff,
-    0 0 60px #0066ff;
-    animation: reactor 2s infinite alternate;
-}
-
-@keyframes reactor {
-    from {
-        transform: scale(1);
-        box-shadow: 0 0 20px #00c8ff;
-    }
-    to {
-        transform: scale(1.05);
-        box-shadow: 0 0 60px #00c8ff;
-    }
-}
-
-h1 {
-    font-size: 55px;
-    margin: 15px 0 0;
-    color: #ffd700;
-    letter-spacing: 5px;
-    text-shadow:
-    0 0 10px #ff0000,
-    0 0 30px #ff0000;
-}
-
-.subtitle {
-    font-size: 13px;
-    letter-spacing: 4px;
-    color: #aaa;
-}
-
-.panel {
-    margin: 15px;
-    padding: 20px;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,215,0,0.4);
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
-}
-
-.progress {
-    height: 20px;
-    background: #222;
-    border-radius: 20px;
-    overflow: hidden;
-}
-
-.progress-bar {
-    height: 100%;
-    background: linear-gradient(90deg,#ff0000,#ffd700);
-    width: 0%;
-    transition: 0.5s;
-}
-
-.mission {
-    display:flex;
-    align-items:center;
-    padding:14px;
-    margin:8px 0;
-    background:#090909;
-    border-radius:15px;
-    border:1px solid #333;
-}
-
-.mission input {
-    width:22px;
-    height:22px;
-    margin-right:15px;
-}
-
-.done {
-    text-decoration: line-through;
-    color:#777;
-}
-
-button {
-    width:100%;
-    padding:15px;
-    border-radius:15px;
-    border:none;
-    background:#a00000;
     color:white;
-    font-size:18px;
-    font-weight:bold;
-}
-#startup {
-    position: fixed;
-    inset: 0;
-    background: black;
-    z-index: 999;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    animation: startupHide 3.5s forwards;
+
+    font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
 }
 
 
-#startup h1 {
-    font-size: 30px;
+/* BOOT JARVIS */
+
+#boot {
+
+    position:fixed;
+
+    inset:0;
+
+    background:#000;
+
+    z-index:999;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    animation:boot 4s forwards;
+
+}
+
+
+#boot h1 {
+
     color:#ffd700;
-    letter-spacing:4px;
+
+    letter-spacing:5px;
+
 }
 
 
-#boot-text {
+#boot p {
+
     color:#00c8ff;
-    font-size:18px;
+
     letter-spacing:3px;
+
 }
 
 
-.jarvis-reactor {
 
-    width:120px;
-    height:120px;
+.reactor,
+.mini-reactor {
+
+
     border-radius:50%;
+
 
     background:
     radial-gradient(circle,
-    white,
-    #00c8ff,
-    #003366);
+    white 5%,
+    #00d9ff 25%,
+    #0066aa 50%,
+    #001020 75%);
+
 
     box-shadow:
-    0 0 30px #00c8ff,
+
+    0 0 30px #00d9ff,
+
     0 0 80px #0066ff;
 
-    animation: pulse 1s infinite alternate;
+
 }
+
+
+.reactor {
+
+    width:150px;
+
+    height:150px;
+
+    animation:pulse 1s infinite alternate;
+
+}
+
+
+
+.mini-reactor {
+
+    width:70px;
+
+    height:70px;
+
+    margin:auto;
+
+}
+
 
 
 @keyframes pulse {
 
 from {
+
 transform:scale(1);
+
 }
 
 to {
+
 transform:scale(1.15);
-}
 
 }
 
+}
 
-@keyframes startupHide {
+
+
+@keyframes boot {
+
 
 0% {
+
 opacity:1;
+
 }
+
 
 80% {
+
 opacity:1;
+
 }
 
+
 100% {
+
 opacity:0;
+
 visibility:hidden;
+
 }
+
+}
+
+
+
+/* HEADER */
+
+
+header {
+
+text-align:center;
+
+padding:30px;
+
+}
+
+
+
+header h1 {
+
+
+font-size:55px;
+
+margin:10px;
+
+color:#ffd700;
+
+text-shadow:
+
+0 0 20px red;
+
+
+}
+
+
+
+header h3 {
+
+
+letter-spacing:5px;
+
+color:#aaa;
+
+
+}
+
+
+
+/* PANELS */
+
+
+.dashboard,
+.panel {
+
+
+margin:15px;
+
+padding:20px;
+
+
+background:
+
+rgba(255,255,255,0.08);
+
+
+border:
+
+1px solid rgba(255,215,0,.4);
+
+
+border-radius:20px;
+
+
+backdrop-filter:blur(10px);
+
+
+}
+
+
+
+#rank {
+
+
+font-size:22px;
+
+color:#00d9ff;
+
+margin-bottom:15px;
+
+}
+
+
+
+#counter {
+
+
+font-size:18px;
+
+}
+
+
+
+.progress {
+
+
+height:22px;
+
+background:#111;
+
+border-radius:20px;
+
+overflow:hidden;
+
+margin-top:15px;
+
+
+}
+
+
+
+#bar {
+
+
+height:100%;
+
+
+width:0%;
+
+
+background:
+
+linear-gradient(90deg,#ff0000,#ffd700);
+
+
+transition:.5s;
+
+
+}
+
+
+
+#percent {
+
+
+font-size:30px;
+
+text-align:center;
+
+color:#ffd700;
+
+
+}
+
+
+
+/* BUTTON */
+
+
+button {
+
+
+width:100%;
+
+padding:15px;
+
+border:0;
+
+border-radius:15px;
+
+
+background:#990000;
+
+
+color:white;
+
+
+font-size:18px;
+
+
+font-weight:bold;
+
+
+}
+
+
+
+/* MISSIONS */
+
+
+.mission {
+
+
+display:flex;
+
+align-items:center;
+
+
+background:#090909;
+
+
+padding:15px;
+
+
+margin:8px 0;
+
+
+border-radius:15px;
+
+
+border:1px solid #333;
+
+
+}
+
+
+
+.mission input {
+
+
+width:22px;
+
+height:22px;
+
+margin-right:15px;
+
+
+}
+
+
+
+.done {
+
+
+text-decoration:line-through;
+
+color:#777;
+
+
+}
+
+
+h2 {
+
+color:#ffd700;
 
 }
