@@ -2,37 +2,39 @@ let defaultMissions = [
 
 {
 saga:"Infinity Saga",
+type:"Film",
 items:[
-"Iron Man (2008)",
-"The Incredible Hulk (2008)",
-"Iron Man 2 (2010)",
-"Thor (2011)",
-"Avengers (2012)",
-"Captain America: The First Avenger (2011)",
-"Iron Man 3 (2013)",
-"Thor: The Dark World (2013)",
-"Captain America: The Winter Soldier (2014)",
-"Guardians of the Galaxy (2014)",
-"Avengers: Age of Ultron (2015)",
-"Ant-Man (2015)",
-"Captain America: Civil War (2016)",
-"Black Panther (2018)",
-"Doctor Strange (2016)",
-"Thor: Ragnarok (2017)",
-"Guardians of the Galaxy Vol.2 (2017)",
-"Spider-Man: Homecoming (2017)",
-"Ant-Man and The Wasp (2018)",
-"Avengers: Infinity War (2018)",
-"Avengers: Endgame (2019)",
-"Spider-Man: Far From Home (2019)",
-"Spider-Man: No Way Home (2021)",
-"Thor: Love and Thunder (2022)",
-"Black Panther: Wakanda Forever (2022)"
+"Iron Man",
+"The Incredible Hulk",
+"Iron Man 2",
+"Thor",
+"Avengers",
+"Captain America: The First Avenger",
+"Iron Man 3",
+"Thor: The Dark World",
+"Captain America: The Winter Soldier",
+"Guardians of the Galaxy",
+"Avengers: Age of Ultron",
+"Ant-Man",
+"Captain America: Civil War",
+"Black Panther",
+"Doctor Strange",
+"Thor Ragnarok",
+"Guardians of the Galaxy Vol.2",
+"Spider-Man Homecoming",
+"Ant-Man and The Wasp",
+"Avengers Infinity War",
+"Avengers Endgame",
+"Spider-Man Far From Home",
+"Spider-Man No Way Home",
+"Thor Love and Thunder",
+"Black Panther Wakanda Forever"
 ]
 },
 
 {
 saga:"Multiverse Saga",
+type:"Serie/Film",
 items:[
 "Loki",
 "What If...?",
@@ -69,6 +71,7 @@ items:[
 
 {
 saga:"Coming Soon",
+type:"Future",
 items:[
 "Wonder Man",
 "Vision Quest"
@@ -78,17 +81,15 @@ items:[
 ];
 
 
+
 let missions =
 JSON.parse(localStorage.getItem("missions"))
-||
-defaultMissions;
-
+|| defaultMissions;
 
 
 let favorites =
 JSON.parse(localStorage.getItem("favorites"))
-||
-[];
+|| [];
 
 
 
@@ -108,31 +109,26 @@ JSON.stringify(favorites)
 
 
 
+
 function render(){
 
 
 let list=document.getElementById("missionsList");
+
+if(list){
 
 list.innerHTML="";
 
 
 let search =
 document.getElementById("search")?.value.toLowerCase()
-||
-"";
-
-
-let total=0;
-let done=0;
-
+||"";
 
 
 missions.forEach((group,g)=>{
 
 
 let title=document.createElement("h2");
-
-title.className="saga-title";
 
 title.innerText=group.saga;
 
@@ -143,23 +139,17 @@ list.appendChild(title);
 group.items.forEach((item,i)=>{
 
 
-let id=g+"-"+i;
-
-
-total++;
-
-
-let checked=
-localStorage.getItem(id)==="true";
-
-if(checked)
-done++;
-
-
 if(search &&
 !item.toLowerCase().includes(search))
 return;
 
+
+
+let id=g+"-"+i;
+
+
+let done=
+localStorage.getItem(id)==="true";
 
 
 let fav=
@@ -177,69 +167,40 @@ div.innerHTML=
 `
 
 <input type="checkbox"
-${checked?"checked":""}
+${done?"checked":""}
 onclick="toggle('${id}')">
 
 
-<span class="${checked?"done":""}">
+<span class="${done?"done":""}">
 ${item}
 </span>
 
 
-<button onclick="favorite('${id}')">
+<button onclick="fav('${id}')">
+
 ${fav?"⭐":"☆"}
+
 </button>
 
 `;
 
-
-
 list.appendChild(div);
 
 
-});
-
 
 });
 
+});
 
 
-let percent=Math.round((done/total)*100);
-
-
-
-document.getElementById("counter").innerText=
-done+" / "+total;
+}
 
 
 
-document.getElementById("percent").innerText=
-percent+"%";
 
+updateStats();
 
-document.getElementById("bar").style.width=
-percent+"%";
-
-
-
-let rank="RECRUIT";
-
-if(percent>=25)
-rank="AVENGER CANDIDATE";
-
-if(percent>=50)
-rank="AVENGER";
-
-if(percent>=75)
-rank="GUARDIAN OF THE MULTIVERSE";
-
-if(percent==100)
-rank="MASTER OF MCU";
-
-
-document.getElementById("rank").innerText=
-rank;
-
+renderFavorites();
 
 renderBadges();
 
@@ -248,13 +209,14 @@ renderBadges();
 
 
 
+
+
 function toggle(id){
 
-let value=
-localStorage.getItem(id)==="true";
-
-
-localStorage.setItem(id,!value);
+localStorage.setItem(
+id,
+!(localStorage.getItem(id)==="true")
+);
 
 render();
 
@@ -262,17 +224,23 @@ render();
 
 
 
-function favorite(id){
+
+
+function fav(id){
 
 if(favorites.includes(id)){
 
-favorites=favorites.filter(x=>x!==id);
+favorites =
+favorites.filter(x=>x!==id);
 
-}else{
+}
+
+else{
 
 favorites.push(id);
 
 }
+
 
 save();
 
@@ -282,14 +250,152 @@ render();
 
 
 
+
+function renderFavorites(){
+
+let box=document.getElementById("favoritesList");
+
+if(!box)return;
+
+
+box.innerHTML="";
+
+
+favorites.forEach(id=>{
+
+
+let parts=id.split("-");
+
+let name=
+missions[parts[0]].items[parts[1]];
+
+
+let p=document.createElement("p");
+
+p.innerText="⭐ "+name;
+
+
+box.appendChild(p);
+
+
+});
+
+
+}
+
+
+
+
+
+function updateStats(){
+
+let total=0;
+let done=0;
+
+
+missions.forEach((g)=>{
+
+g.items.forEach((m)=>{
+
+total++;
+
+let index=missions
+.flatMap(x=>x.items)
+.indexOf(m);
+
+
+});
+
+});
+
+
+
+let keys=
+Object.keys(localStorage);
+
+
+keys.forEach(k=>{
+
+if(k.includes("-") &&
+localStorage.getItem(k)==="true")
+done++;
+
+});
+
+
+
+let percent=
+Math.round(done/total*100)
+||0;
+
+
+
+let bar=document.getElementById("bar");
+
+if(bar)
+bar.style.width=percent+"%";
+
+
+let p=document.getElementById("percent");
+
+if(p)
+p.innerText=percent+"%";
+
+
+
+let counter=document.getElementById("counter");
+
+if(counter)
+counter.innerText=
+done+" / "+total;
+
+
+
+let rank="RECRUIT";
+
+
+if(percent>=25)
+rank="AVENGER";
+
+
+if(percent>=50)
+rank="SUPER HERO";
+
+
+if(percent>=75)
+rank="GUARDIAN";
+
+
+if(percent==100)
+rank="MASTER OF MCU";
+
+
+let r=document.getElementById("rank");
+
+if(r)
+r.innerText=rank;
+
+
+
+let c=document.getElementById("completion");
+
+if(c)
+c.innerText=
+"Completamento: "+percent+"%";
+
+
+}
+
+
+
+
 function addMission(){
 
 let name=
-prompt("Nuova missione MCU");
+prompt("Nuova missione");
 
 
 if(name){
-
 
 missions[0].items.push(name);
 
@@ -303,100 +409,69 @@ render();
 
 
 
-function renderBadges(){
 
+function randomMission(){
+
+let all=[];
+
+
+missions.forEach(g=>{
+
+g.items.forEach(i=>all.push(i));
+
+});
+
+
+let pick=
+all[Math.floor(Math.random()*all.length)];
+
+
+document.getElementById("suggestion")
+.innerText=
+"JARVIS consiglia: "+pick;
+
+}
+
+
+
+
+function renderBadges(){
 
 let box=document.getElementById("badgesList");
 
 if(!box)return;
 
 
-let completed=0;
+box.innerHTML=
 
+`
+<div class="badge">
+🏆 First Mission
+</div>
 
-missions.forEach((g,x)=>{
+<div class="badge">
+💎 Infinity Survivor
+</div>
 
-g.items.forEach((m,i)=>{
-
-if(localStorage.getItem(x+"-"+i)==="true")
-completed++;
-
-});
-
-});
-
-
-box.innerHTML="";
-
-
-let badges=[
-
-["🏆 First Avenger", completed>=1],
-
-["🛡 Avengers Initiative", completed>=10],
-
-["💎 Infinity Survivor", completed>=25],
-
-["🌌 Multiverse Explorer", completed>=40]
-
-];
-
-
-
-badges.forEach(b=>{
-
-
-let div=document.createElement("div");
-
-div.className=
-"badge "+(b[1]?"unlocked":"");
-
-
-div.innerText=
-b[0];
-
-
-box.appendChild(div);
-
-
-});
-
-
-}
-
-
-
-function resetProgress(){
-
-if(confirm("Reset completo?")){
-
-localStorage.clear();
-
-location.reload();
-
-}
+<div class="badge">
+🌌 Multiverse Explorer
+</div>
+`;
 
 }
 
 
 
 
-document.querySelectorAll(".tab")
+document.querySelectorAll("nav button")
 .forEach(btn=>{
 
 
 btn.onclick=function(){
 
 
-document.querySelectorAll(".tab")
-.forEach(x=>x.classList.remove("active"));
-
-
 document.querySelectorAll(".page")
-.forEach(x=>x.classList.remove("active"));
-
-
-btn.classList.add("active");
+.forEach(p=>p.classList.remove("active"));
 
 
 document
@@ -404,10 +479,11 @@ document
 .classList.add("active");
 
 
-}
+};
 
 
 });
+
 
 
 
