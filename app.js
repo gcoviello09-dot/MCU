@@ -81,14 +81,18 @@ items:[
 ];
 
 
+
 let missions =
 JSON.parse(localStorage.getItem("missions"))
 || defaultMissions;
 
 
+
 let favorites =
 JSON.parse(localStorage.getItem("favorites"))
 || [];
+
+
 
 
 
@@ -99,6 +103,7 @@ localStorage.setItem(
 JSON.stringify(missions)
 );
 
+
 localStorage.setItem(
 "favorites",
 JSON.stringify(favorites)
@@ -108,9 +113,13 @@ JSON.stringify(favorites)
 
 
 
+
+
 function render(){
 
-let list=document.getElementById("missionsList");
+let list =
+document.getElementById("missionsList");
+
 
 if(list){
 
@@ -122,12 +131,17 @@ document.getElementById("search")?.value.toLowerCase()
 ||"";
 
 
+
 missions.forEach((group,g)=>{
 
 
-let title=document.createElement("h2");
+let title =
+document.createElement("h2");
 
-title.innerText=group.saga;
+
+title.innerText =
+group.saga;
+
 
 list.appendChild(title);
 
@@ -142,11 +156,14 @@ return;
 
 
 
-let id=g+"-"+i;
+let id =
+g+"-"+i;
+
 
 
 let done =
 localStorage.getItem(id)==="true";
+
 
 
 let fav =
@@ -154,9 +171,13 @@ favorites.includes(id);
 
 
 
-let div=document.createElement("div");
+let div =
+document.createElement("div");
+
+
 
 div.className="mission";
+
 
 
 div.innerHTML=`
@@ -166,8 +187,7 @@ ${done?"checked":""}
 onclick="toggle('${id}')">
 
 
-<span 
-class="${done?"done":""}"
+<span class="${done?"done":""}"
 onclick="openCard(${g},${i})">
 
 ${item}
@@ -176,13 +196,17 @@ ${item}
 
 
 <button onclick="fav('${id}')">
+
 ${fav?"⭐":"☆"}
+
 </button>
 
 `;
 
 
+
 list.appendChild(div);
+
 
 
 });
@@ -192,6 +216,7 @@ list.appendChild(div);
 
 
 }
+
 
 
 updateStats();
@@ -201,6 +226,11 @@ renderFavorites();
 renderBadges();
 
 }
+
+
+
+
+
 function toggle(id){
 
 localStorage.setItem(
@@ -208,22 +238,30 @@ id,
 !(localStorage.getItem(id)==="true")
 );
 
+
 render();
 
 }
 
 
 
+
+
 function fav(id){
 
+
 if(favorites.includes(id)){
+
 
 favorites =
 favorites.filter(x=>x!==id);
 
+
 }else{
 
+
 favorites.push(id);
+
 
 }
 
@@ -232,12 +270,8 @@ save();
 
 render();
 
+
 }
-
-
-
-
-
 function renderFavorites(){
 
 let box =
@@ -253,14 +287,16 @@ box.innerHTML="";
 favorites.forEach(id=>{
 
 
-let parts=id.split("-");
+let parts =
+id.split("-");
 
 
 let name =
 missions[parts[0]].items[parts[1]];
 
 
-let p=document.createElement("p");
+let p =
+document.createElement("p");
 
 
 p.innerText =
@@ -278,18 +314,22 @@ box.appendChild(p);
 
 
 
+
 function updateStats(){
 
 
 let total=0;
+
 let done=0;
 
 
 let filmTotal=0;
+
 let serieTotal=0;
 
 
 let filmDone=0;
+
 let serieDone=0;
 
 
@@ -303,33 +343,42 @@ group.items.forEach((item,i)=>{
 total++;
 
 
+
 let checked =
 localStorage.getItem(g+"-"+i)==="true";
 
 
 
-if(checked)
+if(checked){
+
 done++;
+
+}
 
 
 
 if(group.type==="Film"){
 
+
 filmTotal++;
+
 
 if(checked)
 filmDone++;
 
-}
 
-else{
+}else{
+
 
 serieTotal++;
+
 
 if(checked)
 serieDone++;
 
+
 }
+
 
 
 });
@@ -375,7 +424,8 @@ done+" / "+total;
 
 
 
-let rank="RECRUIT";
+let rank =
+"RECRUIT";
 
 
 if(percent>=25)
@@ -446,7 +496,9 @@ completion.innerText =
 
 
 
+
 function addMission(){
+
 
 let name =
 prompt("Nuova missione");
@@ -454,13 +506,18 @@ prompt("Nuova missione");
 
 if(name){
 
+
 missions[0].items.push(name);
+
 
 save();
 
+
 render();
 
+
 }
+
 
 }
 
@@ -470,16 +527,22 @@ render();
 
 function randomMission(){
 
+
 let all=[];
+
 
 
 missions.forEach(group=>{
 
+
 group.items.forEach(item=>{
+
 
 all.push(item);
 
+
 });
+
 
 });
 
@@ -495,6 +558,7 @@ document.getElementById("suggestion");
 
 
 if(box)
+
 box.innerText =
 "JARVIS consiglia: "+pick;
 
@@ -507,25 +571,29 @@ box.innerText =
 
 function renderBadges(){
 
+
 let box =
 document.getElementById("badgesList");
+
 
 if(!box)return;
 
 
-let completed = 0;
+
+let completed=0;
+
 
 
 Object.keys(localStorage).forEach(key=>{
 
+
 if(
 key.includes("-") &&
 localStorage.getItem(key)==="true"
-){
+)
 
 completed++;
 
-}
 
 });
 
@@ -537,20 +605,24 @@ box.innerHTML="";
 
 let badges=[
 
+
 {
 name:"🏆 First Mission",
 unlock:1
 },
+
 
 {
 name:"💎 Infinity Survivor",
 unlock:10
 },
 
+
 {
 name:"🌌 Multiverse Explorer",
 unlock:25
 }
+
 
 ];
 
@@ -559,12 +631,16 @@ unlock:25
 badges.forEach(badge=>{
 
 
-let div=document.createElement("div");
+let div =
+document.createElement("div");
 
 
-if(completed >= badge.unlock){
+
+if(completed>=badge.unlock){
+
 
 div.className="badge unlocked";
+
 
 div.innerText =
 badge.name+" ✅";
@@ -572,10 +648,13 @@ badge.name+" ✅";
 
 }else{
 
+
 div.className="badge locked";
+
 
 div.innerText =
 badge.name+" 🔒";
+
 
 }
 
@@ -585,6 +664,102 @@ box.appendChild(div);
 
 
 });
+
+
+}
+
+
+
+
+
+function openCard(g,i){
+
+
+let group =
+missions[g];
+
+
+let title =
+group.items[i];
+
+
+
+let card =
+document.getElementById("missionCard");
+
+
+
+if(!card)return;
+
+
+
+document.getElementById("cardTitle").innerText =
+title;
+
+
+
+document.getElementById("cardSaga").innerText =
+"🧬 Saga: "+group.saga;
+
+
+
+let data =
+missionData[title];
+
+
+
+if(data){
+
+
+document.getElementById("cardType").innerText =
+"🎬 Tipo: "+data.tipo;
+
+
+}else{
+
+
+document.getElementById("cardType").innerText =
+"🎬 Tipo: "+group.type;
+
+
+}
+
+
+
+
+let status =
+localStorage.getItem(g+"-"+i)==="true"
+?
+"✅ Missione completata"
+:
+"⏳ Missione da completare";
+
+
+
+document.getElementById("cardStatus").innerText =
+status;
+
+
+
+card.style.display="flex";
+
+
+}
+
+
+
+
+
+function closeCard(){
+
+
+let card =
+document.getElementById("missionCard");
+
+
+if(card)
+
+card.style.display="none";
 
 
 }
@@ -604,6 +779,7 @@ btn.onclick=function(){
 document
 .querySelectorAll(".page")
 .forEach(p=>p.classList.remove("active"));
+
 
 
 document
@@ -628,85 +804,7 @@ render
 );
 
 
-function openCard(g,i){
-
-let group = missions[g];
-
-let title = group.items[i];
-
-
-let card =
-document.getElementById("missionCard");
-
-
-if(!card)return;
 
 
 
-document.getElementById("cardTitle").innerText =
-title;
-
-
-document.getElementById("cardSaga").innerText =
-"🧬 Saga: "+group.saga;
-
-
-document.getElementById("cardType").innerText =
-"🎬 Tipo: "+group.type;
-let data = missionData[title];
-
-
-if(data){
-
-document.getElementById("cardType").innerText =
-"🎬 Tipo: "+data.tipo;
-
-
-let year =
-document.createElement("p");
-
-year.innerText =
-"📅 Anno: "+data.anno;
-
-
-document
-.getElementById("cardStatus")
-.before(year);
-
-
-}
-
-
-let status =
-localStorage.getItem(g+"-"+i)==="true"
-?
-"✅ Missione completata"
-:
-"⏳ Missione da completare";
-
-
-
-document.getElementById("cardStatus").innerText =
-status;
-
-
-
-card.style.display="flex";
-
-
-}
-
-
-
-function closeCard(){
-
-let card =
-document.getElementById("missionCard");
-
-
-if(card)
-card.style.display="none";
-
-
-}
 render();
