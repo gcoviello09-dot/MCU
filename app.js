@@ -34,43 +34,59 @@ items:[
 
 {
 saga:"Multiverse Saga",
-type:"Serie/Film",
+type:"Serie",
 items:[
 "Loki",
 "What If…?",
 "WandaVision",
-"Shang-Chi",
 "The Falcon and the Winter Soldier",
-"Eternals",
-"Spider-Man No Way Home",
-"Doctor Strange Multiverse of Madness",
 "Hawkeye",
 "Moon Knight",
 "I Am Groot",
 "She-Hulk",
 "Ms Marvel",
-"Thor Love and Thunder",
-"Werewolf by Night",
-"Black Panther Wakanda Forever",
-"Guardians Holiday Special",
-"Ant-Man Quantumania",
 "Secret Invasion",
-"Guardians of the Galaxy Vol.3",
-"The Marvels",
 "Echo",
-"Deadpool & Wolverine",
 "Agatha All Along",
 "Jessica Jones",
 "Luke Cage",
 "Iron Fist",
 "The Defenders",
 "The Punisher",
-"Captain America: Brave New World",
-"Thunderbolts*",
 "Daredevil: Born Again",
 "Ironheart",
-"Spider-Man: Brand New Day",
 "Wonder Man"
+]
+},
+
+
+{
+saga:"Multiverse Saga",
+type:"Film",
+items:[
+"Shang-Chi",
+"Eternals",
+"Spider-Man No Way Home",
+"Doctor Strange Multiverse of Madness",
+"Thor Love and Thunder",
+"Black Panther Wakanda Forever",
+"Ant-Man Quantumania",
+"Guardians of the Galaxy Vol.3",
+"The Marvels",
+"Deadpool & Wolverine",
+"Captain America: Brave New World",
+"Thunderbolts*",
+"Spider-Man: Brand New Day"
+]
+},
+
+
+{
+saga:"Special",
+type:"Special",
+items:[
+"Werewolf by Night",
+"Guardians Holiday Special"
 ]
 },
 
@@ -103,6 +119,7 @@ JSON.parse(localStorage.getItem("completed"))
 let favorites =
 JSON.parse(localStorage.getItem("favorites"))
 || [];
+
 
 
 
@@ -220,7 +237,6 @@ ${fav?"⭐":"☆"}
 list.appendChild(div);
 
 
-
 });
 
 
@@ -237,27 +253,18 @@ renderFavorites();
 renderBadges();
 
 }
-
-
-
-
 function toggle(id){
 
 if(completed.includes(id)){
 
-
 completed =
 completed.filter(x=>x!==id);
 
-
 }else{
-
 
 completed.push(id);
 
-
 }
-
 
 save();
 
@@ -294,6 +301,11 @@ render();
 
 
 }
+
+
+
+
+
 function renderFavorites(){
 
 let box =
@@ -303,7 +315,9 @@ document.getElementById("favoritesList");
 if(!box)return;
 
 
+
 box.innerHTML="";
+
 
 
 favorites.forEach(name=>{
@@ -313,8 +327,10 @@ let p =
 document.createElement("p");
 
 
+
 p.innerText =
 "⭐ "+name;
+
 
 
 box.appendChild(p);
@@ -357,6 +373,7 @@ group.items.forEach(item=>{
 total++;
 
 
+
 let checked =
 completed.includes(item);
 
@@ -369,22 +386,30 @@ done++;
 
 if(group.type==="Film"){
 
+
 filmTotal++;
+
 
 if(checked)
 filmDone++;
 
 
-}else{
+}
+
+
+
+if(group.type==="Serie"){
 
 
 serieTotal++;
+
 
 if(checked)
 serieDone++;
 
 
 }
+
 
 
 });
@@ -432,6 +457,7 @@ done+" / "+total;
 
 let rank =
 "RECRUIT";
+
 
 
 if(percent>=25)
@@ -518,6 +544,7 @@ missions[0].items.push(name);
 
 save();
 
+
 render();
 
 
@@ -534,6 +561,7 @@ function randomMission(){
 
 
 let all=[];
+
 
 
 missions.forEach(group=>{
@@ -590,20 +618,30 @@ box.innerHTML="";
 
 let badges=[
 
+
 {
 name:"🏆 First Mission",
 unlock:1
 },
+
 
 {
 name:"💎 Infinity Survivor",
 unlock:10
 },
 
+
 {
 name:"🌌 Multiverse Explorer",
 unlock:25
+},
+
+
+{
+name:"⚡ Stark Level",
+unlock:50
 }
+
 
 ];
 
@@ -648,11 +686,6 @@ box.appendChild(div);
 
 
 }
-
-
-
-
-
 function openCard(g,i){
 
 
@@ -667,6 +700,7 @@ group.items[i];
 
 let card =
 document.getElementById("missionCard");
+
 
 
 if(!card)return;
@@ -703,6 +737,7 @@ document.getElementById("cardType").innerText =
 
 
 }
+
 
 
 
