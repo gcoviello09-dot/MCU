@@ -288,7 +288,36 @@ box.appendChild(p);
 
 
 function updateStats(){
+let movieCount = 0;
+let seriesCount = 0;
 
+missions.forEach(group => {
+
+    if(group.type === "Film"){
+        movieCount += group.items.length;
+    }
+
+    else{
+        seriesCount += group.items.length;
+    }
+
+});
+
+
+let movieBox = document.getElementById("movies");
+
+if(movieBox){
+    movieBox.innerText =
+    "Film: " + movieCount;
+}
+
+
+let seriesBox = document.getElementById("series");
+
+if(seriesBox){
+    seriesBox.innerText =
+    "Serie: " + seriesCount;
+}
 let total=0;
 let done=0;
 
