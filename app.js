@@ -4,51 +4,53 @@ let defaultMissions = [
 saga:"Infinity Saga",
 type:"Film",
 items:[
+"Captain America: The First Avenger",
+"Captain Marvel",
 "Iron Man",
-"The Incredible Hulk",
 "Iron Man 2",
+"The Incredible Hulk",
 "Thor",
 "Avengers",
-"Captain America: The First Avenger",
 "Iron Man 3",
 "Thor: The Dark World",
 "Captain America: The Winter Soldier",
 "Guardians of the Galaxy",
+"Guardians of the Galaxy Vol. 2",
 "Avengers: Age of Ultron",
 "Ant-Man",
 "Captain America: Civil War",
+"Black Widow",
+"Spider-Man Homecoming",
 "Black Panther",
 "Doctor Strange",
 "Thor Ragnarok",
-"Guardians of the Galaxy Vol.2",
-"Spider-Man Homecoming",
 "Ant-Man and The Wasp",
 "Avengers Infinity War",
 "Avengers Endgame",
-"Spider-Man Far From Home",
-"Spider-Man No Way Home",
-"Thor Love and Thunder",
-"Black Panther Wakanda Forever"
+"Spider-Man Far From Home"
 ]
 },
 
 {
 saga:"Multiverse Saga",
-type:"Serie",
+type:"Serie/Film",
 items:[
 "Loki",
-"What If...?",
+"What If…?",
 "WandaVision",
 "Shang-Chi",
 "The Falcon and the Winter Soldier",
 "Eternals",
+"Spider-Man No Way Home",
 "Doctor Strange Multiverse of Madness",
 "Hawkeye",
 "Moon Knight",
 "I Am Groot",
 "She-Hulk",
 "Ms Marvel",
+"Thor Love and Thunder",
 "Werewolf by Night",
+"Black Panther Wakanda Forever",
 "Guardians Holiday Special",
 "Ant-Man Quantumania",
 "Secret Invasion",
@@ -57,15 +59,17 @@ items:[
 "Echo",
 "Deadpool & Wolverine",
 "Agatha All Along",
-"Daredevil Born Again",
-"Ironheart",
-"Captain America Brave New World",
-"Thunderbolts",
 "Jessica Jones",
 "Luke Cage",
 "Iron Fist",
 "The Defenders",
-"The Punisher"
+"The Punisher",
+"Captain America: Brave New World",
+"Thunderbolts*",
+"Daredevil: Born Again",
+"Ironheart",
+"Spider-Man: Brand New Day",
+"Wonder Man"
 ]
 },
 
@@ -73,13 +77,12 @@ items:[
 saga:"Coming Soon",
 type:"Futuro",
 items:[
-"Wonder Man",
-"Vision Quest"
+"Vision Quest",
+"Avengers: Doomsday"
 ]
 }
 
 ];
-
 
 
 let missions =
@@ -87,11 +90,9 @@ JSON.parse(localStorage.getItem("missions"))
 || defaultMissions;
 
 
-
 let favorites =
 JSON.parse(localStorage.getItem("favorites"))
 || [];
-
 
 
 
@@ -110,7 +111,6 @@ JSON.stringify(favorites)
 );
 
 }
-
 
 
 
@@ -703,27 +703,8 @@ document.getElementById("cardSaga").innerText =
 
 
 
-let data =
-missionData[title];
-
-
-
-if(data){
-
-
-document.getElementById("cardType").innerText =
-"🎬 Tipo: "+data.tipo;
-
-
-}else{
-
-
 document.getElementById("cardType").innerText =
 "🎬 Tipo: "+group.type;
-
-
-}
-
 
 
 
