@@ -485,3 +485,54 @@ opacity:0.4;
 filter:grayscale(1);
 
 }
+.modal{
+
+display:none;
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:100%;
+
+background:rgba(0,0,0,0.85);
+
+z-index:9999;
+
+align-items:center;
+
+justify-content:center;
+
+}
+
+
+
+.modal-box{
+
+width:85%;
+
+padding:25px;
+
+background:#111;
+
+border:2px solid #ffd700;
+
+border-radius:20px;
+
+box-shadow:0 0 30px #ffd700;
+
+text-align:center;
+
+}
+
+
+
+.modal-box button{
+
+margin-top:15px;
+
+}
