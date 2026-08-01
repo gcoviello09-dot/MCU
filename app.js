@@ -288,20 +288,151 @@ box.appendChild(p);
 
 
 function updateStats(){
-let movieCount = 0;
-let seriesCount = 0;
 
-missions.forEach(group => {
+let total = 0;
+let completed = 0;
 
-    if(group.type === "Film"){
-        movieCount += group.items.length;
-    }
+let filmTotal = 0;
+let serieTotal = 0;
 
-    else{
-        seriesCount += group.items.length;
-    }
+let filmDone = 0;
+let serieDone = 0;
+
+
+missions.forEach((group)=>{
+
+
+group.items.forEach((item,index)=>{
+
+
+total++;
+
+
+let isDone =
+localStorage.getItem(
+missions.indexOf(group)+"-"+index
+)==="true";
+
+
+if(isDone){
+completed++;
+}
+
+
+
+if(group.type === "Film"){
+
+filmTotal++;
+
+if(isDone){
+filmDone++;
+}
+
+}
+
+else{
+
+serieTotal++;
+
+if(isDone){
+serieDone++;
+}
+
+}
+
 
 });
+
+
+});
+
+
+
+let percent =
+Math.round((completed/total)*100)
+||0;
+
+
+
+let bar=document.getElementById("bar");
+
+if(bar)
+bar.style.width=percent+"%";
+
+
+
+let p=document.getElementById("percent");
+
+if(p)
+p.innerText=percent+"%";
+
+
+
+let counter=document.getElementById("counter");
+
+if(counter)
+counter.innerText=
+completed+" / "+total;
+
+
+
+let rank="RECRUIT";
+
+
+if(percent>=25)
+rank="AVENGER";
+
+
+if(percent>=50)
+rank="SUPER HERO";
+
+
+if(percent>=75)
+rank="GUARDIAN";
+
+
+if(percent==100)
+rank="MASTER OF MCU";
+
+
+
+let r=document.getElementById("rank");
+
+if(r)
+r.innerText=rank;
+
+
+
+let movies=document.getElementById("movies");
+
+if(movies)
+movies.innerText=
+"🎬 Film completati: "
++filmDone+
+" / "
++filmTotal;
+
+
+
+let series=document.getElementById("series");
+
+if(series)
+series.innerText=
+"📺 Serie completate: "
++serieDone+
+" / "
++serieTotal;
+
+
+
+let completion=document.getElementById("completion");
+
+if(completion)
+completion.innerText=
+"⚡ Universo completato: "
++percent+"%";
+
+}
 
 
 let movieBox = document.getElementById("movies");
