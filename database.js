@@ -1,5 +1,6 @@
 const missionData = {
 
+
 "Captain America: The First Avenger":{
 tipo:"Film",
 saga:"Infinity Saga"
@@ -121,6 +122,7 @@ saga:"Infinity Saga"
 },
 
 
+
 "Loki":{
 tipo:"Serie",
 saga:"Multiverse Saga"
@@ -136,28 +138,8 @@ tipo:"Serie",
 saga:"Multiverse Saga"
 },
 
-"Shang-Chi":{
-tipo:"Film",
-saga:"Multiverse Saga"
-},
-
 "The Falcon and the Winter Soldier":{
 tipo:"Serie",
-saga:"Multiverse Saga"
-},
-
-"Eternals":{
-tipo:"Film",
-saga:"Multiverse Saga"
-},
-
-"Spider-Man No Way Home":{
-tipo:"Film",
-saga:"Multiverse Saga"
-},
-
-"Doctor Strange Multiverse of Madness":{
-tipo:"Film",
 saga:"Multiverse Saga"
 },
 
@@ -186,53 +168,13 @@ tipo:"Serie",
 saga:"Multiverse Saga"
 },
 
-"Thor Love and Thunder":{
-tipo:"Film",
-saga:"Multiverse Saga"
-},
-
-"Werewolf by Night":{
-tipo:"Special",
-saga:"Multiverse Saga"
-},
-
-"Black Panther Wakanda Forever":{
-tipo:"Film",
-saga:"Multiverse Saga"
-},
-
-"Guardians Holiday Special":{
-tipo:"Special",
-saga:"Multiverse Saga"
-},
-
-"Ant-Man Quantumania":{
-tipo:"Film",
-saga:"Multiverse Saga"
-},
-
 "Secret Invasion":{
 tipo:"Serie",
 saga:"Multiverse Saga"
 },
 
-"Guardians of the Galaxy Vol.3":{
-tipo:"Film",
-saga:"Multiverse Saga"
-},
-
-"The Marvels":{
-tipo:"Film",
-saga:"Multiverse Saga"
-},
-
 "Echo":{
 tipo:"Serie",
-saga:"Multiverse Saga"
-},
-
-"Deadpool & Wolverine":{
-tipo:"Film",
 saga:"Multiverse Saga"
 },
 
@@ -266,16 +208,6 @@ tipo:"Serie",
 saga:"Marvel Television"
 },
 
-"Captain America: Brave New World":{
-tipo:"Film",
-saga:"Multiverse Saga"
-},
-
-"Thunderbolts*":{
-tipo:"Film",
-saga:"Multiverse Saga"
-},
-
 "Daredevil: Born Again":{
 tipo:"Serie",
 saga:"Multiverse Saga"
@@ -286,16 +218,87 @@ tipo:"Serie",
 saga:"Multiverse Saga"
 },
 
-"Spider-Man: Brand New Day":{
+"Wonder Man":{
+tipo:"Serie",
+saga:"Multiverse Saga"
+},
+"Shang-Chi":{
+tipo:"Film",
+saga:"Multiverse Saga"
+},
+
+"Eternals":{
+tipo:"Film",
+saga:"Multiverse Saga"
+},
+
+"Spider-Man No Way Home":{
+tipo:"Film",
+saga:"Multiverse Saga"
+},
+
+"Doctor Strange Multiverse of Madness":{
+tipo:"Film",
+saga:"Multiverse Saga"
+},
+
+"Thor Love and Thunder":{
+tipo:"Film",
+saga:"Multiverse Saga"
+},
+
+"Black Panther Wakanda Forever":{
+tipo:"Film",
+saga:"Multiverse Saga"
+},
+
+"Ant-Man Quantumania":{
+tipo:"Film",
+saga:"Multiverse Saga"
+},
+
+"Guardians of the Galaxy Vol.3":{
+tipo:"Film",
+saga:"Multiverse Saga"
+},
+
+"The Marvels":{
+tipo:"Film",
+saga:"Multiverse Saga"
+},
+
+"Deadpool & Wolverine":{
+tipo:"Film",
+saga:"Multiverse Saga"
+},
+
+"Captain America: Brave New World":{
+tipo:"Film",
+saga:"Multiverse Saga"
+},
+
+"Thunderbolts*":{
 tipo:"Film",
 saga:"Multiverse Saga"
 },
 
 
-"Wonder Man":{
-tipo:"Serie",
+"Werewolf by Night":{
+tipo:"Special",
 saga:"Multiverse Saga"
 },
+
+"Guardians Holiday Special":{
+tipo:"Special",
+saga:"Multiverse Saga"
+},
+
+
+"Spider-Man: Brand New Day":{
+tipo:"Film",
+saga:"Multiverse Saga"
+},
+
 
 "Vision Quest":{
 tipo:"Serie",
@@ -306,5 +309,6 @@ saga:"Coming Soon"
 tipo:"Film",
 saga:"Coming Soon"
 }
+
 
 };
