@@ -107,7 +107,8 @@ items:[
 let missions =
 JSON.parse(localStorage.getItem("missions"))
 || defaultMissions;
-
+localStorage.removeItem("missions");
+let missions = defaultMissions;
 
 
 let completed =
