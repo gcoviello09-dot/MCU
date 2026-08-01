@@ -536,3 +536,139 @@ text-align:center;
 margin-top:15px;
 
 }
+/* ==========================
+   MCU STARK MISSION CARD
+   ========================== */
+
+
+.modal{
+
+display:none;
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:100%;
+
+background:rgba(0,0,0,0.85);
+
+z-index:9999;
+
+align-items:center;
+
+justify-content:center;
+
+backdrop-filter:blur(5px);
+
+}
+
+
+
+.modal-box{
+
+width:85%;
+
+max-width:400px;
+
+background:#0b0b0b;
+
+border:2px solid #00bfff;
+
+border-radius:20px;
+
+padding:25px;
+
+text-align:center;
+
+box-shadow:
+
+0 0 15px #00bfff,
+
+0 0 40px rgba(0,191,255,0.5);
+
+
+animation:starkOpen 0.3s ease;
+
+}
+
+
+
+.modal-box h2{
+
+font-size:28px;
+
+color:#00bfff;
+
+margin-bottom:20px;
+
+}
+
+
+
+.modal-box p{
+
+font-size:18px;
+
+color:white;
+
+}
+
+
+
+.modal-box button{
+
+background:#111;
+
+color:#00bfff;
+
+border:1px solid #00bfff;
+
+border-radius:10px;
+
+padding:10px 20px;
+
+font-size:18px;
+
+cursor:pointer;
+
+}
+
+
+
+.modal-box button:hover{
+
+background:#00bfff;
+
+color:black;
+
+}
+
+
+
+@keyframes starkOpen{
+
+
+from{
+
+transform:scale(0.7);
+
+opacity:0;
+
+}
+
+
+to{
+
+transform:scale(1);
+
+opacity:1;
+
+}
+
+
+}
