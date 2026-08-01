@@ -1,16 +1,26 @@
 const missionData = {
 
+"Captain America: The First Avenger":{
+tipo:"Film",
+saga:"Infinity Saga"
+},
+
+"Captain Marvel":{
+tipo:"Film",
+saga:"Infinity Saga"
+},
+
 "Iron Man":{
 tipo:"Film",
 saga:"Infinity Saga"
 },
 
-"The Incredible Hulk":{
+"Iron Man 2":{
 tipo:"Film",
 saga:"Infinity Saga"
 },
 
-"Iron Man 2":{
+"The Incredible Hulk":{
 tipo:"Film",
 saga:"Infinity Saga"
 },
@@ -21,11 +31,6 @@ saga:"Infinity Saga"
 },
 
 "Avengers":{
-tipo:"Film",
-saga:"Infinity Saga"
-},
-
-"Captain America: The First Avenger":{
 tipo:"Film",
 saga:"Infinity Saga"
 },
@@ -50,6 +55,11 @@ tipo:"Film",
 saga:"Infinity Saga"
 },
 
+"Guardians of the Galaxy Vol. 2":{
+tipo:"Film",
+saga:"Infinity Saga"
+},
+
 "Avengers: Age of Ultron":{
 tipo:"Film",
 saga:"Infinity Saga"
@@ -65,6 +75,16 @@ tipo:"Film",
 saga:"Infinity Saga"
 },
 
+"Black Widow":{
+tipo:"Film",
+saga:"Infinity Saga"
+},
+
+"Spider-Man Homecoming":{
+tipo:"Film",
+saga:"Infinity Saga"
+},
+
 "Black Panther":{
 tipo:"Film",
 saga:"Infinity Saga"
@@ -76,16 +96,6 @@ saga:"Infinity Saga"
 },
 
 "Thor Ragnarok":{
-tipo:"Film",
-saga:"Infinity Saga"
-},
-
-"Guardians of the Galaxy Vol.2":{
-tipo:"Film",
-saga:"Infinity Saga"
-},
-
-"Spider-Man Homecoming":{
 tipo:"Film",
 saga:"Infinity Saga"
 },
@@ -110,28 +120,13 @@ tipo:"Film",
 saga:"Infinity Saga"
 },
 
-"Spider-Man No Way Home":{
-tipo:"Film",
-saga:"Infinity Saga"
-},
-
-"Thor Love and Thunder":{
-tipo:"Film",
-saga:"Infinity Saga"
-},
-
-"Black Panther Wakanda Forever":{
-tipo:"Film",
-saga:"Infinity Saga"
-},
-
 
 "Loki":{
 tipo:"Serie",
 saga:"Multiverse Saga"
 },
 
-"What If...?":{
+"What If…?":{
 tipo:"Serie",
 saga:"Multiverse Saga"
 },
@@ -152,6 +147,11 @@ saga:"Multiverse Saga"
 },
 
 "Eternals":{
+tipo:"Film",
+saga:"Multiverse Saga"
+},
+
+"Spider-Man No Way Home":{
 tipo:"Film",
 saga:"Multiverse Saga"
 },
@@ -186,8 +186,18 @@ tipo:"Serie",
 saga:"Multiverse Saga"
 },
 
+"Thor Love and Thunder":{
+tipo:"Film",
+saga:"Multiverse Saga"
+},
+
 "Werewolf by Night":{
 tipo:"Special",
+saga:"Multiverse Saga"
+},
+
+"Black Panther Wakanda Forever":{
+tipo:"Film",
 saga:"Multiverse Saga"
 },
 
@@ -231,27 +241,6 @@ tipo:"Serie",
 saga:"Multiverse Saga"
 },
 
-"Daredevil Born Again":{
-tipo:"Serie",
-saga:"Multiverse Saga"
-},
-
-"Ironheart":{
-tipo:"Serie",
-saga:"Multiverse Saga"
-},
-
-"Captain America Brave New World":{
-tipo:"Film",
-saga:"Multiverse Saga"
-},
-
-"Thunderbolts":{
-tipo:"Film",
-saga:"Multiverse Saga"
-},
-
-
 "Jessica Jones":{
 tipo:"Serie",
 saga:"Marvel Television"
@@ -277,14 +266,44 @@ tipo:"Serie",
 saga:"Marvel Television"
 },
 
+"Captain America: Brave New World":{
+tipo:"Film",
+saga:"Multiverse Saga"
+},
+
+"Thunderbolts*":{
+tipo:"Film",
+saga:"Multiverse Saga"
+},
+
+"Daredevil: Born Again":{
+tipo:"Serie",
+saga:"Multiverse Saga"
+},
+
+"Ironheart":{
+tipo:"Serie",
+saga:"Multiverse Saga"
+},
+
+"Spider-Man: Brand New Day":{
+tipo:"Film",
+saga:"Multiverse Saga"
+},
+
 
 "Wonder Man":{
 tipo:"Serie",
-saga:"Coming Soon"
+saga:"Multiverse Saga"
 },
 
 "Vision Quest":{
 tipo:"Serie",
+saga:"Coming Soon"
+},
+
+"Avengers: Doomsday":{
+tipo:"Film",
 saga:"Coming Soon"
 }
 
