@@ -4,17 +4,36 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>MCU Mission Control Unit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+
+<title>
+MCU Mission Control Unit
+</title>
+
+
+<meta name="theme-color" content="#000000">
+
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<meta name="apple-mobile-web-app-title" content="MCU">
+
 
 <link rel="stylesheet" href="style.css">
 
+
 <link rel="manifest" href="manifest.json">
+
 
 <link rel="apple-touch-icon" href="icon.png">
 
+
 </head>
+
 
 
 <body>
@@ -22,71 +41,127 @@
 
 <div id="boot">
 
+
 <div class="reactor"></div>
+
+
 
 <div class="boot-panel">
 
-<h1>STARK INDUSTRIES</h1>
 
-<p>JARVIS ONLINE</p>
+<h1>
+STARK INDUSTRIES
+</h1>
+
+
+<p>
+JARVIS ONLINE
+</p>
+
+
 
 <div class="boot-line"></div>
 
+
+
 <p class="boot-status">
+
 SYSTEM INITIALIZING...
+
 </p>
 
-</div>
 
 </div>
+
+
+</div>
+
+
 
 
 
 <header>
 
+
 <div class="mini-reactor"></div>
 
-<h1>MCU</h1>
 
-<p>MISSION CONTROL UNIT</p>
+<h1>
+MCU
+</h1>
+
+
+<p>
+MISSION CONTROL UNIT
+</p>
+
 
 </header>
 
 
 
+
+
 <nav>
 
-<button data-page="home">🏠</button>
 
-<button data-page="missions">🎬</button>
+<button data-page="home">
 
-<button data-page="favorites">⭐</button>
+🏠
 
-<button data-page="stats">📊</button>
+</button>
+
+
+<button data-page="missions">
+
+🎬
+
+</button>
+
+
+<button data-page="favorites">
+
+⭐
+
+</button>
+
+
+<button data-page="stats">
+
+📊
+
+</button>
+
 
 </nav>
-
-
-
 <section id="home" class="page active">
 
 
-<div class="card">
+<div class="card jarvis-card">
 
-<h2>⚡ JARVIS SYSTEM STATUS</h2>
+
+<h2>
+⚡ JARVIS SYSTEM STATUS
+</h2>
+
+
 
 <h3 id="rank">
 RECRUIT
 </h3>
 
 
+
 <div class="counter-label">
 MISSION DATABASE
 </div>
 
+
+
 <div id="counter">
 0 / 0
 </div>
+
 
 
 <div class="progress">
@@ -94,6 +169,7 @@ MISSION DATABASE
 <div id="bar"></div>
 
 </div>
+
 
 
 <h2 id="percent">
@@ -105,13 +181,17 @@ MISSION DATABASE
 
 
 
-<div class="card">
+
+
+<div class="card jarvis-card">
+
 
 <button onclick="randomMission()">
 
 🎲 JARVIS SCEGLI MISSIONE
 
 </button>
+
 
 
 <h3 id="suggestion"></h3>
@@ -124,13 +204,19 @@ MISSION DATABASE
 
 
 
+
+
 <section id="missions" class="page">
 
 
 <div class="card">
 
-<input id="search"
-placeholder="🔎 Cerca missione">
+
+<input 
+id="search"
+placeholder="🔎 Cerca missione"
+>
+
 
 
 <button onclick="addMission()">
@@ -143,10 +229,13 @@ placeholder="🔎 Cerca missione">
 </div>
 
 
+
 <div id="missionsList"></div>
 
 
 </section>
+
+
 
 
 
@@ -155,9 +244,15 @@ placeholder="🔎 Cerca missione">
 
 <div class="card">
 
-<h2>⭐ Preferiti</h2>
+
+<h2>
+⭐ Preferiti
+</h2>
+
+
 
 <div id="favoritesList"></div>
+
 
 </div>
 
@@ -166,12 +261,18 @@ placeholder="🔎 Cerca missione">
 
 
 
+
+
 <section id="stats" class="page">
 
 
 <div class="card">
 
-<h2>📊 STATISTICHE</h2>
+
+<h2>
+📊 STATISTICHE
+</h2>
+
 
 
 <p id="movies">
@@ -179,9 +280,11 @@ Film: 0
 </p>
 
 
+
 <p id="series">
 Serie: 0
 </p>
+
 
 
 <p id="completion">
@@ -189,7 +292,9 @@ Completamento: 0%
 </p>
 
 
+
 </div>
+
 
 
 <div id="badgesList"></div>
@@ -199,7 +304,7 @@ Completamento: 0%
 
 
 
-<!-- MISSION CARD -->
+
 
 <div id="missionCard" class="modal">
 
@@ -214,6 +319,7 @@ Completamento: 0%
 </button>
 
 
+
 <h2 id="cardTitle"></h2>
 
 
@@ -226,15 +332,20 @@ Completamento: 0%
 <p id="cardStatus"></p>
 
 
+
 </div>
 
 
 </div>
+
+
 
 
 
 <script src="database.js"></script>
+
 <script src="app.js"></script>
+
 
 
 </body>
