@@ -653,7 +653,28 @@ document.getElementById("cardSaga").innerText =
 
 document.getElementById("cardType").innerText =
 "🎬 Tipo: "+group.type;
+let data = missionData[title];
 
+
+if(data){
+
+document.getElementById("cardType").innerText =
+"🎬 Tipo: "+data.tipo;
+
+
+let year =
+document.createElement("p");
+
+year.innerText =
+"📅 Anno: "+data.anno;
+
+
+document
+.getElementById("cardStatus")
+.before(year);
+
+
+}
 
 
 let status =
