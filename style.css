@@ -9,7 +9,8 @@ margin:0;
 
 min-height:100vh;
 
-background:#000;
+background:
+radial-gradient(circle at top,#001522,#000 60%);
 
 color:white;
 
@@ -23,7 +24,9 @@ sans-serif;
 
 
 
-/* BOOT */
+/* =================
+BOOT JARVIS
+================= */
 
 
 #boot{
@@ -50,13 +53,27 @@ animation:boot 4s forwards;
 
 
 
+.boot-panel{
+
+text-align:center;
+
+}
+
+
+
 #boot h1{
+
+font-size:38px;
+
+letter-spacing:8px;
 
 color:#ffe600;
 
-letter-spacing:5px;
+text-shadow:
 
-text-shadow:0 0 20px #ffe600;
+0 0 10px #ffe600,
+
+0 0 30px #ffe600;
 
 }
 
@@ -66,19 +83,77 @@ text-shadow:0 0 20px #ffe600;
 
 color:#00c8ff;
 
-letter-spacing:3px;
+letter-spacing:5px;
 
-text-shadow:0 0 15px #00c8ff;
+}
+
+
+
+.boot-status{
+
+font-size:14px;
+
+margin-top:20px;
+
+}
+
+
+
+.boot-line{
+
+width:220px;
+
+height:3px;
+
+background:#111;
+
+margin:20px auto;
+
+overflow:hidden;
+
+}
+
+
+
+.boot-line::after{
+
+content:"";
+
+display:block;
+
+height:100%;
+
+width:50%;
+
+background:#00c8ff;
+
+animation:loading 2s infinite;
+
+}
+
+
+
+@keyframes loading{
+
+from{
+
+transform:translateX(-100%);
+
+}
+
+to{
+
+transform:translateX(300%);
+
+}
 
 }
 
 
 
 
-
 .reactor,
 .mini-reactor{
-
 
 border-radius:50%;
 
@@ -125,15 +200,19 @@ margin:auto;
 
 
 
-
 @keyframes pulse{
 
 from{
+
 transform:scale(1);
+
 }
 
+
 to{
-transform:scale(1.15);
+
+transform:scale(1.12);
+
 }
 
 }
@@ -143,24 +222,35 @@ transform:scale(1.15);
 @keyframes boot{
 
 0%{
+
 opacity:1;
+
 }
+
 
 80%{
+
 opacity:1;
+
 }
+
 
 100%{
+
 opacity:0;
+
 visibility:hidden;
-}
 
 }
 
+}
 
 
 
-/* HEADER */
+
+/* =================
+HEADER
+================= */
 
 
 header{
@@ -175,7 +265,7 @@ padding:25px;
 
 header h1{
 
-font-size:55px;
+font-size:60px;
 
 margin:10px;
 
@@ -191,11 +281,12 @@ text-shadow:
 
 header p{
 
-color:white;
+color:#00c8ff;
 
-letter-spacing:4px;
+letter-spacing:5px;
 
 }
+
 
 
 
@@ -231,6 +322,8 @@ padding:12px;
 
 font-size:18px;
 
+transition:.3s;
+
 }
 
 
@@ -239,7 +332,11 @@ nav button:hover{
 
 border-color:#ffe600;
 
-box-shadow:0 0 15px #ffe600;
+box-shadow:
+
+0 0 20px #ffe600;
+
+transform:translateY(-3px);
 
 }
 
@@ -265,7 +362,6 @@ display:block;
 
 
 
-
 /* CARDS */
 
 
@@ -275,7 +371,10 @@ margin:15px;
 
 padding:20px;
 
-background:#050505;
+background:
+
+rgba(0,0,0,.75);
+
 
 border:
 
@@ -287,10 +386,9 @@ border-radius:20px;
 
 box-shadow:
 
-0 0 20px rgba(0,200,255,.25);
+0 0 25px rgba(0,200,255,.25);
 
 }
-
 
 
 
@@ -303,22 +401,22 @@ text-shadow:
 0 0 10px #ffe600;
 
 }
-
-
-
-
-/* STATUS */
+/* =================
+STATUS JARVIS
+================= */
 
 
 #rank{
 
 color:#00c8ff;
 
-font-size:24px;
+font-size:30px;
+
+text-align:center;
 
 text-shadow:
 
-0 0 10px #00c8ff;
+0 0 15px #00c8ff;
 
 }
 
@@ -326,7 +424,9 @@ text-shadow:
 
 #counter{
 
-font-size:20px;
+font-size:22px;
+
+text-align:center;
 
 color:white;
 
@@ -334,9 +434,23 @@ color:white;
 
 
 
+.counter-label{
+
+text-align:center;
+
+color:#00c8ff;
+
+letter-spacing:3px;
+
+font-size:13px;
+
+}
+
+
+
 .progress{
 
-height:22px;
+height:25px;
 
 background:#111;
 
@@ -344,7 +458,11 @@ border-radius:20px;
 
 overflow:hidden;
 
-margin:15px 0;
+margin:20px 0;
+
+border:
+
+1px solid #00c8ff;
 
 }
 
@@ -366,6 +484,11 @@ linear-gradient(
 );
 
 
+box-shadow:
+
+0 0 20px #00c8ff;
+
+
 transition:.5s;
 
 }
@@ -376,13 +499,13 @@ transition:.5s;
 
 text-align:center;
 
-font-size:35px;
+font-size:40px;
 
 color:#ffe600;
 
 text-shadow:
 
-0 0 15px #ffe600;
+0 0 20px #ffe600;
 
 }
 
@@ -400,7 +523,9 @@ padding:15px;
 
 border-radius:15px;
 
-border:1px solid #00c8ff;
+border:
+
+1px solid #00c8ff;
 
 background:#000;
 
@@ -413,13 +538,12 @@ font-size:16px;
 
 
 
-
 /* BUTTON */
 
 
 button{
 
-background:#000;
+background:#050505;
 
 color:#00c8ff;
 
@@ -427,11 +551,14 @@ border:
 
 1px solid #00c8ff;
 
+
 border-radius:15px;
 
 padding:15px;
 
 font-weight:bold;
+
+transition:.3s;
 
 }
 
@@ -473,7 +600,21 @@ border-radius:15px;
 
 border:
 
-1px solid #00c8ff;
+1px solid #003b55;
+
+transition:.3s;
+
+}
+
+
+
+.mission:hover{
+
+border-color:#00c8ff;
+
+box-shadow:
+
+0 0 15px rgba(0,200,255,.5);
 
 }
 
@@ -523,21 +664,13 @@ border-radius:20px;
 
 border:
 
-1px solid #00c8ff;
+1px solid #003b55;
 
 font-size:18px;
 
-}
+text-align:center;
 
-
-
-.badge:hover{
-
-border-color:#ffe600;
-
-box-shadow:
-
-0 0 20px #ffe600;
+transition:.4s;
 
 }
 
@@ -547,11 +680,14 @@ box-shadow:
 
 border-color:#ffe600;
 
+color:#ffe600;
+
 box-shadow:
 
-0 0 20px #ffe600;
+0 0 25px #ffe600;
 
-color:#ffe600;
+
+animation:badgeGlow 2s infinite alternate;
 
 }
 
@@ -559,9 +695,30 @@ color:#ffe600;
 
 .badge.locked{
 
-opacity:.4;
+opacity:.35;
 
-filter:grayscale(1);
+}
+
+
+
+@keyframes badgeGlow{
+
+from{
+
+box-shadow:
+
+0 0 10px #ffe600;
+
+}
+
+
+to{
+
+box-shadow:
+
+0 0 30px #ffe600;
+
+}
 
 }
 
@@ -597,7 +754,7 @@ align-items:center;
 
 justify-content:center;
 
-backdrop-filter:blur(5px);
+backdrop-filter:blur(8px);
 
 }
 
@@ -629,7 +786,7 @@ text-align:center;
 
 box-shadow:
 
-0 0 20px #00c8ff,
+0 0 25px #00c8ff,
 
 0 0 40px #ffe600;
 
@@ -665,6 +822,7 @@ color:white;
 margin-top:15px;
 
 }
+
 
 
 
