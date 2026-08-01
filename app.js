@@ -161,6 +161,18 @@ let div=document.createElement("div");
 
 
 div.className="mission";
+div.addEventListener("click", function(e){
+
+if(
+e.target.tagName !== "INPUT" &&
+e.target.tagName !== "BUTTON"
+){
+
+openMission(g,i);
+
+}
+
+});
 div.onclick=function(e){
 
 if(e.target.tagName !== "INPUT" && e.target.tagName !== "BUTTON"){
@@ -670,6 +682,49 @@ function closeMission(){
 document
 .getElementById("missionModal")
 .style.display="none";
+
+}
+function openMission(g,i){
+
+let group = missions[g];
+
+let title = group.items[i];
+
+let modal =
+document.getElementById("missionModal");
+
+
+if(!modal){
+alert("Modal non trovato");
+return;
+}
+
+
+document.getElementById("modalTitle").innerText =
+title;
+
+
+document.getElementById("modalInfo").innerText =
+"Saga: "+group.saga+
+"\nTipo: "+group.type;
+
+
+modal.style.display="flex";
+
+
+}
+
+
+function closeMission(){
+
+let modal =
+document.getElementById("missionModal");
+
+if(modal){
+
+modal.style.display="none";
+
+}
 
 }
 render();
