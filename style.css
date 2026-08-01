@@ -466,3 +466,22 @@ border-color:#ffd700;
 box-shadow:0 0 20px #ffd700;
 
 }
+.badge.unlocked{
+
+border-color:#ffd700;
+
+box-shadow:
+0 0 20px #ffd700;
+
+color:#ffd700;
+
+}
+
+
+.badge.locked{
+
+opacity:0.4;
+
+filter:grayscale(1);
+
+}
