@@ -1,103 +1,143 @@
-* {
+*{
 box-sizing:border-box;
 }
 
-body {
+body{
+
 margin:0;
+
 min-height:100vh;
+
 background:
-radial-gradient(circle at top,#222,#000 70%);
+radial-gradient(circle at top,#202020,#000 70%);
+
 color:white;
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+
+font-family:
+-apple-system,
+BlinkMacSystemFont,
+"Segoe UI",
+sans-serif;
+
 }
+
 
 
 /* BOOT */
 
-#boot {
+#boot{
+
 position:fixed;
+
 inset:0;
+
 background:#000;
+
 z-index:999;
+
 display:flex;
+
 flex-direction:column;
-justify-content:center;
+
 align-items:center;
+
+justify-content:center;
+
 animation:boot 4s forwards;
+
 }
 
-#boot h1 {
+
+#boot h1{
+
 color:#ffd700;
+
 letter-spacing:5px;
+
 }
 
-#boot p {
+
+#boot p{
+
 color:#00c8ff;
+
 letter-spacing:3px;
+
 }
+
 
 
 .reactor,
-.mini-reactor {
+.mini-reactor{
 
 border-radius:50%;
 
 background:
+
 radial-gradient(circle,
-white 5%,
-#00d9ff 25%,
-#0066aa 55%,
-#001020 80%);
+white,
+#00d9ff,
+#003366);
 
 box-shadow:
+
 0 0 30px #00d9ff,
-0 0 90px #0066ff;
+
+0 0 80px #0066ff;
 
 }
 
 
-.reactor {
+
+.reactor{
 
 width:150px;
+
 height:150px;
+
 animation:pulse 1s infinite alternate;
 
 }
 
 
-.mini-reactor {
+
+.mini-reactor{
 
 width:70px;
+
 height:70px;
+
 margin:auto;
 
 }
 
 
-@keyframes pulse {
 
-from {
+@keyframes pulse{
+
+from{
 transform:scale(1);
 }
 
-to {
+to{
 transform:scale(1.15);
 }
 
 }
 
 
-@keyframes boot {
 
-0% {
+@keyframes boot{
+
+0%{
 opacity:1;
 }
 
-80% {
+80%{
 opacity:1;
 }
 
-100% {
+100%{
 opacity:0;
 visibility:hidden;
 }
@@ -105,85 +145,97 @@ visibility:hidden;
 }
 
 
+
 /* HEADER */
 
-header {
+
+header{
 
 text-align:center;
+
 padding:25px;
 
 }
 
 
-header h1 {
+header h1{
 
 font-size:55px;
+
 margin:10px;
 
 color:#ffd700;
 
 text-shadow:
+
 0 0 20px red;
 
 }
 
 
-header p {
+header p{
 
 color:#aaa;
+
 letter-spacing:4px;
 
 }
 
 
-/* NAV */
 
-.tabs {
+/* MENU */
+
+
+nav{
 
 display:flex;
-gap:8px;
+
+gap:10px;
+
 padding:10px;
 
 }
 
 
-.tab {
+
+nav button{
 
 flex:1;
-padding:12px 5px;
-
-border-radius:15px;
-
-border:1px solid #444;
 
 background:#111;
 
+border:1px solid #444;
+
 color:white;
 
-font-size:12px;
+border-radius:15px;
+
+padding:12px;
+
+font-size:18px;
 
 }
 
 
-.tab.active {
-
-background:#990000;
+nav button:hover{
 
 border-color:#ffd700;
 
 }
 
 
+
 /* PAGINE */
 
-.page {
+
+.page{
 
 display:none;
 
 }
 
 
-.page.active {
+.page.active{
 
 display:block;
 
@@ -191,9 +243,10 @@ display:block;
 
 
 
-/* CARD */
+/* CARDS */
 
-.card {
+
+.card{
 
 margin:15px;
 
@@ -215,27 +268,36 @@ backdrop-filter:blur(10px);
 
 
 
+h2{
+
+color:#ffd700;
+
+}
+
+
+
 /* STATUS */
 
-#rank {
 
-font-size:22px;
+#rank{
 
 color:#00d9ff;
 
-margin-bottom:15px;
+font-size:24px;
 
 }
 
 
-#counter {
 
-font-size:18px;
+#counter{
+
+font-size:20px;
 
 }
 
 
-.progress {
+
+.progress{
 
 height:22px;
 
@@ -245,12 +307,13 @@ border-radius:20px;
 
 overflow:hidden;
 
-margin-top:15px;
+margin:15px 0;
 
 }
 
 
-#bar {
+
+#bar{
 
 height:100%;
 
@@ -265,13 +328,14 @@ transition:.5s;
 }
 
 
-#percent {
+
+#percent{
 
 text-align:center;
 
-color:#ffd700;
+font-size:35px;
 
-font-size:30px;
+color:#ffd700;
 
 }
 
@@ -279,19 +343,18 @@ font-size:30px;
 
 /* INPUT */
 
-input {
+
+input{
 
 width:100%;
 
 padding:15px;
 
-margin-bottom:12px;
-
 border-radius:15px;
 
-border:none;
+border:1px solid #555;
 
-background:#111;
+background:#080808;
 
 color:white;
 
@@ -303,23 +366,20 @@ font-size:16px;
 
 /* BUTTON */
 
-button {
 
-width:100%;
-
-padding:15px;
-
-border-radius:15px;
-
-border:none;
+button{
 
 background:#990000;
 
 color:white;
 
-font-weight:bold;
+border:none;
 
-font-size:16px;
+border-radius:15px;
+
+padding:15px;
+
+font-weight:bold;
 
 }
 
@@ -327,24 +387,16 @@ font-size:16px;
 
 /* MISSIONI */
 
-.saga-title {
 
-color:#ffd700;
-
-margin:20px 10px 10px;
-
-}
-
-
-.mission {
+.mission{
 
 display:flex;
 
 align-items:center;
 
-gap:15px;
+gap:12px;
 
-margin:8px 15px;
+margin:10px 15px;
 
 padding:15px;
 
@@ -357,25 +409,26 @@ border:1px solid #333;
 }
 
 
-.mission input {
+
+.mission span{
+
+flex:1;
+
+}
+
+
+
+.mission input{
 
 width:22px;
 
 height:22px;
 
-margin:0;
-
 }
 
 
-.favorite {
 
-color:#ffd700;
-
-}
-
-
-.done {
+.done{
 
 text-decoration:line-through;
 
@@ -385,17 +438,18 @@ color:#777;
 
 
 
-/* BADGES */
+/* BADGE */
 
-.badge {
+
+.badge{
 
 margin:15px;
 
 padding:20px;
 
-border-radius:20px;
-
 background:#111;
+
+border-radius:20px;
 
 border:1px solid #444;
 
@@ -404,7 +458,8 @@ font-size:18px;
 }
 
 
-.unlocked {
+
+.badge:hover{
 
 border-color:#ffd700;
 
