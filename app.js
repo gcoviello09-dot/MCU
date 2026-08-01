@@ -166,8 +166,12 @@ ${done?"checked":""}
 onclick="toggle('${id}')">
 
 
-<span class="${done?"done":""}">
+<span 
+class="${done?"done":""}"
+onclick="openCard(${g},${i})">
+
 ${item}
+
 </span>
 
 
@@ -624,5 +628,64 @@ render
 );
 
 
+function openCard(g,i){
 
+let group = missions[g];
+
+let title = group.items[i];
+
+
+let card =
+document.getElementById("missionCard");
+
+
+if(!card)return;
+
+
+
+document.getElementById("cardTitle").innerText =
+title;
+
+
+document.getElementById("cardSaga").innerText =
+"🧬 Saga: "+group.saga;
+
+
+document.getElementById("cardType").innerText =
+"🎬 Tipo: "+group.type;
+
+
+
+let status =
+localStorage.getItem(g+"-"+i)==="true"
+?
+"✅ Missione completata"
+:
+"⏳ Missione da completare";
+
+
+
+document.getElementById("cardStatus").innerText =
+status;
+
+
+
+card.style.display="flex";
+
+
+}
+
+
+
+function closeCard(){
+
+let card =
+document.getElementById("missionCard");
+
+
+if(card)
+card.style.display="none";
+
+
+}
 render();
