@@ -34,7 +34,7 @@ items:[
 
 {
 saga:"Multiverse Saga",
-type:"Serie/Film",
+type:"Serie",
 items:[
 "Loki",
 "What If...?",
@@ -42,7 +42,7 @@ items:[
 "Shang-Chi",
 "The Falcon and the Winter Soldier",
 "Eternals",
-"Doctor Strange Multiverse of Madness",
+"Doctor Strange in the Multiverse of Madness",
 "Hawkeye",
 "Moon Knight",
 "I Am Groot",
@@ -71,7 +71,7 @@ items:[
 
 {
 saga:"Coming Soon",
-type:"Future",
+type:"Futuro",
 items:[
 "Wonder Man",
 "Vision Quest"
@@ -109,11 +109,11 @@ JSON.stringify(favorites)
 
 
 
-
 function render(){
 
 
 let list=document.getElementById("missionsList");
+
 
 if(list){
 
@@ -148,23 +148,22 @@ return;
 let id=g+"-"+i;
 
 
-let done=
+let done =
 localStorage.getItem(id)==="true";
 
 
-let fav=
+let favourite =
 favorites.includes(id);
 
 
 
 let div=document.createElement("div");
 
+
 div.className="mission";
 
 
-div.innerHTML=
-
-`
+div.innerHTML=`
 
 <input type="checkbox"
 ${done?"checked":""}
@@ -177,25 +176,22 @@ ${item}
 
 
 <button onclick="fav('${id}')">
-
-${fav?"⭐":"☆"}
-
+${favourite?"⭐":"☆"}
 </button>
 
 `;
 
+
 list.appendChild(div);
 
 
-
 });
+
 
 });
 
 
 }
-
-
 
 
 updateStats();
@@ -206,17 +202,17 @@ renderBadges();
 
 
 }
-
-
-
-
-
 function toggle(id){
+
+let value =
+localStorage.getItem(id)==="true";
+
 
 localStorage.setItem(
 id,
-!(localStorage.getItem(id)==="true")
+!value
 );
+
 
 render();
 
@@ -224,20 +220,21 @@ render();
 
 
 
-
-
 function fav(id){
 
+
 if(favorites.includes(id)){
+
 
 favorites =
 favorites.filter(x=>x!==id);
 
-}
 
-else{
+}else{
+
 
 favorites.push(id);
+
 
 }
 
@@ -253,7 +250,10 @@ render();
 
 function renderFavorites(){
 
-let box=document.getElementById("favoritesList");
+
+let box =
+document.getElementById("favoritesList");
+
 
 if(!box)return;
 
@@ -266,13 +266,18 @@ favorites.forEach(id=>{
 
 let parts=id.split("-");
 
-let name=
-missions[parts[0]].items[parts[1]];
+
+let name =
+missions[parts[0]]
+.items[parts[1]];
 
 
-let p=document.createElement("p");
+let p =
+document.createElement("p");
 
-p.innerText="⭐ "+name;
+
+p.innerText =
+"⭐ "+name;
 
 
 box.appendChild(p);
@@ -289,56 +294,66 @@ box.appendChild(p);
 
 function updateStats(){
 
-let total = 0;
-let completed = 0;
 
-let filmTotal = 0;
-let serieTotal = 0;
-
-let filmDone = 0;
-let serieDone = 0;
+let total=0;
+let completed=0;
 
 
-missions.forEach((group)=>{
+let filmTotal=0;
+let serieTotal=0;
 
 
-group.items.forEach((item,index)=>{
+let filmDone=0;
+let serieDone=0;
+
+
+
+missions.forEach((group,g)=>{
+
+
+group.items.forEach((item,i)=>{
 
 
 total++;
 
 
-let isDone =
+let done =
 localStorage.getItem(
-missions.indexOf(group)+"-"+index
+g+"-"+i
 )==="true";
 
 
-if(isDone){
+
+if(done){
+
 completed++;
+
 }
 
 
 
-if(group.type === "Film"){
+if(group.type==="Film"){
+
 
 filmTotal++;
 
-if(isDone){
+
+if(done)
 filmDone++;
-}
 
-}
 
-else{
+}else{
+
 
 serieTotal++;
 
-if(isDone){
+
+if(done)
 serieDone++;
-}
+
 
 }
+
 
 
 });
@@ -349,34 +364,45 @@ serieDone++;
 
 
 let percent =
-Math.round((completed/total)*100)
+Math.round(
+(completed/total)*100
+)
 ||0;
 
 
 
-let bar=document.getElementById("bar");
+let bar =
+document.getElementById("bar");
+
 
 if(bar)
-bar.style.width=percent+"%";
+bar.style.width =
+percent+"%";
 
 
 
-let p=document.getElementById("percent");
-
-if(p)
-p.innerText=percent+"%";
+let percentBox =
+document.getElementById("percent");
 
 
+if(percentBox)
+percentBox.innerText =
+percent+"%";
 
-let counter=document.getElementById("counter");
+
+
+let counter =
+document.getElementById("counter");
+
 
 if(counter)
-counter.innerText=
+counter.innerText =
 completed+" / "+total;
 
 
 
-let rank="RECRUIT";
+let rank =
+"RECRUIT";
 
 
 if(percent>=25)
@@ -391,22 +417,27 @@ if(percent>=75)
 rank="GUARDIAN";
 
 
-if(percent==100)
+if(percent===100)
 rank="MASTER OF MCU";
 
 
 
-let r=document.getElementById("rank");
-
-if(r)
-r.innerText=rank;
+let rankBox =
+document.getElementById("rank");
 
 
+if(rankBox)
+rankBox.innerText =
+rank;
 
-let movies=document.getElementById("movies");
+
+
+let movies =
+document.getElementById("movies");
+
 
 if(movies)
-movies.innerText=
+movies.innerText =
 "🎬 Film completati: "
 +filmDone+
 " / "
@@ -414,10 +445,12 @@ movies.innerText=
 
 
 
-let series=document.getElementById("series");
+let series =
+document.getElementById("series");
+
 
 if(series)
-series.innerText=
+series.innerText =
 "📺 Serie completate: "
 +serieDone+
 " / "
@@ -425,123 +458,14 @@ series.innerText=
 
 
 
-let completion=document.getElementById("completion");
+let completion =
+document.getElementById("completion");
+
 
 if(completion)
-completion.innerText=
+completion.innerText =
 "⚡ Universo completato: "
 +percent+"%";
-
-}
-
-
-let movieBox = document.getElementById("movies");
-
-if(movieBox){
-    movieBox.innerText =
-    "Film: " + movieCount;
-}
-
-
-let seriesBox = document.getElementById("series");
-
-if(seriesBox){
-    seriesBox.innerText =
-    "Serie: " + seriesCount;
-}
-let total=0;
-let done=0;
-
-
-missions.forEach((g)=>{
-
-g.items.forEach((m)=>{
-
-total++;
-
-let index=missions
-.flatMap(x=>x.items)
-.indexOf(m);
-
-
-});
-
-});
-
-
-
-let keys=
-Object.keys(localStorage);
-
-
-keys.forEach(k=>{
-
-if(k.includes("-") &&
-localStorage.getItem(k)==="true")
-done++;
-
-});
-
-
-
-let percent=
-Math.round(done/total*100)
-||0;
-
-
-
-let bar=document.getElementById("bar");
-
-if(bar)
-bar.style.width=percent+"%";
-
-
-let p=document.getElementById("percent");
-
-if(p)
-p.innerText=percent+"%";
-
-
-
-let counter=document.getElementById("counter");
-
-if(counter)
-counter.innerText=
-done+" / "+total;
-
-
-
-let rank="RECRUIT";
-
-
-if(percent>=25)
-rank="AVENGER";
-
-
-if(percent>=50)
-rank="SUPER HERO";
-
-
-if(percent>=75)
-rank="GUARDIAN";
-
-
-if(percent==100)
-rank="MASTER OF MCU";
-
-
-let r=document.getElementById("rank");
-
-if(r)
-r.innerText=rank;
-
-
-
-let c=document.getElementById("completion");
-
-if(c)
-c.innerText=
-"Completamento: "+percent+"%";
 
 
 }
@@ -551,71 +475,107 @@ c.innerText=
 
 function addMission(){
 
-let name=
-prompt("Nuova missione");
+
+let name =
+prompt("Nuova missione MCU");
 
 
 if(name){
 
-missions[0].items.push(name);
+
+missions[0]
+.items
+.push(name);
+
 
 save();
 
 render();
 
-}
 
 }
+
+
+}
+
 
 
 
 
 function randomMission(){
 
+
 let all=[];
 
 
-missions.forEach(g=>{
+missions.forEach(group=>{
 
-g.items.forEach(i=>all.push(i));
+
+group.items.forEach(item=>{
+
+
+all.push(item);
+
 
 });
 
 
-let pick=
-all[Math.floor(Math.random()*all.length)];
+});
 
 
-document.getElementById("suggestion")
-.innerText=
+
+let pick =
+all[
+Math.floor(
+Math.random()*all.length
+)
+];
+
+
+
+let box =
+document.getElementById("suggestion");
+
+
+if(box)
+
+box.innerText =
 "JARVIS consiglia: "+pick;
+
 
 }
 
 
 
 
+
 function renderBadges(){
 
-let box=document.getElementById("badgesList");
+
+let box =
+document.getElementById("badgesList");
+
 
 if(!box)return;
 
 
-box.innerHTML=
 
-`
+box.innerHTML = `
+
 <div class="badge">
 🏆 First Mission
 </div>
+
 
 <div class="badge">
 💎 Infinity Survivor
 </div>
 
+
 <div class="badge">
 🌌 Multiverse Explorer
 </div>
+
 `;
 
 }
@@ -623,19 +583,27 @@ box.innerHTML=
 
 
 
-document.querySelectorAll("nav button")
-.forEach(btn=>{
+
+document
+.querySelectorAll("nav button")
+.forEach(button=>{
 
 
-btn.onclick=function(){
-
-
-document.querySelectorAll(".page")
-.forEach(p=>p.classList.remove("active"));
+button.onclick=function(){
 
 
 document
-.getElementById(btn.dataset.page)
+.querySelectorAll(".page")
+.forEach(page=>{
+
+page.classList.remove("active");
+
+});
+
+
+
+document
+.getElementById(button.dataset.page)
 .classList.add("active");
 
 
@@ -647,12 +615,14 @@ document
 
 
 
+
 document
 .getElementById("search")
 ?.addEventListener(
 "input",
 render
 );
+
 
 
 
