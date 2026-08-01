@@ -10,7 +10,7 @@ margin:0;
 min-height:100vh;
 
 background:
-radial-gradient(circle at top,#001522,#000 60%);
+radial-gradient(circle at top,#00263d 0%,#000 45%);
 
 color:white;
 
@@ -20,13 +20,15 @@ BlinkMacSystemFont,
 "Segoe UI",
 sans-serif;
 
+overflow-x:hidden;
+
 }
 
 
 
-/* =================
-BOOT JARVIS
-================= */
+/* =========================
+JARVIS BOOT SCREEN
+========================= */
 
 
 #boot{
@@ -35,9 +37,11 @@ position:fixed;
 
 inset:0;
 
-background:#000;
+background:
 
-z-index:999;
+radial-gradient(circle,#001522,#000 70%);
+
+z-index:9999;
 
 display:flex;
 
@@ -57,23 +61,27 @@ animation:boot 4s forwards;
 
 text-align:center;
 
+animation:panelGlow 2s infinite alternate;
+
 }
 
 
 
 #boot h1{
 
-font-size:38px;
+font-size:42px;
 
-letter-spacing:8px;
+letter-spacing:10px;
+
+margin-top:35px;
 
 color:#ffe600;
 
 text-shadow:
 
-0 0 10px #ffe600,
+0 0 15px #ffe600,
 
-0 0 30px #ffe600;
+0 0 40px #ffe600;
 
 }
 
@@ -83,7 +91,13 @@ text-shadow:
 
 color:#00c8ff;
 
-letter-spacing:5px;
+letter-spacing:6px;
+
+font-size:18px;
+
+text-shadow:
+
+0 0 15px #00c8ff;
 
 }
 
@@ -91,9 +105,9 @@ letter-spacing:5px;
 
 .boot-status{
 
-font-size:14px;
+font-size:13px!important;
 
-margin-top:20px;
+opacity:.8;
 
 }
 
@@ -101,15 +115,17 @@ margin-top:20px;
 
 .boot-line{
 
-width:220px;
+width:260px;
 
-height:3px;
+height:4px;
 
 background:#111;
 
-margin:20px auto;
+border-radius:10px;
 
 overflow:hidden;
+
+margin:25px auto;
 
 }
 
@@ -127,7 +143,11 @@ width:50%;
 
 background:#00c8ff;
 
-animation:loading 2s infinite;
+box-shadow:
+
+0 0 20px #00c8ff;
+
+animation:loading 1.8s infinite;
 
 }
 
@@ -135,20 +155,20 @@ animation:loading 2s infinite;
 
 @keyframes loading{
 
-from{
+0%{
 
-transform:translateX(-100%);
+transform:translateX(-150%);
 
 }
 
-to{
+
+100%{
 
 transform:translateX(300%);
 
 }
 
 }
-
 
 
 
@@ -160,16 +180,23 @@ border-radius:50%;
 background:
 
 radial-gradient(circle,
-white,
-#00c8ff,
-#003366);
+
+white 0%,
+
+#00c8ff 20%,
+
+#0066ff 45%,
+
+#00152b 75%);
 
 
 box-shadow:
 
 0 0 30px #00c8ff,
 
-0 0 80px #0066ff;
+0 0 70px #0066ff,
+
+inset 0 0 25px white;
 
 }
 
@@ -177,11 +204,13 @@ box-shadow:
 
 .reactor{
 
-width:150px;
+width:170px;
 
-height:150px;
+height:170px;
 
-animation:pulse 1s infinite alternate;
+animation:
+
+pulse 1.5s infinite alternate;
 
 }
 
@@ -189,14 +218,13 @@ animation:pulse 1s infinite alternate;
 
 .mini-reactor{
 
-width:70px;
+width:65px;
 
-height:70px;
+height:65px;
 
 margin:auto;
 
 }
-
 
 
 
@@ -219,16 +247,28 @@ transform:scale(1.12);
 
 
 
-@keyframes boot{
+@keyframes panelGlow{
 
-0%{
+from{
+
+opacity:.8;
+
+}
+
+
+to{
 
 opacity:1;
 
 }
 
+}
 
-80%{
+
+
+@keyframes boot{
+
+0%,80%{
 
 opacity:1;
 
@@ -244,20 +284,16 @@ visibility:hidden;
 }
 
 }
-
-
-
-
-/* =================
-HEADER
-================= */
+/* =========================
+HEADER MCU HUD
+========================= */
 
 
 header{
 
 text-align:center;
 
-padding:25px;
+padding:25px 20px;
 
 }
 
@@ -265,15 +301,19 @@ padding:25px;
 
 header h1{
 
-font-size:60px;
+font-size:65px;
 
-margin:10px;
+margin:15px 0 5px;
+
+letter-spacing:8px;
 
 color:#ffe600;
 
 text-shadow:
 
-0 0 20px #ffe600;
+0 0 15px #ffe600,
+
+0 0 35px #ffe600;
 
 }
 
@@ -281,26 +321,53 @@ text-shadow:
 
 header p{
 
+margin:0;
+
 color:#00c8ff;
 
-letter-spacing:5px;
+letter-spacing:6px;
+
+font-size:14px;
 
 }
 
 
 
+header::after{
+
+content:"";
+
+display:block;
+
+height:1px;
+
+margin-top:25px;
+
+background:
+
+linear-gradient(
+90deg,
+transparent,
+#00c8ff,
+transparent
+);
+
+}
 
 
-/* MENU */
+
+/* =========================
+MENU JARVIS
+========================= */
 
 
 nav{
 
 display:flex;
 
-gap:10px;
+gap:12px;
 
-padding:10px;
+padding:15px;
 
 }
 
@@ -310,19 +377,31 @@ nav button{
 
 flex:1;
 
-background:#050505;
+height:55px;
 
-border:1px solid #00c8ff;
+background:
+
+linear-gradient(
+145deg,
+#050505,
+#111
+);
+
+border:
+
+1px solid #00c8ff;
 
 color:white;
 
-border-radius:15px;
+border-radius:18px;
 
-padding:12px;
-
-font-size:18px;
+font-size:22px;
 
 transition:.3s;
+
+box-shadow:
+
+0 0 10px rgba(0,200,255,.3);
 
 }
 
@@ -332,23 +411,32 @@ nav button:hover{
 
 border-color:#ffe600;
 
+color:#ffe600;
+
 box-shadow:
 
-0 0 20px #ffe600;
+0 0 25px #ffe600;
 
-transform:translateY(-3px);
+transform:
+
+translateY(-4px);
 
 }
 
 
 
 
-/* PAGINE */
+
+/* =========================
+PAGINE
+========================= */
 
 
 .page{
 
 display:none;
+
+animation:pageOpen .4s ease;
 
 }
 
@@ -362,18 +450,49 @@ display:block;
 
 
 
-/* CARDS */
+@keyframes pageOpen{
+
+from{
+
+opacity:0;
+
+transform:translateY(10px);
+
+}
+
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+
+
+
+
+/* =========================
+CARDS JARVIS
+========================= */
 
 
 .card{
 
-margin:15px;
+margin:18px;
 
-padding:20px;
+padding:25px;
 
 background:
 
-rgba(0,0,0,.75);
+linear-gradient(
+145deg,
+rgba(5,5,5,.95),
+rgba(0,20,35,.8)
+);
 
 
 border:
@@ -381,12 +500,25 @@ border:
 1px solid #00c8ff;
 
 
-border-radius:20px;
+border-radius:25px;
 
 
 box-shadow:
 
-0 0 25px rgba(0,200,255,.25);
+0 0 25px rgba(0,200,255,.25),
+
+inset 0 0 20px rgba(0,200,255,.08);
+
+
+}
+
+
+
+.card:hover{
+
+box-shadow:
+
+0 0 35px rgba(0,200,255,.5);
 
 }
 
@@ -396,39 +528,38 @@ h2{
 
 color:#ffe600;
 
+text-align:center;
+
+letter-spacing:2px;
+
 text-shadow:
 
-0 0 10px #ffe600;
+0 0 15px #ffe600;
 
 }
-/* =================
-STATUS JARVIS
-================= */
+
+
+
+
+
+/* =========================
+STATUS SYSTEM
+========================= */
 
 
 #rank{
 
 color:#00c8ff;
 
-font-size:30px;
+font-size:32px;
 
 text-align:center;
+
+letter-spacing:4px;
 
 text-shadow:
 
-0 0 15px #00c8ff;
-
-}
-
-
-
-#counter{
-
-font-size:22px;
-
-text-align:center;
-
-color:white;
+0 0 20px #00c8ff;
 
 }
 
@@ -438,11 +569,23 @@ color:white;
 
 text-align:center;
 
+font-size:12px;
+
+letter-spacing:5px;
+
 color:#00c8ff;
 
-letter-spacing:3px;
+}
 
-font-size:13px;
+
+
+#counter{
+
+text-align:center;
+
+font-size:26px;
+
+margin:10px;
 
 }
 
@@ -450,15 +593,13 @@ font-size:13px;
 
 .progress{
 
-height:25px;
+height:28px;
 
-background:#111;
+background:#080808;
 
 border-radius:20px;
 
 overflow:hidden;
-
-margin:20px 0;
 
 border:
 
@@ -472,9 +613,6 @@ border:
 
 height:100%;
 
-width:0%;
-
-
 background:
 
 linear-gradient(
@@ -486,10 +624,9 @@ linear-gradient(
 
 box-shadow:
 
-0 0 20px #00c8ff;
+0 0 25px #00c8ff;
 
-
-transition:.5s;
+transition:.6s;
 
 }
 
@@ -497,13 +634,47 @@ transition:.5s;
 
 #percent{
 
+font-size:45px;
+
 text-align:center;
 
-font-size:40px;
+margin:15px;
 
-color:#ffe600;
+}
+/* =========================
+INPUT E BUTTON
+========================= */
 
-text-shadow:
+
+input{
+
+width:100%;
+
+padding:16px;
+
+background:#000;
+
+color:white;
+
+border:
+
+1px solid #00c8ff;
+
+border-radius:18px;
+
+font-size:16px;
+
+outline:none;
+
+}
+
+
+
+input:focus{
+
+border-color:#ffe600;
+
+box-shadow:
 
 0 0 20px #ffe600;
 
@@ -512,38 +683,16 @@ text-shadow:
 
 
 
-/* INPUT */
-
-
-input{
-
-width:100%;
-
-padding:15px;
-
-border-radius:15px;
-
-border:
-
-1px solid #00c8ff;
-
-background:#000;
-
-color:white;
-
-font-size:16px;
-
-}
-
-
-
-
-/* BUTTON */
-
 
 button{
 
-background:#050505;
+background:
+
+linear-gradient(
+145deg,
+#050505,
+#111
+);
 
 color:#00c8ff;
 
@@ -551,12 +700,13 @@ border:
 
 1px solid #00c8ff;
 
-
-border-radius:15px;
+border-radius:18px;
 
 padding:15px;
 
 font-weight:bold;
+
+cursor:pointer;
 
 transition:.3s;
 
@@ -572,14 +722,27 @@ color:#000;
 
 box-shadow:
 
-0 0 20px #00c8ff;
+0 0 25px #00c8ff;
 
 }
 
 
 
 
-/* MISSIONI */
+
+/* =========================
+MISSIONI
+========================= */
+
+
+#missionsList h2{
+
+margin-top:30px;
+
+font-size:24px;
+
+}
+
 
 
 .mission{
@@ -590,17 +753,27 @@ align-items:center;
 
 gap:12px;
 
-margin:10px 15px;
+margin:12px 15px;
 
-padding:15px;
+padding:18px;
 
-background:#050505;
 
-border-radius:15px;
+background:
+
+linear-gradient(
+90deg,
+#050505,
+#001522
+);
+
 
 border:
 
 1px solid #003b55;
+
+
+border-radius:18px;
+
 
 transition:.3s;
 
@@ -614,7 +787,11 @@ border-color:#00c8ff;
 
 box-shadow:
 
-0 0 15px rgba(0,200,255,.5);
+0 0 20px rgba(0,200,255,.5);
+
+transform:
+
+translateX(4px);
 
 }
 
@@ -623,6 +800,8 @@ box-shadow:
 .mission span{
 
 flex:1;
+
+font-size:16px;
 
 }
 
@@ -633,6 +812,8 @@ flex:1;
 width:22px;
 
 height:22px;
+
+accent-color:#ffe600;
 
 }
 
@@ -649,26 +830,37 @@ color:#ffe600;
 
 
 
-/* BADGE */
+
+/* =========================
+BADGE
+========================= */
 
 
 .badge{
 
 margin:15px;
 
-padding:20px;
+padding:22px;
 
-background:#050505;
+background:
 
-border-radius:20px;
+linear-gradient(
+145deg,
+#050505,
+#001522
+);
+
 
 border:
 
 1px solid #003b55;
 
-font-size:18px;
+
+border-radius:22px;
 
 text-align:center;
+
+font-size:18px;
 
 transition:.4s;
 
@@ -684,10 +876,12 @@ color:#ffe600;
 
 box-shadow:
 
-0 0 25px #ffe600;
+0 0 30px #ffe600;
 
 
-animation:badgeGlow 2s infinite alternate;
+animation:
+
+badgePulse 2s infinite alternate;
 
 }
 
@@ -701,7 +895,7 @@ opacity:.35;
 
 
 
-@keyframes badgeGlow{
+@keyframes badgePulse{
 
 from{
 
@@ -716,7 +910,7 @@ to{
 
 box-shadow:
 
-0 0 30px #ffe600;
+0 0 35px #ffe600;
 
 }
 
@@ -725,7 +919,10 @@ box-shadow:
 
 
 
-/* MISSION CARD */
+
+/* =========================
+MISSION DETAIL CARD
+========================= */
 
 
 .modal{
@@ -734,27 +931,24 @@ display:none;
 
 position:fixed;
 
-top:0;
-
-left:0;
-
-width:100%;
-
-height:100%;
-
+inset:0;
 
 background:
 
-rgba(0,0,0,.9);
+rgba(0,0,0,.85);
 
 
-z-index:9999;
+backdrop-filter:
+
+blur(10px);
+
+
+z-index:99999;
+
 
 align-items:center;
 
 justify-content:center;
-
-backdrop-filter:blur(8px);
 
 }
 
@@ -764,10 +958,16 @@ backdrop-filter:blur(8px);
 
 width:85%;
 
-max-width:400px;
+max-width:420px;
 
 
-background:#050505;
+background:
+
+linear-gradient(
+145deg,
+#050505,
+#001522
+);
 
 
 border:
@@ -775,10 +975,10 @@ border:
 2px solid #00c8ff;
 
 
-border-radius:20px;
+border-radius:25px;
 
 
-padding:25px;
+padding:30px;
 
 
 text-align:center;
@@ -786,12 +986,14 @@ text-align:center;
 
 box-shadow:
 
-0 0 25px #00c8ff,
+0 0 35px #00c8ff,
 
-0 0 40px #ffe600;
+0 0 60px #ffe600;
 
 
-animation:starkOpen .3s ease;
+animation:
+
+starkOpen .35s ease;
 
 }
 
@@ -799,9 +1001,9 @@ animation:starkOpen .3s ease;
 
 .modal-box h2{
 
-font-size:28px;
-
 color:#00c8ff;
+
+font-size:30px;
 
 }
 
@@ -811,15 +1013,13 @@ color:#00c8ff;
 
 font-size:18px;
 
-color:white;
-
 }
 
 
 
 .modal-box button{
 
-margin-top:15px;
+float:right;
 
 }
 
@@ -828,7 +1028,6 @@ margin-top:15px;
 
 
 @keyframes starkOpen{
-
 
 from{
 
@@ -846,5 +1045,44 @@ transform:scale(1);
 opacity:1;
 
 }
+
+}
+
+
+
+
+
+/* =========================
+MOBILE FIX
+========================= */
+
+
+@media(max-width:600px){
+
+
+header h1{
+
+font-size:50px;
+
+}
+
+
+#boot h1{
+
+font-size:30px;
+
+letter-spacing:5px;
+
+}
+
+
+.card{
+
+margin:12px;
+
+padding:20px;
+
+}
+
 
 }
