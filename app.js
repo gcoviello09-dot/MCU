@@ -42,7 +42,7 @@ items:[
 "Shang-Chi",
 "The Falcon and the Winter Soldier",
 "Eternals",
-"Doctor Strange in the Multiverse of Madness",
+"Doctor Strange Multiverse of Madness",
 "Hawkeye",
 "Moon Knight",
 "I Am Groot",
@@ -81,7 +81,6 @@ items:[
 ];
 
 
-
 let missions =
 JSON.parse(localStorage.getItem("missions"))
 || defaultMissions;
@@ -111,8 +110,8 @@ JSON.stringify(favorites)
 
 function render(){
 
-
-let list=document.getElementById("missionsList");
+let list =
+document.getElementById("missionsList");
 
 
 if(list){
@@ -128,9 +127,13 @@ document.getElementById("search")?.value.toLowerCase()
 missions.forEach((group,g)=>{
 
 
-let title=document.createElement("h2");
+let title =
+document.createElement("h2");
 
-title.innerText=group.saga;
+
+title.innerText =
+group.saga;
+
 
 list.appendChild(title);
 
@@ -139,55 +142,40 @@ list.appendChild(title);
 group.items.forEach((item,i)=>{
 
 
-if(search &&
-!item.toLowerCase().includes(search))
+if(
+search &&
+!item.toLowerCase().includes(search)
+)
 return;
 
 
 
-let id=g+"-"+i;
+let id =
+g+"-"+i;
+
 
 
 let done =
 localStorage.getItem(id)==="true";
 
 
-let favourite =
+
+let star =
 favorites.includes(id);
 
 
 
-let div=document.createElement("div");
-
+let div =
+document.createElement("div");
 
 div.className="mission";
-div.addEventListener("click", function(e){
 
-if(
-e.target.tagName !== "INPUT" &&
-e.target.tagName !== "BUTTON"
-){
 
-openMission(g,i);
-
-}
-
-});
-div.onclick=function(e){
-
-if(e.target.tagName !== "INPUT" && e.target.tagName !== "BUTTON"){
-
-openMission(g,i);
-
-}
-
-};
 
 div.innerHTML=`
 
 <input type="checkbox"
-${done?"checked":""}
-onclick="toggle('${id}')">
+${done?"checked":""}>
 
 
 <span class="${done?"done":""}">
@@ -195,11 +183,42 @@ ${item}
 </span>
 
 
-<button onclick="fav('${id}')">
-${favourite?"⭐":"☆"}
+<button>
+${star?"⭐":"☆"}
 </button>
 
 `;
+
+
+
+div.querySelector("input")
+.onclick=function(e){
+
+e.stopPropagation();
+
+toggle(id);
+
+};
+
+
+
+div.querySelector("button")
+.onclick=function(e){
+
+e.stopPropagation();
+
+fav(id);
+
+};
+
+
+
+div.onclick=function(){
+
+openMission(g,i);
+
+};
+
 
 
 list.appendChild(div);
@@ -220,7 +239,6 @@ renderFavorites();
 
 renderBadges();
 
-
 }
 function toggle(id){
 
@@ -240,21 +258,19 @@ render();
 
 
 
+
 function fav(id){
 
-
 if(favorites.includes(id)){
-
 
 favorites =
 favorites.filter(x=>x!==id);
 
+}
 
-}else{
-
+else{
 
 favorites.push(id);
-
 
 }
 
@@ -268,8 +284,8 @@ render();
 
 
 
-function renderFavorites(){
 
+function renderFavorites(){
 
 let box =
 document.getElementById("favoritesList");
@@ -284,23 +300,23 @@ box.innerHTML="";
 favorites.forEach(id=>{
 
 
-let parts=id.split("-");
+let p =
+id.split("-");
 
 
 let name =
-missions[parts[0]]
-.items[parts[1]];
+missions[p[0]].items[p[1]];
 
 
-let p =
+let div =
 document.createElement("p");
 
 
-p.innerText =
+div.innerText =
 "⭐ "+name;
 
 
-box.appendChild(p);
+box.appendChild(div);
 
 
 });
@@ -311,17 +327,14 @@ box.appendChild(p);
 
 
 
-
 function updateStats(){
 
 
 let total=0;
 let completed=0;
 
-
 let filmTotal=0;
 let serieTotal=0;
-
 
 let filmDone=0;
 let serieDone=0;
@@ -338,42 +351,33 @@ total++;
 
 
 let done =
-localStorage.getItem(
-g+"-"+i
-)==="true";
+localStorage.getItem(g+"-"+i)
+==="true";
 
 
 
-if(done){
-
+if(done)
 completed++;
-
-}
 
 
 
 if(group.type==="Film"){
 
-
 filmTotal++;
-
 
 if(done)
 filmDone++;
 
+}
 
-}else{
-
+else{
 
 serieTotal++;
-
 
 if(done)
 serieDone++;
 
-
 }
-
 
 
 });
@@ -384,9 +388,7 @@ serieDone++;
 
 
 let percent =
-Math.round(
-(completed/total)*100
-)
+Math.round((completed/total)*100)
 ||0;
 
 
@@ -401,12 +403,12 @@ percent+"%";
 
 
 
-let percentBox =
+let p =
 document.getElementById("percent");
 
 
-if(percentBox)
-percentBox.innerText =
+if(p)
+p.innerText =
 percent+"%";
 
 
@@ -448,7 +450,7 @@ document.getElementById("rank");
 
 if(rankBox)
 rankBox.innerText =
-rank;
+"RANK: "+rank;
 
 
 
@@ -493,82 +495,6 @@ completion.innerText =
 
 
 
-function addMission(){
-
-
-let name =
-prompt("Nuova missione MCU");
-
-
-if(name){
-
-
-missions[0]
-.items
-.push(name);
-
-
-save();
-
-render();
-
-
-}
-
-
-}
-
-
-
-
-
-function randomMission(){
-
-
-let all=[];
-
-
-missions.forEach(group=>{
-
-
-group.items.forEach(item=>{
-
-
-all.push(item);
-
-
-});
-
-
-});
-
-
-
-let pick =
-all[
-Math.floor(
-Math.random()*all.length
-)
-];
-
-
-
-let box =
-document.getElementById("suggestion");
-
-
-if(box)
-
-box.innerText =
-"JARVIS consiglia: "+pick;
-
-
-}
-
-
-
-
-
 function renderBadges(){
 
 
@@ -579,24 +505,192 @@ document.getElementById("badgesList");
 if(!box)return;
 
 
-
-box.innerHTML = `
-
-<div class="badge">
-🏆 First Mission
-</div>
+let completed=0;
 
 
-<div class="badge">
-💎 Infinity Survivor
-</div>
+Object.keys(localStorage)
+.forEach(key=>{
+
+if(
+key.includes("-") &&
+localStorage.getItem(key)==="true"
+)
+completed++;
 
 
-<div class="badge">
-🌌 Multiverse Explorer
-</div>
+});
 
-`;
+
+
+box.innerHTML="";
+
+
+
+let badges=[
+
+[
+"🏆 First Mission",
+completed>=1
+],
+
+[
+"💎 Infinity Survivor",
+completed>=10
+],
+
+[
+"🌌 Multiverse Explorer",
+completed>=25
+],
+
+[
+"👑 Master of MCU",
+completed>=55
+]
+
+];
+
+
+
+badges.forEach(b=>{
+
+
+let div =
+document.createElement("div");
+
+
+div.className =
+"badge "+(b[1]?"unlocked":"");
+
+
+div.innerText =
+b[0]+
+(b[1]?" ✅":" 🔒");
+
+
+
+box.appendChild(div);
+
+
+});
+
+
+}
+
+
+
+
+function openMission(g,i){
+
+
+let modal =
+document.getElementById("missionModal");
+
+
+if(!modal)
+return;
+
+
+
+document.getElementById("modalTitle")
+.innerText =
+missions[g].items[i];
+
+
+
+document.getElementById("modalInfo")
+.innerText =
+
+"Saga: "
++missions[g].saga+
+"\nTipo: "
++missions[g].type+
+"\nStato: "
++
+(
+localStorage.getItem(g+"-"+i)==="true"
+?
+"✅ Completato"
+:
+"⏳ Da completare"
+);
+
+
+
+modal.style.display="flex";
+
+
+}
+
+
+
+
+function closeMission(){
+
+let modal =
+document.getElementById("missionModal");
+
+
+if(modal)
+modal.style.display="none";
+
+
+}
+
+
+
+
+
+function addMission(){
+
+let name =
+prompt("Nuova missione MCU");
+
+
+if(name){
+
+missions[0].items.push(name);
+
+save();
+
+render();
+
+}
+
+}
+
+
+
+
+
+function randomMission(){
+
+let all=[];
+
+
+missions.forEach(g=>{
+
+g.items.forEach(x=>{
+
+all.push(x);
+
+});
+
+});
+
+
+let pick =
+all[Math.floor(Math.random()*all.length)];
+
+
+let box =
+document.getElementById("suggestion");
+
+
+if(box)
+box.innerText =
+"JARVIS consiglia: "+pick;
+
 
 }
 
@@ -606,24 +700,19 @@ box.innerHTML = `
 
 document
 .querySelectorAll("nav button")
-.forEach(button=>{
+.forEach(btn=>{
 
 
-button.onclick=function(){
+btn.onclick=function(){
 
 
 document
 .querySelectorAll(".page")
-.forEach(page=>{
-
-page.classList.remove("active");
-
-});
-
+.forEach(p=>p.classList.remove("active"));
 
 
 document
-.getElementById(button.dataset.page)
+.getElementById(btn.dataset.page)
 .classList.add("active");
 
 
@@ -631,8 +720,6 @@ document
 
 
 });
-
-
 
 
 
@@ -645,86 +732,4 @@ render
 
 
 
-function openMission(g,i){
-
-let group = missions[g];
-
-let title = group.items[i];
-
-
-document.getElementById("modalTitle").innerText =
-title;
-
-
-document.getElementById("modalInfo").innerText =
-"Saga: "+group.saga+
-"\nTipo: "+group.type+
-"\nStato: "+
-(localStorage.getItem(g+"-"+i)==="true"
-?"✅ Completato"
-:"⏳ Da completare");
-
-
-
-let modal =
-document.getElementById("missionModal");
-
-
-modal.style.display="flex";
-
-
-}
-
-
-
-function closeMission(){
-
-document
-.getElementById("missionModal")
-.style.display="none";
-
-}
-function openMission(g,i){
-
-let group = missions[g];
-
-let title = group.items[i];
-
-let modal =
-document.getElementById("missionModal");
-
-
-if(!modal){
-alert("Modal non trovato");
-return;
-}
-
-
-document.getElementById("modalTitle").innerText =
-title;
-
-
-document.getElementById("modalInfo").innerText =
-"Saga: "+group.saga+
-"\nTipo: "+group.type;
-
-
-modal.style.display="flex";
-
-
-}
-
-
-function closeMission(){
-
-let modal =
-document.getElementById("missionModal");
-
-if(modal){
-
-modal.style.display="none";
-
-}
-
-}
 render();
