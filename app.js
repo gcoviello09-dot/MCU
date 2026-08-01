@@ -104,12 +104,42 @@ items:[
 
 
 
-let missions =
+const DATABASE_VERSION = 2;
+
+
+let savedVersion =
+localStorage.getItem("databaseVersion");
+
+
+let missions;
+
+
+if(savedVersion != DATABASE_VERSION){
+
+missions = defaultMissions;
+
+
+localStorage.setItem(
+"missions",
+JSON.stringify(missions)
+);
+
+
+localStorage.setItem(
+"databaseVersion",
+DATABASE_VERSION
+);
+
+
+}else{
+
+
+missions =
 JSON.parse(localStorage.getItem("missions"))
 || defaultMissions;
-localStorage.removeItem("missions");
-let missions = defaultMissions;
 
+
+}
 
 let completed =
 JSON.parse(localStorage.getItem("completed"))
