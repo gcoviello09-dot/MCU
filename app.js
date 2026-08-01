@@ -161,7 +161,15 @@ let div=document.createElement("div");
 
 
 div.className="mission";
+div.onclick=function(e){
 
+if(e.target.tagName !== "INPUT" && e.target.tagName !== "BUTTON"){
+
+openMission(g,i);
+
+}
+
+};
 
 div.innerHTML=`
 
@@ -625,5 +633,43 @@ render
 
 
 
+function openMission(g,i){
 
+let group = missions[g];
+
+let title = group.items[i];
+
+
+document.getElementById("modalTitle").innerText =
+title;
+
+
+document.getElementById("modalInfo").innerText =
+"Saga: "+group.saga+
+"\nTipo: "+group.type+
+"\nStato: "+
+(localStorage.getItem(g+"-"+i)==="true"
+?"✅ Completato"
+:"⏳ Da completare");
+
+
+
+let modal =
+document.getElementById("missionModal");
+
+
+modal.style.display="flex";
+
+
+}
+
+
+
+function closeMission(){
+
+document
+.getElementById("missionModal")
+.style.display="none";
+
+}
 render();
