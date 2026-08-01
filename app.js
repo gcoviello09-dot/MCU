@@ -31,6 +31,7 @@ items:[
 ]
 },
 
+
 {
 saga:"Multiverse Saga",
 type:"Serie/Film",
@@ -73,6 +74,7 @@ items:[
 ]
 },
 
+
 {
 saga:"Coming Soon",
 type:"Futuro",
@@ -85,9 +87,17 @@ items:[
 ];
 
 
+
 let missions =
 JSON.parse(localStorage.getItem("missions"))
 || defaultMissions;
+
+
+
+let completed =
+JSON.parse(localStorage.getItem("completed"))
+|| [];
+
 
 
 let favorites =
@@ -106,11 +116,18 @@ JSON.stringify(missions)
 
 
 localStorage.setItem(
+"completed",
+JSON.stringify(completed)
+);
+
+
+localStorage.setItem(
 "favorites",
 JSON.stringify(favorites)
 );
 
 }
+
 
 
 
@@ -156,18 +173,13 @@ return;
 
 
 
-let id =
-g+"-"+i;
-
-
-
 let done =
-localStorage.getItem(id)==="true";
+completed.includes(item);
 
 
 
 let fav =
-favorites.includes(id);
+favorites.includes(item);
 
 
 
@@ -184,7 +196,7 @@ div.innerHTML=`
 
 <input type="checkbox"
 ${done?"checked":""}
-onclick="toggle('${id}')">
+onclick="toggle('${item}')">
 
 
 <span class="${done?"done":""}"
@@ -195,7 +207,7 @@ ${item}
 </span>
 
 
-<button onclick="fav('${id}')">
+<button onclick="fav('${item}')">
 
 ${fav?"⭐":"☆"}
 
@@ -218,7 +230,6 @@ list.appendChild(div);
 }
 
 
-
 updateStats();
 
 renderFavorites();
@@ -230,14 +241,25 @@ renderBadges();
 
 
 
-
 function toggle(id){
 
-localStorage.setItem(
-id,
-!(localStorage.getItem(id)==="true")
-);
+if(completed.includes(id)){
 
+
+completed =
+completed.filter(x=>x!==id);
+
+
+}else{
+
+
+completed.push(id);
+
+
+}
+
+
+save();
 
 render();
 
@@ -284,15 +306,7 @@ if(!box)return;
 box.innerHTML="";
 
 
-favorites.forEach(id=>{
-
-
-let parts =
-id.split("-");
-
-
-let name =
-missions[parts[0]].items[parts[1]];
+favorites.forEach(name=>{
 
 
 let p =
@@ -325,43 +339,37 @@ let done=0;
 
 let filmTotal=0;
 
-let serieTotal=0;
-
-
 let filmDone=0;
+
+
+let serieTotal=0;
 
 let serieDone=0;
 
 
 
-missions.forEach((group,g)=>{
+missions.forEach(group=>{
 
 
-group.items.forEach((item,i)=>{
+group.items.forEach(item=>{
 
 
 total++;
 
 
-
 let checked =
-localStorage.getItem(g+"-"+i)==="true";
+completed.includes(item);
 
 
 
-if(checked){
-
+if(checked)
 done++;
-
-}
 
 
 
 if(group.type==="Film"){
 
-
 filmTotal++;
-
 
 if(checked)
 filmDone++;
@@ -372,13 +380,11 @@ filmDone++;
 
 serieTotal++;
 
-
 if(checked)
 serieDone++;
 
 
 }
-
 
 
 });
@@ -512,7 +518,6 @@ missions[0].items.push(name);
 
 save();
 
-
 render();
 
 
@@ -529,7 +534,6 @@ function randomMission(){
 
 
 let all=[];
-
 
 
 missions.forEach(group=>{
@@ -580,49 +584,26 @@ if(!box)return;
 
 
 
-let completed=0;
-
-
-
-Object.keys(localStorage).forEach(key=>{
-
-
-if(
-key.includes("-") &&
-localStorage.getItem(key)==="true"
-)
-
-completed++;
-
-
-});
-
-
-
 box.innerHTML="";
 
 
 
 let badges=[
 
-
 {
 name:"🏆 First Mission",
 unlock:1
 },
-
 
 {
 name:"💎 Infinity Survivor",
 unlock:10
 },
 
-
 {
 name:"🌌 Multiverse Explorer",
 unlock:25
 }
-
 
 ];
 
@@ -636,7 +617,7 @@ document.createElement("div");
 
 
 
-if(completed>=badge.unlock){
+if(completed.length >= badge.unlock){
 
 
 div.className="badge unlocked";
@@ -688,7 +669,6 @@ let card =
 document.getElementById("missionCard");
 
 
-
 if(!card)return;
 
 
@@ -703,16 +683,38 @@ document.getElementById("cardSaga").innerText =
 
 
 
+let data =
+missionData[title];
+
+
+
+if(data){
+
+
+document.getElementById("cardType").innerText =
+"🎬 Tipo: "+data.tipo;
+
+
+}else{
+
+
 document.getElementById("cardType").innerText =
 "🎬 Tipo: "+group.type;
 
 
+}
+
+
 
 let status =
-localStorage.getItem(g+"-"+i)==="true"
+completed.includes(title)
+
 ?
+
 "✅ Missione completata"
+
 :
+
 "⏳ Missione da completare";
 
 
