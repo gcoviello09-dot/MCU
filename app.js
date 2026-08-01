@@ -506,25 +506,82 @@ function renderBadges(){
 let box =
 document.getElementById("badgesList");
 
-
 if(!box)return;
 
 
-box.innerHTML=
+let completed = 0;
 
-`
-<div class="badge">
-🏆 First Mission
-</div>
 
-<div class="badge">
-💎 Infinity Survivor
-</div>
+Object.keys(localStorage).forEach(key=>{
 
-<div class="badge">
-🌌 Multiverse Explorer
-</div>
-`;
+if(
+key.includes("-") &&
+localStorage.getItem(key)==="true"
+){
+
+completed++;
+
+}
+
+});
+
+
+
+box.innerHTML="";
+
+
+
+let badges=[
+
+{
+name:"🏆 First Mission",
+unlock:1
+},
+
+{
+name:"💎 Infinity Survivor",
+unlock:10
+},
+
+{
+name:"🌌 Multiverse Explorer",
+unlock:25
+}
+
+];
+
+
+
+badges.forEach(badge=>{
+
+
+let div=document.createElement("div");
+
+
+if(completed >= badge.unlock){
+
+div.className="badge unlocked";
+
+div.innerText =
+badge.name+" ✅";
+
+
+}else{
+
+div.className="badge locked";
+
+div.innerText =
+badge.name+" 🔒";
+
+}
+
+
+
+box.appendChild(div);
+
+
+});
+
 
 }
 
