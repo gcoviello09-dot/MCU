@@ -386,3 +386,462 @@ box.appendChild(p);
 });
 
 }
+function updateStats(){
+
+let total=0;
+let done=0;
+
+let filmTotal=0;
+let filmDone=0;
+
+let serieTotal=0;
+let serieDone=0;
+
+missions.forEach(group=>{
+
+group.items.forEach(item=>{
+
+total++;
+
+let checked =
+completed.includes(item);
+
+if(checked)
+done++;
+
+if(group.type==="Film"){
+
+filmTotal++;
+
+if(checked)
+filmDone++;
+
+}
+
+if(group.type==="Serie"){
+
+serieTotal++;
+
+if(checked)
+serieDone++;
+
+}
+
+});
+
+});
+
+let percent =
+Math.round(done/total*100)
+||0;
+
+document.getElementById(
+"bar"
+).style.width =
+percent+"%";
+
+document.getElementById(
+"percent"
+).innerText =
+percent+"%";
+
+document.getElementById(
+"counter"
+).innerText =
+done+" / "+total;
+
+let rank =
+"RECRUIT";
+
+if(percent>=25)
+rank="AVENGER";
+
+if(percent>=50)
+rank="SUPER HERO";
+
+if(percent>=75)
+rank="GUARDIAN";
+
+if(percent===100)
+rank="MASTER OF MCU";
+
+document.getElementById(
+"rank"
+).innerText =
+rank;
+
+document.getElementById(
+"movies"
+).innerText =
+"🎬 Film completati: "
++
+filmDone
++
+" / "
++
+filmTotal;
+
+document.getElementById(
+"series"
+).innerText =
+"📺 Serie completate: "
++
+serieDone
++
+" / "
++
+serieTotal;
+
+document.getElementById(
+"completion"
+).innerText =
+"⚡ Universo completato: "
++
+percent
++
+"%";
+
+}
+
+function addMission(){
+
+let name =
+prompt(
+"Nome della missione:"
+);
+
+if(!name)
+return;
+
+let saga =
+prompt(
+"Saga:\n\nInfinity Saga\nMultiverse Saga\nSpecial\nX-Men Universe\nComing Soon"
+);
+
+if(!saga)
+return;
+
+let type =
+prompt(
+"Tipo:\n\nFilm\nSerie\nSpecial\nFuturo"
+);
+
+if(!type)
+return;
+
+let groupIndex =
+missions.findIndex(
+g =>
+g.saga===saga &&
+g.type===type
+);
+
+if(groupIndex===-1){
+
+missions.push({
+
+saga:saga,
+type:type,
+items:[]
+
+});
+
+groupIndex =
+missions.length-1;
+
+}
+
+let group =
+missions[groupIndex];
+
+let position =
+prompt(
+
+"Inserisci la posizione da 1 a "
++
+(group.items.length+1)
+
+);
+
+position =
+parseInt(position);
+
+if(
+isNaN(position)
+||
+position<1
+){
+
+position=1;
+
+}
+
+if(
+position>
+group.items.length+1
+){
+
+position=
+group.items.length+1;
+
+}
+
+group.items.splice(
+
+position-1,
+0,
+name
+
+);
+
+save();
+
+render();
+
+}
+function randomMission(){
+
+let all=[];
+
+missions.forEach(group=>{
+
+group.items.forEach(item=>{
+
+all.push(item);
+
+});
+
+});
+
+let pick =
+all[
+Math.floor(
+Math.random()*all.length
+)
+];
+
+let box =
+document.getElementById(
+"suggestion"
+);
+
+if(box){
+
+box.innerText =
+"🤖 JARVIS consiglia: "
++
+pick;
+
+}
+
+}
+
+function renderBadges(){
+
+let box =
+document.getElementById(
+"badgesList"
+);
+
+if(!box)
+return;
+
+box.innerHTML="";
+
+let badges=[
+
+{
+name:"🏆 First Mission",
+unlock:1
+},
+
+{
+name:"💎 Infinity Survivor",
+unlock:10
+},
+
+{
+name:"🌌 Multiverse Explorer",
+unlock:25
+},
+
+{
+name:"⚡ Stark Level",
+unlock:50
+},
+
+{
+name:"🧪 Mutant Hunter",
+unlock:75
+},
+
+{
+name:"👑 Master of the Multiverse",
+unlock:100
+}
+
+];
+
+badges.forEach(badge=>{
+
+let div =
+document.createElement("div");
+
+if(
+completed.length
+>=
+badge.unlock
+){
+
+div.className =
+"badge unlocked";
+
+div.innerText =
+badge.name
++
+" ✅";
+
+}else{
+
+div.className =
+"badge locked";
+
+div.innerText =
+badge.name
++
+" 🔒";
+
+}
+
+box.appendChild(div);
+
+});
+
+}
+
+function openCard(g,i){
+
+let group =
+missions[g];
+
+let title =
+group.items[i];
+
+let card =
+document.getElementById(
+"missionCard"
+);
+
+if(!card)
+return;
+
+document.getElementById(
+"cardTitle"
+).innerText =
+title;
+
+document.getElementById(
+"cardSaga"
+).innerText =
+"🧬 Saga: "
++
+group.saga;
+
+let data =
+missionData[title];
+
+if(data){
+
+document.getElementById(
+"cardType"
+).innerText =
+"🎬 Tipo: "
++
+data.tipo;
+
+}else{
+
+document.getElementById(
+"cardType"
+).innerText =
+"🎬 Tipo: "
++
+group.type;
+
+}
+
+document.getElementById(
+"cardStatus"
+).innerText =
+
+completed.includes(title)
+
+?
+
+"✅ Missione completata"
+
+:
+
+"⏳ Missione da completare";
+
+card.style.display =
+"flex";
+
+}
+
+function closeCard(){
+
+let card =
+document.getElementById(
+"missionCard"
+);
+
+if(card){
+
+card.style.display =
+"none";
+
+}
+
+}
+
+document
+.querySelectorAll(
+"nav button"
+)
+.forEach(btn=>{
+
+btn.onclick=function(){
+
+document
+.querySelectorAll(
+".page"
+)
+.forEach(p=>
+p.classList.remove(
+"active"
+)
+);
+
+document
+.getElementById(
+btn.dataset.page
+)
+.classList.add(
+"active"
+);
+
+};
+
+});
+
+document
+.getElementById(
+"search"
+)
+?.addEventListener(
+"input",
+render
+);
+
+render();
