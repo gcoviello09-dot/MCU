@@ -31,7 +31,6 @@ items:[
 ]
 },
 
-
 {
 saga:"Multiverse Saga",
 type:"Serie",
@@ -59,7 +58,6 @@ items:[
 ]
 },
 
-
 {
 saga:"Multiverse Saga",
 type:"Film",
@@ -80,7 +78,6 @@ items:[
 ]
 },
 
-
 {
 saga:"Special",
 type:"Special",
@@ -90,6 +87,25 @@ items:[
 ]
 },
 
+{
+saga:"X-Men Universe",
+type:"Film",
+items:[
+"X-Men",
+"X2",
+"X-Men: The Last Stand",
+"X-Men Origins: Wolverine",
+"X-Men: First Class",
+"The Wolverine",
+"X-Men: Days of Future Past",
+"Deadpool",
+"X-Men: Apocalypse",
+"Logan",
+"Deadpool 2",
+"Dark Phoenix",
+"The New Mutants"
+]
+},
 
 {
 saga:"Coming Soon",
@@ -102,58 +118,53 @@ items:[
 
 ];
 
-
-
-const DATABASE_VERSION = 2;
-
+const DATABASE_VERSION = 3;
 
 let savedVersion =
-localStorage.getItem("databaseVersion");
-
+localStorage.getItem(
+"databaseVersion"
+);
 
 let missions;
-
 
 if(savedVersion != DATABASE_VERSION){
 
 missions = defaultMissions;
-
 
 localStorage.setItem(
 "missions",
 JSON.stringify(missions)
 );
 
-
 localStorage.setItem(
 "databaseVersion",
 DATABASE_VERSION
 );
 
-
 }else{
 
-
 missions =
-JSON.parse(localStorage.getItem("missions"))
+JSON.parse(
+localStorage.getItem(
+"missions"
+))
 || defaultMissions;
-
 
 }
 
 let completed =
-JSON.parse(localStorage.getItem("completed"))
+JSON.parse(
+localStorage.getItem(
+"completed"
+))
 || [];
-
-
 
 let favorites =
-JSON.parse(localStorage.getItem("favorites"))
+JSON.parse(
+localStorage.getItem(
+"favorites"
+))
 || [];
-
-
-
-
 
 function save(){
 
@@ -162,12 +173,10 @@ localStorage.setItem(
 JSON.stringify(missions)
 );
 
-
 localStorage.setItem(
 "completed",
 JSON.stringify(completed)
 );
-
 
 localStorage.setItem(
 "favorites",
@@ -175,107 +184,93 @@ JSON.stringify(favorites)
 );
 
 }
-
-
-
-
-
 function render(){
 
 let list =
-document.getElementById("missionsList");
+document.getElementById(
+"missionsList"
+);
 
-
-if(list){
+if(!list)
+return;
 
 list.innerHTML="";
 
-
 let search =
-document.getElementById("search")?.value.toLowerCase()
-||"";
-
-
+document.getElementById(
+"search"
+)?.value.toLowerCase()
+|| "";
 
 missions.forEach((group,g)=>{
-
 
 let title =
 document.createElement("h2");
 
-
 title.innerText =
-group.saga;
-
+group.saga +
+" • " +
+group.type;
 
 list.appendChild(title);
 
-
-
 group.items.forEach((item,i)=>{
 
-
-if(search &&
-!item.toLowerCase().includes(search))
+if(
+search &&
+!item.toLowerCase()
+.includes(search)
+)
 return;
-
-
 
 let done =
 completed.includes(item);
 
-
-
-let fav =
+let favorite =
 favorites.includes(item);
-
-
 
 let div =
 document.createElement("div");
 
+div.className =
+"mission";
 
+div.innerHTML = `
 
-div.className="mission";
-
-
-
-div.innerHTML=`
-
-<input type="checkbox"
-${done?"checked":""}
+<input
+type="checkbox"
+${done ? "checked" : ""}
 onclick="toggle('${item}')">
 
-
-<span class="${done?"done":""}"
+<span
+class="${done ? "done" : ""}"
 onclick="openCard(${g},${i})">
 
 ${item}
 
 </span>
 
+<button
+onclick="fav('${item}')">
 
-<button onclick="fav('${item}')">
+${favorite ? "⭐" : "☆"}
 
-${fav?"⭐":"☆"}
+</button>
+
+<button
+onclick="deleteMission(${g},${i})">
+
+🗑️
 
 </button>
 
 `;
 
-
-
 list.appendChild(div);
 
-
 });
 
-
 });
-
-
-}
-
 
 updateStats();
 
@@ -284,12 +279,17 @@ renderFavorites();
 renderBadges();
 
 }
+
 function toggle(id){
 
-if(completed.includes(id)){
+if(
+completed.includes(id)
+){
 
 completed =
-completed.filter(x=>x!==id);
+completed.filter(
+x => x !== id
+);
 
 }else{
 
@@ -303,557 +303,86 @@ render();
 
 }
 
-
-
-
-
 function fav(id){
 
-
-if(favorites.includes(id)){
-
+if(
+favorites.includes(id)
+){
 
 favorites =
-favorites.filter(x=>x!==id);
-
+favorites.filter(
+x => x !== id
+);
 
 }else{
 
-
 favorites.push(id);
 
-
 }
-
 
 save();
 
 render();
 
+}
+
+function deleteMission(g,i){
+
+let name =
+missions[g].items[i];
+
+if(
+confirm(
+"Eliminare " +
+name +
+"?"
+)
+){
+
+completed =
+completed.filter(
+x => x !== name
+);
+
+favorites =
+favorites.filter(
+x => x !== name
+);
+
+missions[g]
+.items
+.splice(i,1);
+
+save();
+
+render();
 
 }
 
-
-
-
+}
 
 function renderFavorites(){
 
 let box =
-document.getElementById("favoritesList");
+document.getElementById(
+"favoritesList"
+);
 
-
-if(!box)return;
-
-
+if(!box)
+return;
 
 box.innerHTML="";
 
-
-
 favorites.forEach(name=>{
-
 
 let p =
 document.createElement("p");
 
-
-
 p.innerText =
-"⭐ "+name;
-
-
+"⭐ " + name;
 
 box.appendChild(p);
 
-
 });
 
-
 }
-
-
-
-
-
-function updateStats(){
-
-
-let total=0;
-
-let done=0;
-
-
-let filmTotal=0;
-
-let filmDone=0;
-
-
-let serieTotal=0;
-
-let serieDone=0;
-
-
-
-missions.forEach(group=>{
-
-
-group.items.forEach(item=>{
-
-
-total++;
-
-
-
-let checked =
-completed.includes(item);
-
-
-
-if(checked)
-done++;
-
-
-
-if(group.type==="Film"){
-
-
-filmTotal++;
-
-
-if(checked)
-filmDone++;
-
-
-}
-
-
-
-if(group.type==="Serie"){
-
-
-serieTotal++;
-
-
-if(checked)
-serieDone++;
-
-
-}
-
-
-
-});
-
-
-});
-
-
-
-let percent =
-Math.round(done/total*100)
-||0;
-
-
-
-let bar =
-document.getElementById("bar");
-
-
-if(bar)
-bar.style.width =
-percent+"%";
-
-
-
-let percentBox =
-document.getElementById("percent");
-
-
-if(percentBox)
-percentBox.innerText =
-percent+"%";
-
-
-
-let counter =
-document.getElementById("counter");
-
-
-if(counter)
-counter.innerText =
-done+" / "+total;
-
-
-
-let rank =
-"RECRUIT";
-
-
-
-if(percent>=25)
-rank="AVENGER";
-
-
-if(percent>=50)
-rank="SUPER HERO";
-
-
-if(percent>=75)
-rank="GUARDIAN";
-
-
-if(percent===100)
-rank="MASTER OF MCU";
-
-
-
-let rankBox =
-document.getElementById("rank");
-
-
-if(rankBox)
-rankBox.innerText =
-rank;
-
-
-
-let movies =
-document.getElementById("movies");
-
-
-if(movies)
-movies.innerText =
-"🎬 Film completati: "
-+filmDone+
-" / "
-+filmTotal;
-
-
-
-let series =
-document.getElementById("series");
-
-
-if(series)
-series.innerText =
-"📺 Serie completate: "
-+serieDone+
-" / "
-+serieTotal;
-
-
-
-let completion =
-document.getElementById("completion");
-
-
-if(completion)
-completion.innerText =
-"⚡ Universo completato: "
-+percent+"%";
-
-
-}
-
-
-
-
-
-function addMission(){
-
-
-let name =
-prompt("Nuova missione");
-
-
-if(name){
-
-
-missions[0].items.push(name);
-
-
-save();
-
-
-render();
-
-
-}
-
-
-}
-
-
-
-
-
-function randomMission(){
-
-
-let all=[];
-
-
-
-missions.forEach(group=>{
-
-
-group.items.forEach(item=>{
-
-
-all.push(item);
-
-
-});
-
-
-});
-
-
-
-let pick =
-all[Math.floor(Math.random()*all.length)];
-
-
-
-let box =
-document.getElementById("suggestion");
-
-
-if(box)
-
-box.innerText =
-"JARVIS consiglia: "+pick;
-
-
-}
-
-
-
-
-
-function renderBadges(){
-
-
-let box =
-document.getElementById("badgesList");
-
-
-if(!box)return;
-
-
-
-box.innerHTML="";
-
-
-
-let badges=[
-
-
-{
-name:"🏆 First Mission",
-unlock:1
-},
-
-
-{
-name:"💎 Infinity Survivor",
-unlock:10
-},
-
-
-{
-name:"🌌 Multiverse Explorer",
-unlock:25
-},
-
-
-{
-name:"⚡ Stark Level",
-unlock:50
-}
-
-
-];
-
-
-
-badges.forEach(badge=>{
-
-
-let div =
-document.createElement("div");
-
-
-
-if(completed.length >= badge.unlock){
-
-
-div.className="badge unlocked";
-
-
-div.innerText =
-badge.name+" ✅";
-
-
-}else{
-
-
-div.className="badge locked";
-
-
-div.innerText =
-badge.name+" 🔒";
-
-
-}
-
-
-
-box.appendChild(div);
-
-
-});
-
-
-}
-function openCard(g,i){
-
-
-let group =
-missions[g];
-
-
-let title =
-group.items[i];
-
-
-
-let card =
-document.getElementById("missionCard");
-
-
-
-if(!card)return;
-
-
-
-document.getElementById("cardTitle").innerText =
-title;
-
-
-
-document.getElementById("cardSaga").innerText =
-"🧬 Saga: "+group.saga;
-
-
-
-let data =
-missionData[title];
-
-
-
-if(data){
-
-
-document.getElementById("cardType").innerText =
-"🎬 Tipo: "+data.tipo;
-
-
-}else{
-
-
-document.getElementById("cardType").innerText =
-"🎬 Tipo: "+group.type;
-
-
-}
-
-
-
-
-let status =
-completed.includes(title)
-
-?
-
-"✅ Missione completata"
-
-:
-
-"⏳ Missione da completare";
-
-
-
-document.getElementById("cardStatus").innerText =
-status;
-
-
-
-card.style.display="flex";
-
-
-}
-
-
-
-
-
-function closeCard(){
-
-
-let card =
-document.getElementById("missionCard");
-
-
-if(card)
-
-card.style.display="none";
-
-
-}
-
-
-
-
-
-document
-.querySelectorAll("nav button")
-.forEach(btn=>{
-
-
-btn.onclick=function(){
-
-
-document
-.querySelectorAll(".page")
-.forEach(p=>p.classList.remove("active"));
-
-
-
-document
-.getElementById(btn.dataset.page)
-.classList.add("active");
-
-
-};
-
-
-});
-
-
-
-
-
-document
-.getElementById("search")
-?.addEventListener(
-"input",
-render
-);
-
-
-
-
-
-render();
