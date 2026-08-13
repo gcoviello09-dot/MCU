@@ -5,164 +5,122 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <title>
 MCU Mission Control Unit
 </title>
 
+<meta
+name="theme-color"
+content="#000000">
 
-<meta name="theme-color" content="#000000">
+<meta
+name="apple-mobile-web-app-capable"
+content="yes">
 
+<meta
+name="apple-mobile-web-app-status-bar-style"
+content="black">
 
-<meta name="apple-mobile-web-app-capable" content="yes">
+<meta
+name="apple-mobile-web-app-title"
+content="MCU">
 
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link
+rel="stylesheet"
+href="style.css">
 
-<meta name="apple-mobile-web-app-title" content="MCU">
+<link
+rel="manifest"
+href="manifest.json">
 
-
-<link rel="stylesheet" href="style.css">
-
-
-<link rel="manifest" href="manifest.json">
-
-
-<link rel="apple-touch-icon" href="icon.png">
-
+<link
+rel="apple-touch-icon"
+href="icon.png">
 
 </head>
 
-
-
 <body>
-
 
 <div id="boot">
 
-
 <div class="reactor"></div>
 
-
-
 <div class="boot-panel">
-
 
 <h1>
 STARK INDUSTRIES
 </h1>
 
-
 <p>
 JARVIS ONLINE
 </p>
 
-
-
 <div class="boot-line"></div>
 
-
-
 <p class="boot-status">
-
 SYSTEM INITIALIZING...
-
 </p>
 
-
 </div>
 
-
 </div>
-
-
-
-
 
 <header>
 
-
 <div class="mini-reactor"></div>
-
 
 <h1>
 MCU
 </h1>
 
-
 <p>
 MISSION CONTROL UNIT
 </p>
 
-
 </header>
-
-
-
-
 
 <nav>
 
-
 <button data-page="home">
-
 🏠
-
 </button>
-
 
 <button data-page="missions">
-
 🎬
-
 </button>
-
 
 <button data-page="favorites">
-
 ⭐
-
 </button>
-
 
 <button data-page="stats">
-
 📊
-
 </button>
-
 
 </nav>
 <section id="home" class="page active">
 
-
 <div class="card jarvis-card">
-
 
 <h2>
 ⚡ JARVIS SYSTEM STATUS
 </h2>
 
-
-
 <h3 id="rank">
 RECRUIT
 </h3>
-
-
 
 <div class="counter-label">
 MISSION DATABASE
 </div>
 
-
-
 <div id="counter">
 0 / 0
 </div>
-
-
 
 <div class="progress">
 
@@ -170,183 +128,134 @@ MISSION DATABASE
 
 </div>
 
-
-
 <h2 id="percent">
 0%
 </h2>
 
-
 </div>
-
-
-
 
 
 <div class="card jarvis-card">
 
-
-<button onclick="randomMission()">
+<button
+onclick="randomMission()">
 
 🎲 JARVIS SCEGLI MISSIONE
 
 </button>
 
-
-
 <h3 id="suggestion"></h3>
 
-
 </div>
-
 
 </section>
 
 
-
-
-
 <section id="missions" class="page">
-
 
 <div class="card">
 
+<h2>
+🎬 MISSION DATABASE
+</h2>
 
-<input 
+<input
 id="search"
+type="search"
 placeholder="🔎 Cerca missione"
->
+autocomplete="off">
 
-
-
-<button onclick="addMission()">
+<button
+onclick="addMission()">
 
 ＋ Nuova Missione
 
 </button>
 
-
 </div>
 
-
-
 <div id="missionsList"></div>
-
 
 </section>
 
 
-
-
-
 <section id="favorites" class="page">
 
-
 <div class="card">
-
 
 <h2>
 ⭐ Preferiti
 </h2>
 
-
-
 <div id="favoritesList"></div>
-
 
 </div>
 
-
 </section>
-
-
-
-
-
 <section id="stats" class="page">
 
-
 <div class="card">
-
 
 <h2>
 📊 STATISTICHE
 </h2>
 
-
-
 <p id="movies">
-Film: 0
+🎬 Film completati: 0 / 0
 </p>
-
-
 
 <p id="series">
-Serie: 0
+📺 Serie completate: 0 / 0
 </p>
-
-
 
 <p id="completion">
-Completamento: 0%
+⚡ Universo completato: 0%
 </p>
-
-
 
 </div>
 
-
-
 <div id="badgesList"></div>
-
 
 </section>
 
 
+<!-- =========================
+     MISSION CARD
+========================= -->
 
-
-
-<div id="missionCard" class="modal">
-
+<div
+id="missionCard"
+class="modal">
 
 <div class="modal-box">
 
-
-<button onclick="closeCard()">
+<button
+onclick="closeCard()">
 
 ✖
 
 </button>
 
-
-
 <h2 id="cardTitle"></h2>
-
 
 <p id="cardSaga"></p>
 
-
 <p id="cardType"></p>
-
 
 <p id="cardStatus"></p>
 
-
+</div>
 
 </div>
 
 
-</div>
-
-
-
-
+<!-- =========================
+     JAVASCRIPT
+========================= -->
 
 <script src="database.js"></script>
 
 <script src="app.js"></script>
-
-
 
 </body>
 
