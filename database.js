@@ -1,6 +1,5 @@
 const missionData = {
 
-
 "Captain America: The First Avenger":{
 tipo:"Film",
 saga:"Infinity Saga"
@@ -120,9 +119,6 @@ saga:"Infinity Saga"
 tipo:"Film",
 saga:"Infinity Saga"
 },
-
-
-
 "Loki":{
 tipo:"Serie",
 saga:"Multiverse Saga"
@@ -183,31 +179,6 @@ tipo:"Serie",
 saga:"Multiverse Saga"
 },
 
-"Jessica Jones":{
-tipo:"Serie",
-saga:"Marvel Television"
-},
-
-"Luke Cage":{
-tipo:"Serie",
-saga:"Marvel Television"
-},
-
-"Iron Fist":{
-tipo:"Serie",
-saga:"Marvel Television"
-},
-
-"The Defenders":{
-tipo:"Serie",
-saga:"Marvel Television"
-},
-
-"The Punisher":{
-tipo:"Serie",
-saga:"Marvel Television"
-},
-
 "Daredevil: Born Again":{
 tipo:"Serie",
 saga:"Multiverse Saga"
@@ -222,6 +193,7 @@ saga:"Multiverse Saga"
 tipo:"Serie",
 saga:"Multiverse Saga"
 },
+
 "Shang-Chi":{
 tipo:"Film",
 saga:"Multiverse Saga"
@@ -282,23 +254,109 @@ tipo:"Film",
 saga:"Multiverse Saga"
 },
 
-
-"Werewolf by Night":{
-tipo:"Special",
-saga:"Multiverse Saga"
-},
-
-"Guardians Holiday Special":{
-tipo:"Special",
-saga:"Multiverse Saga"
-},
-
-
 "Spider-Man: Brand New Day":{
 tipo:"Film",
 saga:"Multiverse Saga"
 },
 
+"Werewolf by Night":{
+tipo:"Special",
+saga:"Special"
+},
+
+"Guardians Holiday Special":{
+tipo:"Special",
+saga:"Special"
+},
+"Jessica Jones":{
+tipo:"Serie",
+saga:"Marvel Television"
+},
+
+"Luke Cage":{
+tipo:"Serie",
+saga:"Marvel Television"
+},
+
+"Iron Fist":{
+tipo:"Serie",
+saga:"Marvel Television"
+},
+
+"The Defenders":{
+tipo:"Serie",
+saga:"Marvel Television"
+},
+
+"The Punisher":{
+tipo:"Serie",
+saga:"Marvel Television"
+},
+
+"X-Men":{
+tipo:"Film",
+saga:"X-Men Universe"
+},
+
+"X2":{
+tipo:"Film",
+saga:"X-Men Universe"
+},
+
+"X-Men: The Last Stand":{
+tipo:"Film",
+saga:"X-Men Universe"
+},
+
+"X-Men Origins: Wolverine":{
+tipo:"Film",
+saga:"X-Men Universe"
+},
+
+"X-Men: First Class":{
+tipo:"Film",
+saga:"X-Men Universe"
+},
+
+"The Wolverine":{
+tipo:"Film",
+saga:"X-Men Universe"
+},
+
+"X-Men: Days of Future Past":{
+tipo:"Film",
+saga:"X-Men Universe"
+},
+
+"Deadpool":{
+tipo:"Film",
+saga:"X-Men Universe"
+},
+
+"X-Men: Apocalypse":{
+tipo:"Film",
+saga:"X-Men Universe"
+},
+
+"Logan":{
+tipo:"Film",
+saga:"X-Men Universe"
+},
+
+"Deadpool 2":{
+tipo:"Film",
+saga:"X-Men Universe"
+},
+
+"Dark Phoenix":{
+tipo:"Film",
+saga:"X-Men Universe"
+},
+
+"The New Mutants":{
+tipo:"Film",
+saga:"X-Men Universe"
+},
 
 "Vision Quest":{
 tipo:"Serie",
@@ -309,6 +367,5 @@ saga:"Coming Soon"
 tipo:"Film",
 saga:"Coming Soon"
 }
-
 
 };
