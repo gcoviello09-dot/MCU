@@ -1,1413 +1,1194 @@
-*{
-box-sizing:border-box;
+/* =========================================================
+   MCU MISSION CONTROL UNIT
+   JARVIS HUD UI
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
-html{
-scroll-behavior:smooth;
+html {
+    min-height: 100%;
+    background: #020508;
 }
 
-body{
+body {
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
 
-margin:0;
+    color: #f4faff;
 
-min-height:100vh;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
 
-background:
-radial-gradient(
-circle at top,
-#00263d 0%,
-#000 48%
-);
-
-color:white;
-
-font-family:
--apple-system,
-BlinkMacSystemFont,
-"Segoe UI",
-sans-serif;
-
-overflow-x:hidden;
-
--webkit-tap-highlight-color:transparent;
-
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(0, 180, 255, .20),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 100% 50%,
+            rgba(0, 100, 255, .08),
+            transparent 35%
+        ),
+        linear-gradient(
+            180deg,
+            #020a10 0%,
+            #010305 55%,
+            #000 100%
+        );
 }
 
-/* =========================
-JARVIS BOOT
-========================= */
+/* =========================================================
+   SCANLINES / HUD OVERLAY
+   ========================================================= */
 
-#boot{
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
 
-position:fixed;
+    pointer-events: none;
+    z-index: 5000;
 
-inset:0;
+    opacity: .08;
 
-background:
-radial-gradient(
-circle,
-#001522,
-#000 70%
-);
-
-z-index:9999;
-
-display:flex;
-
-flex-direction:column;
-
-align-items:center;
-
-justify-content:center;
-
-animation:
-boot 4s forwards;
-
+    background:
+        repeating-linear-gradient(
+            180deg,
+            transparent 0px,
+            transparent 3px,
+            rgba(0, 200, 255, .15) 4px
+        );
 }
 
-.boot-panel{
+/* =========================================================
+   BOOT SCREEN
+   ========================================================= */
 
-text-align:center;
+#boot {
+    position: fixed;
+    inset: 0;
 
-animation:
-panelGlow 2s infinite alternate;
+    z-index: 99999;
 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #031a27 0%,
+            #01070b 45%,
+            #000 75%
+        );
+
+    animation: bootScreen 3.5s forwards;
 }
 
-#boot h1{
+.boot-panel {
+    text-align: center;
+    width: min(90%, 420px);
 
-font-size:42px;
-
-letter-spacing:10px;
-
-margin-top:35px;
-
-color:#ffe600;
-
-text-shadow:
-0 0 15px #ffe600,
-0 0 40px #ffe600;
-
+    animation: bootPanel 1.2s ease;
 }
 
-#boot p{
+#boot h1 {
+    margin: 28px 0 8px;
 
-color:#00c8ff;
+    font-size: clamp(28px, 8vw, 42px);
+    font-weight: 800;
 
-letter-spacing:6px;
+    letter-spacing: .25em;
 
-font-size:18px;
+    color: #ffe600;
 
-text-shadow:
-0 0 15px #00c8ff;
-
+    text-shadow:
+        0 0 8px rgba(255, 230, 0, .9),
+        0 0 25px rgba(255, 230, 0, .6);
 }
 
-.boot-status{
+#boot p {
+    margin: 8px 0;
 
-font-size:13px !important;
+    color: #00c8ff;
 
-opacity:.8;
+    font-size: 14px;
+    font-weight: 600;
 
+    letter-spacing: .35em;
+
+    text-shadow:
+        0 0 12px rgba(0, 200, 255, .8);
 }
 
-.boot-line{
-
-width:260px;
-
-height:4px;
-
-background:#111;
-
-border-radius:10px;
-
-overflow:hidden;
-
-margin:25px auto;
-
+.boot-status {
+    font-size: 11px !important;
+    letter-spacing: .2em !important;
+    opacity: .7;
 }
 
-.boot-line::after{
+.boot-line {
+    position: relative;
 
-content:"";
+    width: 230px;
+    height: 3px;
 
-display:block;
+    margin: 22px auto;
 
-height:100%;
+    overflow: hidden;
 
-width:50%;
+    background: rgba(255,255,255,.08);
 
-background:#00c8ff;
-
-box-shadow:
-0 0 20px #00c8ff;
-
-animation:
-loading 1.8s infinite;
-
+    border-radius: 20px;
 }
 
-@keyframes loading{
+.boot-line::after {
+    content: "";
 
-0%{
-transform:translateX(-150%);
+    position: absolute;
+    top: 0;
+    left: -50%;
+
+    width: 50%;
+    height: 100%;
+
+    background: #00c8ff;
+
+    box-shadow:
+        0 0 15px #00c8ff;
+
+    animation: bootLoading 1.2s infinite;
 }
 
-100%{
-transform:translateX(300%);
-}
-
-}
+/* =========================================================
+   REACTOR
+   ========================================================= */
 
 .reactor,
-.mini-reactor{
+.mini-reactor {
+    position: relative;
 
-border-radius:50%;
+    border-radius: 50%;
 
-background:
-radial-gradient(
-circle,
-white 0%,
-#00c8ff 20%,
-#0066ff 45%,
-#00152b 75%
-);
+    background:
+        radial-gradient(
+            circle,
+            #fff 0%,
+            #dffaff 8%,
+            #00c8ff 24%,
+            #0077ff 43%,
+            #031c35 68%,
+            #000 100%
+        );
 
-box-shadow:
-0 0 30px #00c8ff,
-0 0 70px #0066ff,
-inset 0 0 25px white;
+    box-shadow:
+        0 0 15px #00c8ff,
+        0 0 40px rgba(0, 153, 255, .8),
+        0 0 90px rgba(0, 102, 255, .35),
+        inset 0 0 20px #fff;
 
+    animation: reactorPulse 1.8s infinite alternate;
 }
 
-.reactor{
+.reactor::before,
+.mini-reactor::before {
+    content: "";
 
-width:170px;
+    position: absolute;
+    inset: 12%;
 
-height:170px;
+    border: 1px solid rgba(255,255,255,.8);
 
-animation:
-pulse 1.5s infinite alternate;
+    border-radius: 50%;
 
+    animation: reactorSpin 6s linear infinite;
 }
 
-.mini-reactor{
+.reactor::after,
+.mini-reactor::after {
+    content: "";
 
-width:65px;
+    position: absolute;
+    inset: -15%;
 
-height:65px;
+    border: 1px solid rgba(0,200,255,.25);
 
-margin:auto;
-
-}
-
-@keyframes pulse{
-
-from{
-transform:scale(1);
-}
-
-to{
-transform:scale(1.12);
-}
-
-}
-
-@keyframes panelGlow{
-
-from{
-opacity:.8;
-}
-
-to{
-opacity:1;
-}
-
-}
-
-@keyframes boot{
-
-0%,80%{
-opacity:1;
-}
-
-100%{
-opacity:0;
-visibility:hidden;
+    border-radius: 50%;
 }
 
+.reactor {
+    width: 145px;
+    height: 145px;
 }
 
-/* =========================
-HEADER
-========================= */
+.mini-reactor {
+    width: 58px;
+    height: 58px;
 
-header{
-
-text-align:center;
-
-padding:
-25px 20px;
-
-}
-
-header h1{
-
-font-size:65px;
-
-margin:
-15px 0 5px;
-
-letter-spacing:8px;
-
-color:#ffe600;
-
-text-shadow:
-0 0 15px #ffe600,
-0 0 35px #ffe600;
-
-}
-
-header p{
-
-margin:0;
-
-color:#00c8ff;
-
-letter-spacing:6px;
-
-font-size:14px;
-
+    margin: 0 auto;
 }
-
-header::after{
-
-content:"";
 
-display:block;
+/* =========================================================
+   HEADER
+   ========================================================= */
 
-height:1px;
+header {
+    position: relative;
 
-margin-top:25px;
+    text-align: center;
 
-background:
-linear-gradient(
-90deg,
-transparent,
-#00c8ff,
-transparent
-);
+    padding:
+        28px
+        20px
+        20px;
 
+    border-bottom:
+        1px solid rgba(0, 200, 255, .16);
 }
 
-/* =========================
-MENU
-========================= */
+header::before {
+    content: "STARK INDUSTRIES // MISSION CONTROL";
 
-nav{
+    display: block;
 
-display:flex;
+    margin-bottom: 15px;
 
-gap:12px;
+    color: rgba(0, 200, 255, .55);
 
-padding:15px;
+    font-size: 9px;
+    font-weight: 700;
 
-position:sticky;
-
-top:0;
-
-z-index:100;
-
-background:
-rgba(0,0,0,.75);
-
-backdrop-filter:
-blur(12px);
-
+    letter-spacing: .25em;
 }
-
-nav button{
-
-flex:1;
-
-height:55px;
-
-background:
-linear-gradient(
-145deg,
-#050505,
-#111
-);
-
-border:
-1px solid #00c8ff;
 
-color:white;
+header h1 {
+    margin: 12px 0 2px;
 
-border-radius:18px;
+    font-size: clamp(48px, 16vw, 72px);
+    line-height: .9;
 
-font-size:22px;
+    font-weight: 900;
+    letter-spacing: .12em;
 
-transition:.3s;
+    color: #ffe600;
 
-box-shadow:
-0 0 10px rgba(0,200,255,.3);
-
+    text-shadow:
+        0 0 8px rgba(255,230,0,.9),
+        0 0 30px rgba(255,230,0,.45);
 }
-
-nav button:hover{
 
-border-color:#ffe600;
+header p {
+    margin: 12px 0 0;
 
-color:#ffe600;
+    color: #00c8ff;
 
-box-shadow:
-0 0 25px #ffe600;
+    font-size: 11px;
+    font-weight: 700;
 
-transform:
-translateY(-4px);
+    letter-spacing: .35em;
 
+    opacity: .9;
 }
 
-/* =========================
-PAGINE
-========================= */
+header::after {
+    content: "";
 
-.page{
+    display: block;
 
-display:none;
-
-animation:
-pageOpen .4s ease;
-
-}
+    width: 75%;
+    max-width: 350px;
+    height: 1px;
 
-.page.active{
+    margin: 20px auto 0;
 
-display:block;
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #00c8ff,
+            transparent
+        );
 
+    box-shadow:
+        0 0 12px #00c8ff;
 }
 
-@keyframes pageOpen{
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
 
-from{
+nav {
+    position: sticky;
+    top: 0;
 
-opacity:0;
+    z-index: 1000;
 
-transform:
-translateY(10px);
+    display: flex;
+    gap: 8px;
 
-}
-
-to{
+    padding: 10px 12px;
 
-opacity:1;
+    background:
+        rgba(1, 7, 11, .88);
 
-transform:
-translateY(0);
+    border-bottom:
+        1px solid rgba(0, 200, 255, .15);
 
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
 }
-
-}
-
-/* =========================
-CARDS
-========================= */
 
-.card{
+nav button {
+    position: relative;
 
-margin:18px;
+    flex: 1;
 
-padding:25px;
+    min-height: 48px;
 
-background:
-linear-gradient(
-145deg,
-rgba(5,5,5,.95),
-rgba(0,20,35,.8)
-);
+    padding: 10px;
 
-border:
-1px solid #00c8ff;
+    color: #6edfff;
 
-border-radius:25px;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(0, 200, 255, .08),
+            rgba(0, 0, 0, .55)
+        );
 
-box-shadow:
-0 0 25px rgba(0,200,255,.25),
-inset 0 0 20px rgba(0,200,255,.08);
+    border:
+        1px solid rgba(0, 200, 255, .28);
 
-}
+    border-radius: 12px;
 
-.card:hover{
+    font-size: 20px;
 
-box-shadow:
-0 0 35px rgba(0,200,255,.5);
+    box-shadow:
+        inset 0 0 12px rgba(0,200,255,.03);
 
+    transition:
+        transform .18s ease,
+        border-color .18s ease,
+        box-shadow .18s ease,
+        color .18s ease;
 }
-
-h2{
-
-color:#ffe600;
-
-text-align:center;
-
-letter-spacing:2px;
 
-text-shadow:
-0 0 15px #ffe600;
-
+nav button:active {
+    transform: scale(.94);
 }
-
-/* =========================
-STATUS
-========================= */
-
-#rank{
-
-color:#00c8ff;
-
-font-size:32px;
 
-text-align:center;
+nav button:hover {
+    color: #ffe600;
 
-letter-spacing:4px;
+    border-color: #ffe600;
 
-text-shadow:
-0 0 20px #00c8ff;
-
+    box-shadow:
+        0 0 16px rgba(255,230,0,.25);
 }
-
-.counter-label{
-
-text-align:center;
-
-font-size:12px;
-
-letter-spacing:5px;
 
-color:#00c8ff;
+/* =========================================================
+   PAGES
+   ========================================================= */
 
-}
+.page {
+    display: none;
 
-#counter{
+    width: 100%;
+    max-width: 760px;
 
-text-align:center;
+    margin: 0 auto;
 
-font-size:26px;
+    padding-bottom: 35px;
 
-margin:10px;
-
+    animation: pageIn .3s ease;
 }
-
-.progress{
-
-height:28px;
-
-background:#080808;
-
-border-radius:20px;
 
-overflow:hidden;
-
-border:
-1px solid #00c8ff;
-
+.page.active {
+    display: block;
 }
-
-#bar{
-
-height:100%;
-
-width:0%;
 
-background:
-linear-gradient(
-90deg,
-#00c8ff,
-#ffe600
-);
+/* =========================================================
+   CARDS
+   ========================================================= */
 
-box-shadow:
-0 0 25px #00c8ff;
+.card {
+    position: relative;
 
-transition:.6s;
+    margin: 14px 12px;
+    padding: 20px;
 
-}
-
-#percent{
+    overflow: hidden;
 
-font-size:45px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(4, 15, 22, .96),
+            rgba(1, 5, 8, .94)
+        );
 
-text-align:center;
+    border:
+        1px solid rgba(0, 200, 255, .28);
 
-margin:15px;
+    border-radius: 18px;
 
+    box-shadow:
+        0 10px 35px rgba(0,0,0,.45),
+        inset 0 0 25px rgba(0,200,255,.025);
 }
-
-/* =========================
-INPUT
-========================= */
-
-input,
-select{
-
-width:100%;
 
-padding:16px;
+.card::before {
+    content: "";
 
-background:#000;
+    position: absolute;
 
-color:white;
+    top: 0;
+    left: 0;
 
-border:
-1px solid #00c8ff;
+    width: 70px;
+    height: 1px;
 
-border-radius:18px;
+    background: #00c8ff;
 
-font-size:16px;
-
-outline:none;
-
-margin-bottom:12px;
-
+    box-shadow:
+        0 0 10px #00c8ff;
 }
-
-input:focus,
-select:focus{
-
-border-color:#ffe600;
 
-box-shadow:
-0 0 20px #ffe600;
+.card::after {
+    content: "";
 
-}
+    position: absolute;
 
-select{
+    bottom: 0;
+    right: 0;
 
-appearance:none;
+    width: 45px;
+    height: 1px;
 
--webkit-appearance:none;
+    background: #ffe600;
 
+    box-shadow:
+        0 0 10px #ffe600;
 }
-
-/* =========================
-BUTTON
-========================= */
-
-button{
-
-background:
-linear-gradient(
-145deg,
-#050505,
-#111
-);
-
-color:#00c8ff;
 
-border:
-1px solid #00c8ff;
+h2 {
+    margin-top: 0;
 
-border-radius:18px;
+    color: #ffe600;
 
-padding:15px;
+    font-size: 18px;
+    font-weight: 800;
 
-font-weight:bold;
+    letter-spacing: .08em;
 
-cursor:pointer;
-
-transition:.3s;
-
+    text-shadow:
+        0 0 12px rgba(255,230,0,.4);
 }
-
-button:hover{
-
-background:#00c8ff;
-
-color:#000;
 
-box-shadow:
-0 0 25px #00c8ff;
-
+h3 {
+    color: #fff;
 }
-/* =========================
-FORM NUOVA MISSIONE
-========================= */
-
-.add-mission-form{
-
-display:none;
-
-margin-top:20px;
-
-padding:20px;
 
-background:
+/* =========================================================
+   HOME / JARVIS STATUS
+   ========================================================= */
 
-linear-gradient(
-145deg,
-#02080d,
-#001522
-);
-
-border:
-
-1px solid #00c8ff;
-
-border-radius:20px;
-
-box-shadow:
-
-0 0 20px rgba(0,200,255,.2);
-
+.jarvis-card {
+    text-align: center;
 }
 
+#rank {
+    margin: 20px 0;
 
-.add-mission-form.active{
+    color: #00c8ff;
 
-display:block;
+    font-size: 27px;
+    font-weight: 900;
 
-animation:formOpen .3s ease;
+    letter-spacing: .12em;
 
+    text-shadow:
+        0 0 15px rgba(0,200,255,.7);
 }
-
-
-.add-mission-form h3{
 
-margin-top:0;
+.counter-label {
+    margin-top: 15px;
 
-color:#ffe600;
+    color: rgba(0,200,255,.7);
 
-text-align:center;
+    font-size: 9px;
+    font-weight: 800;
 
-letter-spacing:2px;
-
+    letter-spacing: .3em;
 }
-
-
-.form-group{
 
-margin-bottom:15px;
+#counter {
+    margin: 7px 0 15px;
 
+    font-size: 22px;
+    font-weight: 700;
 }
 
+.progress {
+    position: relative;
 
-.form-group label{
+    width: 100%;
+    height: 12px;
 
-display:block;
+    overflow: hidden;
 
-margin-bottom:7px;
+    background: #020507;
 
-color:#00c8ff;
+    border:
+        1px solid rgba(0,200,255,.3);
 
-font-size:13px;
-
-letter-spacing:2px;
-
+    border-radius: 20px;
 }
-
-
-.form-group select{
-
-width:100%;
-
-padding:15px;
-
-background:#000;
-
-color:white;
-
-border:
-
-1px solid #00c8ff;
 
-border-radius:15px;
+#bar {
+    width: 0%;
+    height: 100%;
 
-font-size:16px;
+    background:
+        linear-gradient(
+            90deg,
+            #0077ff,
+            #00c8ff,
+            #ffe600
+        );
 
-outline:none;
+    box-shadow:
+        0 0 15px #00c8ff;
 
+    transition: width .5s ease;
 }
 
+#percent {
+    margin: 14px 0 0;
 
-.form-group select:focus{
+    font-size: 40px;
 
-border-color:#ffe600;
+    color: #ffe600;
 
-box-shadow:
-
-0 0 15px #ffe600;
-
+    text-shadow:
+        0 0 20px rgba(255,230,0,.5);
 }
-
-
-.form-buttons{
-
-display:flex;
 
-gap:10px;
+#suggestion {
+    min-height: 24px;
 
-margin-top:20px;
+    margin: 18px 0 0;
 
-}
-
+    color: #00c8ff;
 
-.form-buttons button{
+    font-size: 15px;
 
-flex:1;
-
+    line-height: 1.4;
 }
 
+/* =========================================================
+   INPUT
+   ========================================================= */
 
-.cancel-button{
+input {
+    width: 100%;
 
-border-color:#ff3b3b;
+    min-height: 50px;
 
-color:#ff5555;
-
-}
+    padding: 14px 16px;
 
+    color: white;
 
-.cancel-button:hover{
+    background:
+        rgba(0,0,0,.65);
 
-background:#ff3b3b;
+    border:
+        1px solid rgba(0,200,255,.35);
 
-color:white;
+    border-radius: 12px;
 
-box-shadow:
+    outline: none;
 
-0 0 20px #ff3b3b;
+    font-size: 16px;
 
+    -webkit-appearance: none;
 }
 
-
-.add-button{
-
-border-color:#ffe600;
-
-color:#ffe600;
-
+input::placeholder {
+    color: rgba(255,255,255,.4);
 }
-
 
-.add-button:hover{
+input:focus {
+    border-color: #00c8ff;
 
-background:#ffe600;
-
-color:#000;
-
-box-shadow:
-
-0 0 20px #ffe600;
-
+    box-shadow:
+        0 0 18px rgba(0,200,255,.2);
 }
-
 
-@keyframes formOpen{
+/* =========================================================
+   BUTTONS
+   ========================================================= */
 
-from{
+button {
+    min-height: 48px;
 
-opacity:0;
+    margin-top: 10px;
 
-transform:translateY(-10px);
+    padding: 12px 16px;
 
-}
+    color: #00c8ff;
 
+    background:
+        linear-gradient(
+            145deg,
+            rgba(0,200,255,.08),
+            rgba(0,0,0,.7)
+        );
 
-to{
+    border:
+        1px solid rgba(0,200,255,.4);
 
-opacity:1;
+    border-radius: 12px;
 
-transform:translateY(0);
+    font-size: 14px;
+    font-weight: 800;
 
-}
+    cursor: pointer;
 
+    transition:
+        transform .15s ease,
+        background .15s ease,
+        color .15s ease,
+        border-color .15s ease,
+        box-shadow .15s ease;
 }
-
-
-
-/* =========================
-SELETTORE POSIZIONE
-========================= */
-
-.position-info{
-
-margin-top:10px;
-
-padding:12px;
-
-border:
-
-1px solid #003b55;
-
-border-radius:12px;
 
-background:rgba(0,200,255,.05);
-
-color:#aaa;
-
-font-size:13px;
-
-text-align:center;
-
+button:active {
+    transform: scale(.96);
 }
 
+button:hover {
+    color: #000;
 
-.position-info strong{
+    background: #00c8ff;
 
-color:#00c8ff;
+    border-color: #00c8ff;
 
+    box-shadow:
+        0 0 18px rgba(0,200,255,.45);
 }
-
 
+/* =========================================================
+   MISSION LIST
+   ========================================================= */
 
-/* =========================
-GRUPPI MISSIONI
-========================= */
-
-.mission-group{
-
-margin-bottom:25px;
-
+#missionsList {
+    padding-bottom: 20px;
 }
-
-
-.mission-group-title{
-
-display:flex;
-
-align-items:center;
-
-justify-content:space-between;
-
-margin:
-
-30px 15px 10px;
-
-padding:
-
-10px 15px;
-
-border-left:
-
-3px solid #00c8ff;
-
-background:
 
-linear-gradient(
-90deg,
-rgba(0,200,255,.12),
-transparent
-);
+#missionsList h2 {
+    position: relative;
 
-}
+    margin:
+        25px
+        15px
+        10px;
 
+    padding:
+        10px
+        12px;
 
-.mission-group-title h2{
+    color: #ffe600;
 
-margin:0;
+    text-align: left;
 
-text-align:left;
+    font-size: 14px;
 
-font-size:22px;
+    border-left:
+        3px solid #ffe600;
 
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255,230,0,.07),
+            transparent
+        );
 }
-
-
-.mission-type{
-
-font-size:11px;
-
-color:#00c8ff;
 
-letter-spacing:2px;
+.mission {
+    position: relative;
 
-}
+    display: flex;
+    align-items: center;
 
+    gap: 10px;
 
+    margin: 7px 12px;
 
-/* =========================
-MISSION ACTIONS
-========================= */
+    min-height: 58px;
 
-.mission-actions{
+    padding: 9px 10px;
 
-display:flex;
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0,200,255,.045),
+            rgba(0,0,0,.55)
+        );
 
-align-items:center;
+    border:
+        1px solid rgba(0,200,255,.15);
 
-gap:8px;
+    border-radius: 13px;
 
+    transition:
+        border-color .18s ease,
+        transform .18s ease,
+        background .18s ease;
 }
-
-
-.mission-favorite{
-
-width:42px;
-
-height:42px;
 
-padding:0;
+.mission:hover {
+    border-color: rgba(0,200,255,.55);
 
-display:flex;
+    transform: translateX(2px);
 
-align-items:center;
-
-justify-content:center;
-
-font-size:20px;
-
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0,200,255,.09),
+            rgba(0,0,0,.6)
+        );
 }
-
-
-.mission-delete{
-
-width:42px;
-
-height:42px;
-
-padding:0;
-
-display:flex;
-
-align-items:center;
 
-justify-content:center;
+.mission span {
+    flex: 1;
 
-color:#ff4d4d;
+    min-width: 0;
 
-border-color:#ff4d4d;
+    color: #eaf8ff;
 
-font-size:18px;
+    font-size: 14px;
+    line-height: 1.3;
 
+    cursor: pointer;
 }
 
+.mission input {
+    flex: 0 0 auto;
 
-.mission-delete:hover{
+    width: 21px;
+    height: 21px;
 
-background:#ff4d4d;
+    min-height: 0;
 
-color:white;
+    margin: 0;
+    padding: 0;
 
-box-shadow:
+    accent-color: #ffe600;
 
-0 0 20px #ff4d4d;
-
-}
-
-
-/* Evita che il click sui pulsanti
-apra la scheda missione */
-
-.mission-actions button{
-
-flex-shrink:0;
-
+    cursor: pointer;
 }
 
+.mission button {
+    flex: 0 0 auto;
 
+    width: 40px;
+    min-height: 40px;
 
-/* =========================
-MISSIONE PERSONALIZZATA
-========================= */
+    margin: 0;
+    padding: 5px;
 
-.custom-mission{
+    border-radius: 10px;
 
-border-color:#ffe600;
-
+    font-size: 17px;
 }
-
-
-.custom-mission::before{
 
-content:"CUSTOM";
+/* =========================================================
+   COMPLETED
+   ========================================================= */
 
-font-size:9px;
+.done {
+    color: #ffe600 !important;
 
-letter-spacing:1px;
+    text-decoration: line-through;
 
-color:#ffe600;
-
+    opacity: .65;
 }
-
-
-
-/* =========================
-X-MEN
-========================= */
-
-.xmen-section{
 
-border-color:#ff1744;
+/* =========================================================
+   FAVORITES
+   ========================================================= */
 
-box-shadow:
-
-0 0 25px rgba(255,23,68,.2);
-
+#favoritesList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
-
-
-.xmen-title{
-
-color:#ff1744!important;
 
-text-shadow:
+#favoritesList p {
+    margin: 0;
 
-0 0 15px #ff1744!important;
+    padding: 13px;
 
-}
-
+    color: #fff;
 
-.xmen-badge{
+    background:
+        rgba(255,230,0,.035);
 
-color:#ff1744;
+    border:
+        1px solid rgba(255,230,0,.15);
 
-border-color:#ff1744;
+    border-radius: 10px;
 
+    font-size: 14px;
 }
-
-
-
-/* =========================
-PREFERITI
-========================= */
-
-.favorite-item{
-
-display:flex;
-
-align-items:center;
-
-gap:10px;
-
-margin:10px 0;
 
-padding:15px;
+/* =========================================================
+   STATS
+   ========================================================= */
 
-background:#050505;
+#stats .card p {
+    display: flex;
+    justify-content: space-between;
 
-border:
+    margin: 10px 0;
 
-1px solid #003b55;
+    padding: 13px;
 
-border-radius:15px;
+    color: #bdeeff;
 
-}
-
+    background:
+        rgba(0,200,255,.035);
 
-.favorite-item span{
+    border-radius: 10px;
 
-flex:1;
-
+    border-left:
+        2px solid #00c8ff;
 }
-
-
-.favorite-item button{
 
-padding:10px;
+/* =========================================================
+   BADGES
+   ========================================================= */
 
+#badgesList {
+    padding-bottom: 20px;
 }
-
-
-
-/* =========================
-STATISTICHE
-========================= */
-
-.stat-line{
-
-display:flex;
-
-align-items:center;
 
-justify-content:space-between;
+.badge {
+    position: relative;
 
-padding:14px 0;
+    margin: 10px 12px;
 
-border-bottom:
+    padding: 17px;
 
-1px solid #003b55;
+    color: #9ab2bd;
 
-}
-
+    text-align: center;
 
-.stat-line:last-child{
-
-border-bottom:none;
-
-}
+    background:
+        linear-gradient(
+            145deg,
+            #050b0f,
+            #020405
+        );
 
+    border:
+        1px solid rgba(0,200,255,.12);
 
-.stat-label{
+    border-radius: 14px;
 
-color:#00c8ff;
+    font-size: 14px;
+    font-weight: 800;
 
+    letter-spacing: .04em;
 }
 
+.badge.unlocked {
+    color: #ffe600;
 
-.stat-value{
+    border-color:
+        rgba(255,230,0,.55);
 
-color:#ffe600;
-
-font-weight:bold;
-
+    box-shadow:
+        0 0 18px rgba(255,230,0,.15);
 }
-
-
-
-/* =========================
-MISSION CARD
-========================= */
 
-.modal-box{
-
-position:relative;
-
+.badge.locked {
+    opacity: .35;
 }
-
-
-.modal-close{
-
-position:absolute;
-
-top:12px;
-
-right:12px;
-
-width:40px;
-
-height:40px;
-
-padding:0;
 
-display:flex;
+/* =========================================================
+   MODAL
+   ========================================================= */
 
-align-items:center;
+.modal {
+    display: none;
 
-justify-content:center;
+    position: fixed;
+    inset: 0;
 
-}
-
+    z-index: 99998;
 
-.card-actions{
+    align-items: center;
+    justify-content: center;
 
-display:flex;
+    padding: 20px;
 
-gap:10px;
+    background:
+        rgba(0,0,0,.86);
 
-margin-top:25px;
-
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
+.modal-box {
+    position: relative;
 
-.card-actions button{
+    width: min(100%, 430px);
 
-flex:1;
-
-}
+    padding: 24px;
 
+    background:
+        linear-gradient(
+            145deg,
+            #07141c,
+            #020608
+        );
 
-.card-delete{
+    border:
+        1px solid #00c8ff;
 
-color:#ff4d4d;
+    border-radius: 20px;
 
-border-color:#ff4d4d;
+    box-shadow:
+        0 0 35px rgba(0,200,255,.35),
+        inset 0 0 25px rgba(0,200,255,.04);
 
+    animation: modalOpen .25s ease;
 }
 
+.modal-box h2 {
+    padding-right: 45px;
 
-.card-delete:hover{
+    color: #ffe600;
 
-background:#ff4d4d;
+    font-size: 22px;
 
-color:white;
-
-box-shadow:
-
-0 0 20px #ff4d4d;
-
+    text-align: left;
 }
-
-
-
-/* =========================
-TOAST / MESSAGGI
-========================= */
-
-.toast{
-
-position:fixed;
-
-left:50%;
-
-bottom:25px;
-
-transform:
-
-translateX(-50%)
-translateY(100px);
-
-z-index:100000;
-
-padding:14px 20px;
-
-background:#050505;
-
-border:
 
-1px solid #00c8ff;
+.modal-box p {
+    margin: 12px 0;
 
-border-radius:15px;
+    color: #ccefff;
 
-color:#00c8ff;
-
-box-shadow:
-
-0 0 25px rgba(0,200,255,.5);
-
-opacity:0;
-
-pointer-events:none;
-
-transition:.3s;
-
+    font-size: 14px;
 }
 
+.modal-box button {
+    position: absolute;
 
-.toast.show{
+    top: 12px;
+    right: 12px;
 
-opacity:1;
+    width: 40px;
+    min-height: 40px;
 
-transform:
+    margin: 0;
+    padding: 0;
 
-translateX(-50%)
-translateY(0);
+    color: #ff6670;
 
+    border-color:
+        rgba(255,100,110,.4);
 }
-
 
-.toast.error{
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
 
-border-color:#ff4d4d;
-
-color:#ff4d4d;
-
+::-webkit-scrollbar {
+    width: 4px;
 }
-
 
-
-/* =========================
-TOUCH IPHONE
-========================= */
-
-button,
-.mission,
-.mission span{
-
--webkit-tap-highlight-color:transparent;
-
+::-webkit-scrollbar-track {
+    background: #000;
 }
-
 
-button{
+::-webkit-scrollbar-thumb {
+    background: #006d91;
 
-touch-action:manipulation;
-
+    border-radius: 10px;
 }
-
 
-.mission span{
-
-cursor:pointer;
-
-}
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
+@media (max-width: 600px) {
 
-@media(max-width:600px){
+    header {
+        padding-top: 22px;
+    }
 
-.add-mission-form{
+    header h1 {
+        font-size: 52px;
+    }
 
-margin-top:15px;
+    header p {
+        font-size: 9px;
+        letter-spacing: .28em;
+    }
 
-}
+    .reactor {
+        width: 125px;
+        height: 125px;
+    }
 
+    #boot h1 {
+        font-size: 27px;
+        letter-spacing: .18em;
+    }
 
-.form-buttons{
+    #boot p {
+        font-size: 11px;
+    }
 
-flex-direction:column;
+    nav {
+        padding: 8px 10px;
+    }
 
-}
+    nav button {
+        min-height: 45px;
+        font-size: 19px;
+    }
 
+    .card {
+        margin: 10px;
+        padding: 17px;
+        border-radius: 16px;
+    }
 
-.form-buttons button{
+    .mission {
+        margin-left: 8px;
+        margin-right: 8px;
+    }
 
-width:100%;
+    .mission span {
+        font-size: 13px;
+    }
 
+    #missionsList h2 {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
 }
 
+/* =========================================================
+   SAFE AREA IPHONE
+   ========================================================= */
 
-.mission{
+@supports (padding: env(safe-area-inset-top)) {
 
-padding:14px 10px;
+    header {
+        padding-top:
+            calc(22px + env(safe-area-inset-top));
+    }
 
-gap:8px;
-
+    nav {
+        padding-bottom:
+            calc(8px + env(safe-area-inset-bottom));
+    }
 }
 
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
 
-.mission span{
+@keyframes bootLoading {
+    from {
+        transform: translateX(0);
+    }
 
-font-size:14px;
-
+    to {
+        transform: translateX(400%);
+    }
 }
-
 
-.mission-actions{
+@keyframes bootScreen {
+    0%,
+    82% {
+        opacity: 1;
+        visibility: visible;
+    }
 
-gap:5px;
-
+    100% {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
 }
-
 
-.mission-favorite,
-.mission-delete{
+@keyframes bootPanel {
+    from {
+        opacity: 0;
+        transform: scale(.96);
+    }
 
-width:38px;
-
-height:38px;
-
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
-
 
-.mission-group-title{
+@keyframes reactorPulse {
+    from {
+        transform: scale(1);
+    }
 
-margin-left:10px;
-
-margin-right:10px;
-
+    to {
+        transform: scale(1.06);
+    }
 }
 
+@keyframes reactorSpin {
+    from {
+        transform: rotate(0deg);
+    }
 
-.mission-group-title h2{
-
-font-size:19px;
-
+    to {
+        transform: rotate(360deg);
+    }
 }
-
 
-.mission-type{
+@keyframes pageIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
 
-font-size:9px;
-
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
-
-
-.modal-box{
 
-width:92%;
-
-padding:25px 18px;
-
-}
+@keyframes modalOpen {
+    from {
+        opacity: 0;
+        transform: scale(.92) translateY(10px);
+    }
 
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
