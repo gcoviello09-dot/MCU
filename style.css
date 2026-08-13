@@ -1,1194 +1,1088 @@
-/* =========================================================
-   MCU MISSION CONTROL UNIT
-   JARVIS HUD UI
-   ========================================================= */
-
-* {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
+*{
+box-sizing:border-box;
 }
 
-html {
-    min-height: 100%;
-    background: #020508;
+
+body{
+
+margin:0;
+
+min-height:100vh;
+
+background:
+radial-gradient(circle at top,#00263d 0%,#000 45%);
+
+color:white;
+
+font-family:
+-apple-system,
+BlinkMacSystemFont,
+"Segoe UI",
+sans-serif;
+
+overflow-x:hidden;
+
 }
 
-body {
-    margin: 0;
-    min-height: 100vh;
-    overflow-x: hidden;
 
-    color: #f4faff;
 
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
+/* =========================
+JARVIS BOOT SCREEN
+========================= */
 
-    background:
-        radial-gradient(
-            circle at 50% -10%,
-            rgba(0, 180, 255, .20),
-            transparent 35%
-        ),
-        radial-gradient(
-            circle at 100% 50%,
-            rgba(0, 100, 255, .08),
-            transparent 35%
-        ),
-        linear-gradient(
-            180deg,
-            #020a10 0%,
-            #010305 55%,
-            #000 100%
-        );
+
+#boot{
+
+position:fixed;
+
+inset:0;
+
+background:
+
+radial-gradient(circle,#001522,#000 70%);
+
+z-index:9999;
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+justify-content:center;
+
+animation:boot 4s forwards;
+
 }
 
-/* =========================================================
-   SCANLINES / HUD OVERLAY
-   ========================================================= */
 
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
 
-    pointer-events: none;
-    z-index: 5000;
+.boot-panel{
 
-    opacity: .08;
+text-align:center;
 
-    background:
-        repeating-linear-gradient(
-            180deg,
-            transparent 0px,
-            transparent 3px,
-            rgba(0, 200, 255, .15) 4px
-        );
+animation:panelGlow 2s infinite alternate;
+
 }
 
-/* =========================================================
-   BOOT SCREEN
-   ========================================================= */
 
-#boot {
-    position: fixed;
-    inset: 0;
 
-    z-index: 99999;
+#boot h1{
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+font-size:42px;
 
-    background:
-        radial-gradient(
-            circle at center,
-            #031a27 0%,
-            #01070b 45%,
-            #000 75%
-        );
+letter-spacing:10px;
 
-    animation: bootScreen 3.5s forwards;
+margin-top:35px;
+
+color:#ffe600;
+
+text-shadow:
+
+0 0 15px #ffe600,
+
+0 0 40px #ffe600;
+
 }
 
-.boot-panel {
-    text-align: center;
-    width: min(90%, 420px);
 
-    animation: bootPanel 1.2s ease;
+
+#boot p{
+
+color:#00c8ff;
+
+letter-spacing:6px;
+
+font-size:18px;
+
+text-shadow:
+
+0 0 15px #00c8ff;
+
 }
 
-#boot h1 {
-    margin: 28px 0 8px;
 
-    font-size: clamp(28px, 8vw, 42px);
-    font-weight: 800;
 
-    letter-spacing: .25em;
+.boot-status{
 
-    color: #ffe600;
+font-size:13px!important;
 
-    text-shadow:
-        0 0 8px rgba(255, 230, 0, .9),
-        0 0 25px rgba(255, 230, 0, .6);
+opacity:.8;
+
 }
 
-#boot p {
-    margin: 8px 0;
 
-    color: #00c8ff;
 
-    font-size: 14px;
-    font-weight: 600;
+.boot-line{
 
-    letter-spacing: .35em;
+width:260px;
 
-    text-shadow:
-        0 0 12px rgba(0, 200, 255, .8);
+height:4px;
+
+background:#111;
+
+border-radius:10px;
+
+overflow:hidden;
+
+margin:25px auto;
+
 }
 
-.boot-status {
-    font-size: 11px !important;
-    letter-spacing: .2em !important;
-    opacity: .7;
+
+
+.boot-line::after{
+
+content:"";
+
+display:block;
+
+height:100%;
+
+width:50%;
+
+background:#00c8ff;
+
+box-shadow:
+
+0 0 20px #00c8ff;
+
+animation:loading 1.8s infinite;
+
 }
 
-.boot-line {
-    position: relative;
 
-    width: 230px;
-    height: 3px;
 
-    margin: 22px auto;
+@keyframes loading{
 
-    overflow: hidden;
+0%{
 
-    background: rgba(255,255,255,.08);
+transform:translateX(-150%);
 
-    border-radius: 20px;
 }
 
-.boot-line::after {
-    content: "";
 
-    position: absolute;
-    top: 0;
-    left: -50%;
+100%{
 
-    width: 50%;
-    height: 100%;
+transform:translateX(300%);
 
-    background: #00c8ff;
-
-    box-shadow:
-        0 0 15px #00c8ff;
-
-    animation: bootLoading 1.2s infinite;
 }
 
-/* =========================================================
-   REACTOR
-   ========================================================= */
+}
+
+
 
 .reactor,
-.mini-reactor {
-    position: relative;
+.mini-reactor{
 
-    border-radius: 50%;
+border-radius:50%;
 
-    background:
-        radial-gradient(
-            circle,
-            #fff 0%,
-            #dffaff 8%,
-            #00c8ff 24%,
-            #0077ff 43%,
-            #031c35 68%,
-            #000 100%
-        );
+background:
 
-    box-shadow:
-        0 0 15px #00c8ff,
-        0 0 40px rgba(0, 153, 255, .8),
-        0 0 90px rgba(0, 102, 255, .35),
-        inset 0 0 20px #fff;
+radial-gradient(circle,
 
-    animation: reactorPulse 1.8s infinite alternate;
-}
+white 0%,
 
-.reactor::before,
-.mini-reactor::before {
-    content: "";
+#00c8ff 20%,
 
-    position: absolute;
-    inset: 12%;
+#0066ff 45%,
 
-    border: 1px solid rgba(255,255,255,.8);
+#00152b 75%);
 
-    border-radius: 50%;
 
-    animation: reactorSpin 6s linear infinite;
-}
+box-shadow:
 
-.reactor::after,
-.mini-reactor::after {
-    content: "";
+0 0 30px #00c8ff,
 
-    position: absolute;
-    inset: -15%;
+0 0 70px #0066ff,
 
-    border: 1px solid rgba(0,200,255,.25);
+inset 0 0 25px white;
 
-    border-radius: 50%;
 }
 
-.reactor {
-    width: 145px;
-    height: 145px;
-}
 
-.mini-reactor {
-    width: 58px;
-    height: 58px;
 
-    margin: 0 auto;
-}
+.reactor{
 
-/* =========================================================
-   HEADER
-   ========================================================= */
+width:170px;
 
-header {
-    position: relative;
+height:170px;
 
-    text-align: center;
+animation:
 
-    padding:
-        28px
-        20px
-        20px;
+pulse 1.5s infinite alternate;
 
-    border-bottom:
-        1px solid rgba(0, 200, 255, .16);
 }
 
-header::before {
-    content: "STARK INDUSTRIES // MISSION CONTROL";
 
-    display: block;
 
-    margin-bottom: 15px;
+.mini-reactor{
 
-    color: rgba(0, 200, 255, .55);
+width:65px;
 
-    font-size: 9px;
-    font-weight: 700;
+height:65px;
 
-    letter-spacing: .25em;
+margin:auto;
+
 }
+
 
-header h1 {
-    margin: 12px 0 2px;
 
-    font-size: clamp(48px, 16vw, 72px);
-    line-height: .9;
+@keyframes pulse{
 
-    font-weight: 900;
-    letter-spacing: .12em;
+from{
 
-    color: #ffe600;
+transform:scale(1);
 
-    text-shadow:
-        0 0 8px rgba(255,230,0,.9),
-        0 0 30px rgba(255,230,0,.45);
 }
 
-header p {
-    margin: 12px 0 0;
 
-    color: #00c8ff;
+to{
 
-    font-size: 11px;
-    font-weight: 700;
+transform:scale(1.12);
 
-    letter-spacing: .35em;
+}
 
-    opacity: .9;
 }
 
-header::after {
-    content: "";
 
-    display: block;
 
-    width: 75%;
-    max-width: 350px;
-    height: 1px;
+@keyframes panelGlow{
 
-    margin: 20px auto 0;
+from{
 
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            #00c8ff,
-            transparent
-        );
+opacity:.8;
 
-    box-shadow:
-        0 0 12px #00c8ff;
 }
+
+
+to{
 
-/* =========================================================
-   NAVIGATION
-   ========================================================= */
+opacity:1;
 
-nav {
-    position: sticky;
-    top: 0;
+}
+
+}
 
-    z-index: 1000;
 
-    display: flex;
-    gap: 8px;
 
-    padding: 10px 12px;
+@keyframes boot{
 
-    background:
-        rgba(1, 7, 11, .88);
+0%,80%{
 
-    border-bottom:
-        1px solid rgba(0, 200, 255, .15);
+opacity:1;
 
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
 }
 
-nav button {
-    position: relative;
 
-    flex: 1;
+100%{
 
-    min-height: 48px;
+opacity:0;
 
-    padding: 10px;
+visibility:hidden;
 
-    color: #6edfff;
+}
 
-    background:
-        linear-gradient(
-            180deg,
-            rgba(0, 200, 255, .08),
-            rgba(0, 0, 0, .55)
-        );
+}
+/* =========================
+HEADER MCU HUD
+========================= */
 
-    border:
-        1px solid rgba(0, 200, 255, .28);
 
-    border-radius: 12px;
+header{
 
-    font-size: 20px;
+text-align:center;
 
-    box-shadow:
-        inset 0 0 12px rgba(0,200,255,.03);
+padding:25px 20px;
 
-    transition:
-        transform .18s ease,
-        border-color .18s ease,
-        box-shadow .18s ease,
-        color .18s ease;
 }
 
-nav button:active {
-    transform: scale(.94);
-}
 
-nav button:hover {
-    color: #ffe600;
 
-    border-color: #ffe600;
+header h1{
 
-    box-shadow:
-        0 0 16px rgba(255,230,0,.25);
-}
+font-size:65px;
 
-/* =========================================================
-   PAGES
-   ========================================================= */
+margin:15px 0 5px;
 
-.page {
-    display: none;
+letter-spacing:8px;
 
-    width: 100%;
-    max-width: 760px;
+color:#ffe600;
 
-    margin: 0 auto;
+text-shadow:
 
-    padding-bottom: 35px;
+0 0 15px #ffe600,
 
-    animation: pageIn .3s ease;
-}
+0 0 35px #ffe600;
 
-.page.active {
-    display: block;
 }
 
-/* =========================================================
-   CARDS
-   ========================================================= */
 
-.card {
-    position: relative;
 
-    margin: 14px 12px;
-    padding: 20px;
+header p{
 
-    overflow: hidden;
+margin:0;
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(4, 15, 22, .96),
-            rgba(1, 5, 8, .94)
-        );
+color:#00c8ff;
 
-    border:
-        1px solid rgba(0, 200, 255, .28);
+letter-spacing:6px;
 
-    border-radius: 18px;
+font-size:14px;
 
-    box-shadow:
-        0 10px 35px rgba(0,0,0,.45),
-        inset 0 0 25px rgba(0,200,255,.025);
 }
+
+
+
+header::after{
 
-.card::before {
-    content: "";
+content:"";
 
-    position: absolute;
+display:block;
 
-    top: 0;
-    left: 0;
+height:1px;
 
-    width: 70px;
-    height: 1px;
+margin-top:25px;
 
-    background: #00c8ff;
+background:
 
-    box-shadow:
-        0 0 10px #00c8ff;
+linear-gradient(
+90deg,
+transparent,
+#00c8ff,
+transparent
+);
+
 }
+
+
 
-.card::after {
-    content: "";
+/* =========================
+MENU JARVIS
+========================= */
 
-    position: absolute;
 
-    bottom: 0;
-    right: 0;
+nav{
 
-    width: 45px;
-    height: 1px;
+display:flex;
 
-    background: #ffe600;
+gap:12px;
 
-    box-shadow:
-        0 0 10px #ffe600;
+padding:15px;
+
 }
 
-h2 {
-    margin-top: 0;
 
-    color: #ffe600;
 
-    font-size: 18px;
-    font-weight: 800;
+nav button{
 
-    letter-spacing: .08em;
+flex:1;
 
-    text-shadow:
-        0 0 12px rgba(255,230,0,.4);
-}
+height:55px;
 
-h3 {
-    color: #fff;
-}
+background:
 
-/* =========================================================
-   HOME / JARVIS STATUS
-   ========================================================= */
+linear-gradient(
+145deg,
+#050505,
+#111
+);
 
-.jarvis-card {
-    text-align: center;
-}
+border:
 
-#rank {
-    margin: 20px 0;
+1px solid #00c8ff;
 
-    color: #00c8ff;
+color:white;
 
-    font-size: 27px;
-    font-weight: 900;
+border-radius:18px;
 
-    letter-spacing: .12em;
+font-size:22px;
 
-    text-shadow:
-        0 0 15px rgba(0,200,255,.7);
+transition:.3s;
+
+box-shadow:
+
+0 0 10px rgba(0,200,255,.3);
+
 }
 
-.counter-label {
-    margin-top: 15px;
 
-    color: rgba(0,200,255,.7);
 
-    font-size: 9px;
-    font-weight: 800;
+nav button:hover{
 
-    letter-spacing: .3em;
-}
+border-color:#ffe600;
+
+color:#ffe600;
+
+box-shadow:
+
+0 0 25px #ffe600;
 
-#counter {
-    margin: 7px 0 15px;
+transform:
 
-    font-size: 22px;
-    font-weight: 700;
+translateY(-4px);
+
 }
+
+
 
-.progress {
-    position: relative;
 
-    width: 100%;
-    height: 12px;
 
-    overflow: hidden;
+/* =========================
+PAGINE
+========================= */
 
-    background: #020507;
 
-    border:
-        1px solid rgba(0,200,255,.3);
+.page{
 
-    border-radius: 20px;
+display:none;
+
+animation:pageOpen .4s ease;
+
 }
 
-#bar {
-    width: 0%;
-    height: 100%;
 
-    background:
-        linear-gradient(
-            90deg,
-            #0077ff,
-            #00c8ff,
-            #ffe600
-        );
 
-    box-shadow:
-        0 0 15px #00c8ff;
+.page.active{
 
-    transition: width .5s ease;
+display:block;
+
 }
+
 
-#percent {
-    margin: 14px 0 0;
 
-    font-size: 40px;
+@keyframes pageOpen{
 
-    color: #ffe600;
+from{
 
-    text-shadow:
-        0 0 20px rgba(255,230,0,.5);
+opacity:0;
+
+transform:translateY(10px);
+
 }
+
 
-#suggestion {
-    min-height: 24px;
+to{
 
-    margin: 18px 0 0;
+opacity:1;
 
-    color: #00c8ff;
+transform:translateY(0);
 
-    font-size: 15px;
+}
 
-    line-height: 1.4;
 }
+
+
+
+
+
+/* =========================
+CARDS JARVIS
+========================= */
+
+
+.card{
+
+margin:18px;
+
+padding:25px;
+
+background:
 
-/* =========================================================
-   INPUT
-   ========================================================= */
+linear-gradient(
+145deg,
+rgba(5,5,5,.95),
+rgba(0,20,35,.8)
+);
 
-input {
-    width: 100%;
 
-    min-height: 50px;
+border:
 
-    padding: 14px 16px;
+1px solid #00c8ff;
 
-    color: white;
 
-    background:
-        rgba(0,0,0,.65);
+border-radius:25px;
 
-    border:
-        1px solid rgba(0,200,255,.35);
 
-    border-radius: 12px;
+box-shadow:
 
-    outline: none;
+0 0 25px rgba(0,200,255,.25),
 
-    font-size: 16px;
+inset 0 0 20px rgba(0,200,255,.08);
 
-    -webkit-appearance: none;
+
 }
+
+
 
-input::placeholder {
-    color: rgba(255,255,255,.4);
+.card:hover{
+
+box-shadow:
+
+0 0 35px rgba(0,200,255,.5);
+
 }
+
 
-input:focus {
-    border-color: #00c8ff;
 
-    box-shadow:
-        0 0 18px rgba(0,200,255,.2);
+h2{
+
+color:#ffe600;
+
+text-align:center;
+
+letter-spacing:2px;
+
+text-shadow:
+
+0 0 15px #ffe600;
+
 }
 
-/* =========================================================
-   BUTTONS
-   ========================================================= */
 
-button {
-    min-height: 48px;
 
-    margin-top: 10px;
 
-    padding: 12px 16px;
 
-    color: #00c8ff;
+/* =========================
+STATUS SYSTEM
+========================= */
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(0,200,255,.08),
-            rgba(0,0,0,.7)
-        );
 
-    border:
-        1px solid rgba(0,200,255,.4);
+#rank{
 
-    border-radius: 12px;
+color:#00c8ff;
 
-    font-size: 14px;
-    font-weight: 800;
+font-size:32px;
 
-    cursor: pointer;
+text-align:center;
 
-    transition:
-        transform .15s ease,
-        background .15s ease,
-        color .15s ease,
-        border-color .15s ease,
-        box-shadow .15s ease;
-}
+letter-spacing:4px;
 
-button:active {
-    transform: scale(.96);
+text-shadow:
+
+0 0 20px #00c8ff;
+
 }
+
 
-button:hover {
-    color: #000;
 
-    background: #00c8ff;
+.counter-label{
 
-    border-color: #00c8ff;
+text-align:center;
 
-    box-shadow:
-        0 0 18px rgba(0,200,255,.45);
+font-size:12px;
+
+letter-spacing:5px;
+
+color:#00c8ff;
+
 }
+
 
-/* =========================================================
-   MISSION LIST
-   ========================================================= */
 
-#missionsList {
-    padding-bottom: 20px;
+#counter{
+
+text-align:center;
+
+font-size:26px;
+
+margin:10px;
+
 }
+
 
-#missionsList h2 {
-    position: relative;
 
-    margin:
-        25px
-        15px
-        10px;
+.progress{
 
-    padding:
-        10px
-        12px;
+height:28px;
 
-    color: #ffe600;
+background:#080808;
 
-    text-align: left;
+border-radius:20px;
 
-    font-size: 14px;
+overflow:hidden;
 
-    border-left:
-        3px solid #ffe600;
+border:
 
-    background:
-        linear-gradient(
-            90deg,
-            rgba(255,230,0,.07),
-            transparent
-        );
+1px solid #00c8ff;
+
 }
+
 
-.mission {
-    position: relative;
 
-    display: flex;
-    align-items: center;
+#bar{
 
-    gap: 10px;
+height:100%;
 
-    margin: 7px 12px;
+background:
 
-    min-height: 58px;
+linear-gradient(
+90deg,
+#00c8ff,
+#ffe600
+);
 
-    padding: 9px 10px;
 
-    background:
-        linear-gradient(
-            90deg,
-            rgba(0,200,255,.045),
-            rgba(0,0,0,.55)
-        );
+box-shadow:
 
-    border:
-        1px solid rgba(0,200,255,.15);
+0 0 25px #00c8ff;
 
-    border-radius: 13px;
+transition:.6s;
 
-    transition:
-        border-color .18s ease,
-        transform .18s ease,
-        background .18s ease;
 }
 
-.mission:hover {
-    border-color: rgba(0,200,255,.55);
 
-    transform: translateX(2px);
 
-    background:
-        linear-gradient(
-            90deg,
-            rgba(0,200,255,.09),
-            rgba(0,0,0,.6)
-        );
+#percent{
+
+font-size:45px;
+
+text-align:center;
+
+margin:15px;
+
 }
+/* =========================
+INPUT E BUTTON
+========================= */
 
-.mission span {
-    flex: 1;
 
-    min-width: 0;
+input{
 
-    color: #eaf8ff;
+width:100%;
 
-    font-size: 14px;
-    line-height: 1.3;
+padding:16px;
 
-    cursor: pointer;
-}
+background:#000;
 
-.mission input {
-    flex: 0 0 auto;
+color:white;
 
-    width: 21px;
-    height: 21px;
+border:
 
-    min-height: 0;
+1px solid #00c8ff;
 
-    margin: 0;
-    padding: 0;
+border-radius:18px;
 
-    accent-color: #ffe600;
+font-size:16px;
 
-    cursor: pointer;
+outline:none;
+
 }
+
 
-.mission button {
-    flex: 0 0 auto;
 
-    width: 40px;
-    min-height: 40px;
+input:focus{
 
-    margin: 0;
-    padding: 5px;
+border-color:#ffe600;
 
-    border-radius: 10px;
+box-shadow:
 
-    font-size: 17px;
+0 0 20px #ffe600;
+
 }
 
-/* =========================================================
-   COMPLETED
-   ========================================================= */
 
-.done {
-    color: #ffe600 !important;
 
-    text-decoration: line-through;
 
-    opacity: .65;
-}
 
-/* =========================================================
-   FAVORITES
-   ========================================================= */
+button{
 
-#favoritesList {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
+background:
 
-#favoritesList p {
-    margin: 0;
+linear-gradient(
+145deg,
+#050505,
+#111
+);
 
-    padding: 13px;
+color:#00c8ff;
 
-    color: #fff;
+border:
 
-    background:
-        rgba(255,230,0,.035);
+1px solid #00c8ff;
 
-    border:
-        1px solid rgba(255,230,0,.15);
+border-radius:18px;
 
-    border-radius: 10px;
+padding:15px;
 
-    font-size: 14px;
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.3s;
+
 }
 
-/* =========================================================
-   STATS
-   ========================================================= */
 
-#stats .card p {
-    display: flex;
-    justify-content: space-between;
 
-    margin: 10px 0;
+button:hover{
 
-    padding: 13px;
+background:#00c8ff;
 
-    color: #bdeeff;
+color:#000;
 
-    background:
-        rgba(0,200,255,.035);
+box-shadow:
 
-    border-radius: 10px;
+0 0 25px #00c8ff;
 
-    border-left:
-        2px solid #00c8ff;
 }
+
 
-/* =========================================================
-   BADGES
-   ========================================================= */
 
-#badgesList {
-    padding-bottom: 20px;
+
+
+/* =========================
+MISSIONI
+========================= */
+
+
+#missionsList h2{
+
+margin-top:30px;
+
+font-size:24px;
+
 }
+
+
+
+.mission{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+margin:12px 15px;
 
-.badge {
-    position: relative;
+padding:18px;
 
-    margin: 10px 12px;
 
-    padding: 17px;
+background:
 
-    color: #9ab2bd;
+linear-gradient(
+90deg,
+#050505,
+#001522
+);
 
-    text-align: center;
 
-    background:
-        linear-gradient(
-            145deg,
-            #050b0f,
-            #020405
-        );
+border:
 
-    border:
-        1px solid rgba(0,200,255,.12);
+1px solid #003b55;
 
-    border-radius: 14px;
 
-    font-size: 14px;
-    font-weight: 800;
+border-radius:18px;
 
-    letter-spacing: .04em;
+
+transition:.3s;
+
 }
+
+
+
+.mission:hover{
+
+border-color:#00c8ff;
 
-.badge.unlocked {
-    color: #ffe600;
+box-shadow:
 
-    border-color:
-        rgba(255,230,0,.55);
+0 0 20px rgba(0,200,255,.5);
 
-    box-shadow:
-        0 0 18px rgba(255,230,0,.15);
+transform:
+
+translateX(4px);
+
 }
+
+
+
+.mission span{
+
+flex:1;
+
+font-size:16px;
 
-.badge.locked {
-    opacity: .35;
 }
 
-/* =========================================================
-   MODAL
-   ========================================================= */
 
-.modal {
-    display: none;
 
-    position: fixed;
-    inset: 0;
+.mission input{
 
-    z-index: 99998;
+width:22px;
 
-    align-items: center;
-    justify-content: center;
+height:22px;
 
-    padding: 20px;
+accent-color:#ffe600;
 
-    background:
-        rgba(0,0,0,.86);
+}
+
+
 
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+.done{
+
+text-decoration:line-through;
+
+color:#ffe600;
+
 }
+
+
+
+
+
+/* =========================
+BADGE
+========================= */
+
+
+.badge{
+
+margin:15px;
 
-.modal-box {
-    position: relative;
+padding:22px;
 
-    width: min(100%, 430px);
+background:
 
-    padding: 24px;
+linear-gradient(
+145deg,
+#050505,
+#001522
+);
 
-    background:
-        linear-gradient(
-            145deg,
-            #07141c,
-            #020608
-        );
 
-    border:
-        1px solid #00c8ff;
+border:
 
-    border-radius: 20px;
+1px solid #003b55;
 
-    box-shadow:
-        0 0 35px rgba(0,200,255,.35),
-        inset 0 0 25px rgba(0,200,255,.04);
 
-    animation: modalOpen .25s ease;
+border-radius:22px;
+
+text-align:center;
+
+font-size:18px;
+
+transition:.4s;
+
 }
+
+
+
+.badge.unlocked{
 
-.modal-box h2 {
-    padding-right: 45px;
+border-color:#ffe600;
 
-    color: #ffe600;
+color:#ffe600;
 
-    font-size: 22px;
+box-shadow:
 
-    text-align: left;
+0 0 30px #ffe600;
+
+
+animation:
+
+badgePulse 2s infinite alternate;
+
 }
+
 
-.modal-box p {
-    margin: 12px 0;
 
-    color: #ccefff;
+.badge.locked{
 
-    font-size: 14px;
+opacity:.35;
+
 }
+
 
-.modal-box button {
-    position: absolute;
 
-    top: 12px;
-    right: 12px;
+@keyframes badgePulse{
 
-    width: 40px;
-    min-height: 40px;
+from{
 
-    margin: 0;
-    padding: 0;
+box-shadow:
 
-    color: #ff6670;
+0 0 10px #ffe600;
 
-    border-color:
-        rgba(255,100,110,.4);
 }
 
-/* =========================================================
-   SCROLLBAR
-   ========================================================= */
 
-::-webkit-scrollbar {
-    width: 4px;
+to{
+
+box-shadow:
+
+0 0 35px #ffe600;
+
 }
 
-::-webkit-scrollbar-track {
-    background: #000;
 }
+
+
+
+
+
+/* =========================
+MISSION DETAIL CARD
+========================= */
+
+
+.modal{
+
+display:none;
+
+position:fixed;
+
+inset:0;
+
+background:
 
-::-webkit-scrollbar-thumb {
-    background: #006d91;
+rgba(0,0,0,.85);
 
-    border-radius: 10px;
+
+backdrop-filter:
+
+blur(10px);
+
+
+z-index:99999;
+
+
+align-items:center;
+
+justify-content:center;
+
 }
+
+
+
+.modal-box{
+
+width:85%;
+
+max-width:420px;
+
 
-/* =========================================================
-   MOBILE
-   ========================================================= */
+background:
 
-@media (max-width: 600px) {
+linear-gradient(
+145deg,
+#050505,
+#001522
+);
 
-    header {
-        padding-top: 22px;
-    }
 
-    header h1 {
-        font-size: 52px;
-    }
+border:
 
-    header p {
-        font-size: 9px;
-        letter-spacing: .28em;
-    }
+2px solid #00c8ff;
 
-    .reactor {
-        width: 125px;
-        height: 125px;
-    }
 
-    #boot h1 {
-        font-size: 27px;
-        letter-spacing: .18em;
-    }
+border-radius:25px;
 
-    #boot p {
-        font-size: 11px;
-    }
 
-    nav {
-        padding: 8px 10px;
-    }
+padding:30px;
 
-    nav button {
-        min-height: 45px;
-        font-size: 19px;
-    }
 
-    .card {
-        margin: 10px;
-        padding: 17px;
-        border-radius: 16px;
-    }
+text-align:center;
 
-    .mission {
-        margin-left: 8px;
-        margin-right: 8px;
-    }
 
-    .mission span {
-        font-size: 13px;
-    }
+box-shadow:
 
-    #missionsList h2 {
-        margin-left: 10px;
-        margin-right: 10px;
-    }
+0 0 35px #00c8ff,
+
+0 0 60px #ffe600;
+
+
+animation:
+
+starkOpen .35s ease;
+
+}
+
+
+
+.modal-box h2{
+
+color:#00c8ff;
+
+font-size:30px;
+
 }
 
-/* =========================================================
-   SAFE AREA IPHONE
-   ========================================================= */
 
-@supports (padding: env(safe-area-inset-top)) {
 
-    header {
-        padding-top:
-            calc(22px + env(safe-area-inset-top));
-    }
+.modal-box p{
 
-    nav {
-        padding-bottom:
-            calc(8px + env(safe-area-inset-bottom));
-    }
+font-size:18px;
+
 }
+
 
-/* =========================================================
-   ANIMATIONS
-   ========================================================= */
 
-@keyframes bootLoading {
-    from {
-        transform: translateX(0);
-    }
+.modal-box button{
 
-    to {
-        transform: translateX(400%);
-    }
+float:right;
+
 }
+
+
+
+
+
+@keyframes starkOpen{
+
+from{
 
-@keyframes bootScreen {
-    0%,
-    82% {
-        opacity: 1;
-        visibility: visible;
-    }
+transform:scale(.7);
 
-    100% {
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-    }
+opacity:0;
+
 }
+
+
+to{
 
-@keyframes bootPanel {
-    from {
-        opacity: 0;
-        transform: scale(.96);
-    }
+transform:scale(1);
 
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+opacity:1;
+
+}
+
 }
+
 
-@keyframes reactorPulse {
-    from {
-        transform: scale(1);
-    }
 
-    to {
-        transform: scale(1.06);
-    }
+
+
+/* =========================
+MOBILE FIX
+========================= */
+
+
+@media(max-width:600px){
+
+
+header h1{
+
+font-size:50px;
+
 }
+
+
+#boot h1{
 
-@keyframes reactorSpin {
-    from {
-        transform: rotate(0deg);
-    }
+font-size:30px;
 
-    to {
-        transform: rotate(360deg);
-    }
+letter-spacing:5px;
+
 }
+
+
+.card{
+
+margin:12px;
 
-@keyframes pageIn {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-    }
+padding:20px;
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
-@keyframes modalOpen {
-    from {
-        opacity: 0;
-        transform: scale(.92) translateY(10px);
-    }
 
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
 }
